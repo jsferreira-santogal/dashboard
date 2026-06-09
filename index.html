@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -500,22 +501,28 @@ var AUTO_REFRESH_MIN = 10; // minutos entre actualizações automáticas
 var autoRefreshTimer = null;
 
 function startAutoRefresh(){
+  // Clear any existing timers
   if(autoRefreshTimer) clearInterval(autoRefreshTimer);
-  var gsUrl = localStorage.getItem(GS_URL_KEY);
-  if(!gsUrl) return;
-  // Countdown ticker
-  var secsLeft = AUTO_REFRESH_MIN * 60;
   if(window._countdownTimer) clearInterval(window._countdownTimer);
+  var gsUrl = localStorage.getItem(GS_URL_KEY) || GS_DEFAULT_URL;
+  if(!gsUrl) return;
+
+  // Real refresh timer — fires every AUTO_REFRESH_MIN minutes
+  autoRefreshTimer = setInterval(function(){
+    var updEl = document.getElementById('tbUpd');
+    if(updEl) updEl.textContent = '⟳ A actualizar...';
+    loadFromGSheets(true);
+  }, AUTO_REFRESH_MIN * 60 * 1000);
+
+  // Countdown display — updates every second
+  var secsLeft = AUTO_REFRESH_MIN * 60;
   window._countdownTimer = setInterval(function(){
     secsLeft--;
+    if(secsLeft <= 0) secsLeft = AUTO_REFRESH_MIN * 60;
+    var m = Math.floor(secsLeft/60), s = secsLeft%60;
     var updEl = document.getElementById('tbUpd');
-    if(secsLeft <= 0){
-      secsLeft = AUTO_REFRESH_MIN * 60;
-      if(updEl) updEl.textContent = '⟳ A actualizar...';
-      loadFromGSheets(true);
-    } else {
-      var m = Math.floor(secsLeft/60), s = secsLeft%60;
-      if(updEl) updEl.textContent = '⟳ ' + m + 'm' + (s<10?'0':'')+s+'s';
+    if(updEl && updEl.textContent.indexOf('A actualizar') < 0){
+      updEl.textContent = '⟳ ' + m + 'm' + (s<10?'0':'')+s+'s';
     }
   }, 1000);
 }

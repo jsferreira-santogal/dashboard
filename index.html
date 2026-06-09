@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -705,10 +704,7 @@ function buildGrupo(){
   }).join('');
 
   // Seguros por balcão — sempre visível
-  var isSingleMonth = true; // mostrar sempre
-  var kBalSeg = '';
-  if(true){
-    kBalSeg = '<div class="seg-row-label">Seguros · Nº &amp; Fat.</div>'
+  var kBalSeg = '<div class="seg-row-label">Seguros · Nº &amp; Fat.</div>'
     + '<div class="kr" style="grid-template-columns:repeat(4,1fr);margin-top:6px">'
     + BL.map(function(b,i){
         var s26=T26[i].seg, s25=T25[i].seg;
@@ -736,7 +732,7 @@ function buildGrupo(){
         +'</div>';
       }).join('')
     + '</div>';
-  } // fim kBalSeg
+
 
   var kGrp=
     kpi('Fat. Total',g26.fat,g25.fat,fE,'pct','')+
@@ -1239,3 +1235,4 @@ function setYear(y,btn){
 </script>
 </body>
 </html>
+

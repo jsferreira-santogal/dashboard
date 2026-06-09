@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -58,6 +59,14 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
 .divider-line{flex:1;height:1px;background:rgba(255,255,255,.08)}.divider-txt{font-size:10px;color:var(--mu2);letter-spacing:1px;text-transform:uppercase}
 .tb-deluxe{font-size:8.5px;font-weight:700;letter-spacing:1px;color:#ffd54f;background:rgba(255,213,79,.1);border:1px solid rgba(255,213,79,.3);border-radius:4px;padding:2px 6px;text-transform:uppercase}
 .tb-updated{font-size:9px;color:var(--mu);white-space:nowrap}
+.seg-row-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin-top:14px;padding-left:2px}
+.kpi-seg{padding:10px 12px !important}
+.kpi-seg-inner{display:flex;gap:0;align-items:stretch;margin-top:6px}
+.kpi-seg-half{flex:1;display:flex;flex-direction:column;gap:2px}
+.kpi-seg-divider{width:1px;background:rgba(255,255,255,.1);margin:0 10px}
+.kpi-seg-lbl{font-size:9px;color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+.kpi-seg-val{font-size:18px;font-weight:700;color:var(--w);line-height:1.2}
+.kpi-seg-sub{font-size:10px;color:var(--mu)}
 /* TOPBAR */
 #db{display:none}
 .topbar{position:sticky;top:0;z-index:100;background:rgba(4,4,18,.95);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07);height:54px;display:flex;align-items:center;padding:0 18px;gap:14px}
@@ -335,12 +344,17 @@ function pg(p,m){document.getElementById('lb').style.display='block';document.ge
 var GS_URL_KEY = 'f2m_gs_url';
 
 // On page load: restore saved URL and auto-load immediately
+var GS_DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxCfCptq5o7zpEakokGvb8VtSZhAliM2YU4h96K7Yg7BqgBcM8piFNkMm95X18EU5ZT4g/exec';
+
 (function initGS(){
-  var saved = localStorage.getItem(GS_URL_KEY);
+  // Use saved URL or fall back to default embedded URL
+  var saved = localStorage.getItem(GS_URL_KEY) || GS_DEFAULT_URL;
   if(saved){
     var el = document.getElementById('gsUrl');
     if(el) el.value = saved;
-    // Auto-load immediately — sem precisar de clicar
+    // Save default if nothing saved yet
+    try{ if(!localStorage.getItem(GS_URL_KEY)) localStorage.setItem(GS_URL_KEY, saved); }catch(e){}
+    // Auto-load immediately
     setTimeout(function(){ loadFromGSheets(true); }, 150);
   }
 })();
@@ -690,6 +704,40 @@ function buildGrupo(){
     return '<div class="kpi" style="--c:'+COL[b].c26+'"><div class="kl" style="color:'+COL[b].c26+'">'+b+'</div><div class="kv">'+fE(mv)+'</div><div class="ks">'+sub+'</div>'+bdg+'</div>';
   }).join('');
 
+  // Seguros por balcão — só em modo mês individual
+  var isSingleMonth = (S.p !== 'acum' && S.months.size <= 1);
+  var kBalSeg = '';
+  if(isSingleMonth){
+    kBalSeg = '<div class="seg-row-label">Seguros · Nº &amp; Fat.</div>'
+    + '<div class="kr" style="grid-template-columns:repeat(4,1fr);margin-top:6px">'
+    + BL.map(function(b,i){
+        var s26=T26[i].seg, s25=T25[i].seg;
+        var f26=T26[i].fat_seg, f25=T25[i].fat_seg;
+        var sdg=kBdg(s26,s25,'pct'), fdg=kBdg(f26,f25,'pct');
+        var svar=s25?fN((s26-s25)/s25*100,1):'—';
+        var fvar=f25?fN((f26-f25)/f25*100,1):'—';
+        return '<div class="kpi kpi-seg" style="--c:'+COL[b].c26+'">'
+          +'<div class="kl" style="color:'+COL[b].c26+'">'+b+'</div>'
+          +'<div class="kpi-seg-inner">'
+            +'<div class="kpi-seg-half">'
+              +'<div class="kpi-seg-lbl">Nº Seguros</div>'
+              +'<div class="kpi-seg-val">'+s26+'</div>'
+              +'<div class="kpi-seg-sub">2025: '+s25+'</div>'
+              +sdg
+            +'</div>'
+            +'<div class="kpi-seg-divider"></div>'
+            +'<div class="kpi-seg-half">'
+              +'<div class="kpi-seg-lbl">Fat. Seguros</div>'
+              +'<div class="kpi-seg-val">'+fE(f26)+'</div>'
+              +'<div class="kpi-seg-sub">2025: '+fE(f25)+'</div>'
+              +fdg
+            +'</div>'
+          +'</div>'
+        +'</div>';
+      }).join('')
+    + '</div>';
+  }
+
   var kGrp=
     kpi('Fat. Total',g26.fat,g25.fat,fE,'pct','')+
     kpi('Resultado F2M',g26.res,g25.res,function(v){return (v>=0?'+':'')+fE(v);},'','#4fc3f7')+
@@ -781,6 +829,7 @@ function buildGrupo(){
     +'<div class="ssub"><span class="pdyn">'+pTxt+'</span></div>'
     +'<div class="legbar">'+BL.map(function(b){return '<div class="legi"><div class="legsq" style="background:'+COL[b].c26+'"></div>'+b+' 2026</div><div class="legi"><div class="legsq" style="background:'+COL[b].c25+'"></div>'+b+' 2025</div>';}).join('')+'</div>'
     +'<div class="kr" style="grid-template-columns:repeat(4,1fr)">'+kBal+'</div>'
+    +(isSingleMonth?kBalSeg:'')
     +'<div class="kr" style="grid-template-columns:repeat(6,1fr)">'+kGrp+'</div>'
     +'<div class="sdiv"></div>'
     // Pack section

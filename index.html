@@ -704,10 +704,10 @@ function buildGrupo(){
     return '<div class="kpi" style="--c:'+COL[b].c26+'"><div class="kl" style="color:'+COL[b].c26+'">'+b+'</div><div class="kv">'+fE(mv)+'</div><div class="ks">'+sub+'</div>'+bdg+'</div>';
   }).join('');
 
-  // Seguros por balcão — só em modo mês individual
-  var isSingleMonth = (S.p !== 'acum' && S.months.size <= 1);
+  // Seguros por balcão — sempre visível
+  var isSingleMonth = true; // mostrar sempre
   var kBalSeg = '';
-  if(isSingleMonth){
+  if(true){
     kBalSeg = '<div class="seg-row-label">Seguros · Nº &amp; Fat.</div>'
     + '<div class="kr" style="grid-template-columns:repeat(4,1fr);margin-top:6px">'
     + BL.map(function(b,i){
@@ -736,7 +736,7 @@ function buildGrupo(){
         +'</div>';
       }).join('')
     + '</div>';
-  }
+  } // fim kBalSeg
 
   var kGrp=
     kpi('Fat. Total',g26.fat,g25.fat,fE,'pct','')+
@@ -829,7 +829,7 @@ function buildGrupo(){
     +'<div class="ssub"><span class="pdyn">'+pTxt+'</span></div>'
     +'<div class="legbar">'+BL.map(function(b){return '<div class="legi"><div class="legsq" style="background:'+COL[b].c26+'"></div>'+b+' 2026</div><div class="legi"><div class="legsq" style="background:'+COL[b].c25+'"></div>'+b+' 2025</div>';}).join('')+'</div>'
     +'<div class="kr" style="grid-template-columns:repeat(4,1fr)">'+kBal+'</div>'
-    +(isSingleMonth?kBalSeg:'')
+    +kBalSeg
     +'<div class="kr" style="grid-template-columns:repeat(6,1fr)">'+kGrp+'</div>'
     +'<div class="sdiv"></div>'
     // Pack section

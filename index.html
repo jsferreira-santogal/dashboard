@@ -354,7 +354,7 @@ var GS_DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxCfCptq5o7zpEakok
   if(el) el.value = url;
   try{ localStorage.setItem(GS_URL_KEY, url); }catch(e){}
   // Auto-load immediately
-  setTimeout(function(){ loadFromGSheets(true); }, 150);
+  setTimeout(function(){ usarEmbutidos(); }, 150);
 })();
 
 function loadFromGSheets(silent){

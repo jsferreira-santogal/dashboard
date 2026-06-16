@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -348,13 +351,16 @@ var GS_URL_KEY = 'f2m_gs_url';
 var GS_DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxCfCptq5o7zpEakokGvb8VtSZhAliM2YU4h96K7Yg7BqgBcM8piFNkMm95X18EU5ZT4g/exec';
 
 (function initGS(){
-  // Always use default URL - never depend on localStorage
-  var url = GS_DEFAULT_URL;
+  // Set URL in field
   var el = document.getElementById('gsUrl');
-  if(el) el.value = url;
-  try{ localStorage.setItem(GS_URL_KEY, url); }catch(e){}
-  // Auto-load immediately
-  setTimeout(function(){ usarEmbutidos(); }, 150);
+  if(el) el.value = GS_DEFAULT_URL;
+  try{ localStorage.setItem(GS_URL_KEY, GS_DEFAULT_URL); }catch(e){}
+  // Load embedded data immediately so dashboard opens right away
+  setTimeout(function(){ 
+    usarEmbutidos();
+    // Then try to refresh from GSheets in background
+    setTimeout(function(){ loadFromGSheets(true); }, 2000);
+  }, 100);
 })();
 
 function loadFromGSheets(silent){
@@ -373,32 +379,45 @@ function loadFromGSheets(silent){
 
   // Fetch via JSONP-style URL (Apps Script needs ?callback= for CORS, or use no-cors mode)
   // We use fetch with no-cors as fallback, but Apps Script with "Anyone" access supports CORS
-  fetch(url)
-    .then(function(r){
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return r.json();
-    })
-    .then(function(data){
-      if(data.error) throw new Error(data.error);
-      if(btn) btn.disabled = false;
-      pg(100,'✅ Dados Google Sheets carregados!');
-      var meta = data._meta || {};
-      var label = 'Google Sheets';
-      if(meta.generated){
-        var d = new Date(meta.generated);
-        label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
-      }
-      setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
-      var updEl = document.getElementById('tbUpd');
-      if(updEl) updEl.textContent = '⟳ ' + label;
-      initData(data, label);
-    })
-    .catch(function(err){
-      if(btn) btn.disabled = false;
-      pg(0,'');
-      setGsStatus('❌ Erro: ' + err.message + ' — verifica o URL e as permissões.','err');
-      console.error('GSheets load error:', err);
-    });
+  // JSONP to bypass CORS
+  var cbName = 'gs_cb_' + Date.now();
+  var script = document.createElement('script');
+  var timeout = setTimeout(function(){
+    if(btn) btn.disabled = false;
+    pg(0,'');
+    setGsStatus('❌ Timeout — Apps Script não respondeu.','err');
+    delete window[cbName];
+    if(script.parentNode) script.parentNode.removeChild(script);
+  }, 15000);
+
+  window[cbName] = function(data){
+    clearTimeout(timeout);
+    delete window[cbName];
+    if(script.parentNode) script.parentNode.removeChild(script);
+    if(btn) btn.disabled = false;
+    if(data.error){ pg(0,''); setGsStatus('❌ '+data.error,'err'); return; }
+    pg(100,'✅ Dados Google Sheets carregados!');
+    var meta = data._meta || {};
+    var label = 'Google Sheets';
+    if(meta.generated){
+      var d = new Date(meta.generated);
+      label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+    setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
+    var updEl = document.getElementById('tbUpd');
+    if(updEl) updEl.textContent = '⟳ ' + label;
+    initData(data, label);
+  };
+
+  script.src = url + (url.indexOf('?')>=0?'&':'?') + 'callback=' + cbName;
+  script.onerror = function(){
+    clearTimeout(timeout);
+    if(btn) btn.disabled = false;
+    pg(0,'');
+    setGsStatus('❌ Erro ao carregar — verifica o URL.','err');
+    delete window[cbName];
+  };
+  document.head.appendChild(script);
 }
 
 function setGsStatus(msg, cls){
@@ -1278,13 +1297,13 @@ function buildContabPanel(){
     MESES_LABEL.forEach(function(l,i){
       var act=i<activeMeses.length;
       var bg=act?'rgba(0,230,180,.03)':'rgba(255,255,255,.01)';
-      h+='<th style="'+thS+'background:'+bg+';color:rgba(255,255,255,.3);border-left:1px solid rgba(255,255,255,.05);">'25</th>'
-        +'<th style="'+thS+'background:'+bg+';color:'+(act?'#00e6b4':'rgba(255,255,255,.2)')+';font-weight:900;">'26</th>';
+      h+='<th style="'+thS+'background:'+bg+';color:rgba(255,255,255,.3);border-left:1px solid rgba(255,255,255,.05);">25</th>'
+        +'<th style="'+thS+'background:'+bg+';color:'+(act?'#00e6b4':'rgba(255,255,255,.2)')+';font-weight:900;">26</th>';
     });
-    h+='<th style="'+thS+'background:rgba(0,230,180,.05);color:rgba(255,255,255,.4);border-left:2px solid rgba(0,230,180,.2);">'25</th>'
-      +'<th style="'+thS+'background:rgba(0,230,180,.1);color:#00e6b4;font-weight:900;">'26</th>'
-      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.2);">'26</th>'
-      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.2);">'26</th>'
+    h+='<th style="'+thS+'background:rgba(0,230,180,.05);color:rgba(255,255,255,.4);border-left:2px solid rgba(0,230,180,.2);">25</th>'
+      +'<th style="'+thS+'background:rgba(0,230,180,.1);color:#00e6b4;font-weight:900;">26</th>'
+      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.2);">26</th>'
+      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.2);">26</th>';
       +'</tr></thead><tbody>';
 
     function cel(v,extra){
@@ -1324,6 +1343,33 @@ function buildContabPanel(){
     h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.07);border-left:1px solid rgba(255,213,79,.2);">'+eC(tot26c.desv)+'</td>'
       +'</tr></tbody></table></div></div>';
     return h;
+  }
+
+  function cmpCards(){
+    var h='<div style="margin-bottom:24px;"><div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">Comparação Acumulada por Balcão — 2025 vs 2026</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">';
+    BALCOES_CONTAB.forEach(function(b){
+      var cor=COR_CONTAB[b],v25=d25[b].acum,v26=d26[b].acum;
+      var orc25=d25[b].orc,orc26=d26[b].orc,desv25=d25[b].desv,desv26=d26[b].desv;
+      var varV=v25!==0?((v26-v25)/Math.abs(v25)*100):null;
+      var varCor=varV!==null&&varV>=0?'#00e6b4':'#ff4d6d';
+      h+='<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:3px solid '+cor+';border-radius:12px;padding:14px;">'
+        +'<div style="font-size:13px;font-weight:800;color:'+cor+';margin-bottom:10px;">'+b+'</div>'
+        +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px;">2025</div>'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:10px;color:rgba(255,255,255,.4);">Acumulado</span><span style="font-size:11px;font-weight:700;color:'+(v25>=0?'#00e6b4':'#ff4d6d')+';">'+eC(v25)+'</span></div>'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:10px;color:rgba(255,255,255,.4);">ORC/Acum.</span><span style="font-size:11px;font-weight:600;color:#4b8ef5;">'+eC(orc25)+'</span></div>'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:10px;color:rgba(255,255,255,.4);">Desvio</span><span style="font-size:11px;font-weight:600;color:#ffd54f;">'+eC(desv25)+'</span></div>'
+        +'<div style="height:1px;background:rgba(255,255,255,.07);margin-bottom:8px;"></div>'
+        +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px;">2026</div>'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:10px;color:rgba(255,255,255,.4);">Acumulado</span><span style="font-size:11px;font-weight:700;color:'+(v26>=0?'#00e6b4':'#ff4d6d')+';">'+eC(v26)+'</span></div>'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span style="font-size:10px;color:rgba(255,255,255,.4);">ORC/Acum.</span><span style="font-size:11px;font-weight:600;color:#4b8ef5;">'+eC(orc26)+'</span></div>'
+        +'<div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:10px;color:rgba(255,255,255,.4);">Desvio</span><span style="font-size:11px;font-weight:600;color:#ffd54f;">'+eC(desv26)+'</span></div>'
+        +'<div style="background:rgba(255,255,255,.06);border-radius:6px;padding:7px;text-align:center;">'
+        +'<div style="font-size:9px;color:rgba(255,255,255,.3);margin-bottom:2px;">Variação Acum. 2026 vs 2025</div>'
+        +'<span style="font-size:14px;font-weight:800;color:'+varCor+';">'+(varV!==null?(varV>=0?'▲ +':'▼ ')+Math.abs(varV).toFixed(1)+'%':'—')+'</span>'
+        +'</div></div>';
+    });
+    return h+'</div></div>';
   }
 
   var tbl26=buildTableComparada();
@@ -1379,5 +1425,3 @@ function setYear(y,btn){
 </script>
 </body>
 </html>
-
-

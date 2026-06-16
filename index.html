@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -1207,6 +1205,7 @@ function showPanel(id,btn){
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
   document.getElementById('p-'+id).classList.add('active');
   btn.classList.add('active');S.panel=id;updateLabels();
+  if(id==='contab') buildContabPanel();
 }
 function setPeriod(p,btn){
   document.querySelectorAll('[data-p]').forEach(function(b){b.classList.remove('active');});
@@ -1519,12 +1518,7 @@ function buildContabPanel(){
   }, 100);
 }
 
-// Hook into showPanel
-var _origShowPanel = showPanel;
-function showPanel(id, btn){
-  _origShowPanel(id, btn);
-  if(id==='contab') buildContabPanel();
-}
+
 
 </script>
 </body>

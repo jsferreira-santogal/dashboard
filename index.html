@@ -349,16 +349,13 @@ var GS_URL_KEY = 'f2m_gs_url';
 var GS_DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxCfCptq5o7zpEakokGvb8VtSZhAliM2YU4h96K7Yg7BqgBcM8piFNkMm95X18EU5ZT4g/exec';
 
 (function initGS(){
-  // Set URL in field
+  // Always use default URL - never depend on localStorage
+  var url = GS_DEFAULT_URL;
   var el = document.getElementById('gsUrl');
-  if(el) el.value = GS_DEFAULT_URL;
-  try{ localStorage.setItem(GS_URL_KEY, GS_DEFAULT_URL); }catch(e){}
-  // Load embedded data immediately so dashboard opens right away
-  setTimeout(function(){ 
-    usarEmbutidos();
-    // Then try to refresh from GSheets in background
-    setTimeout(function(){ loadFromGSheets(true); }, 2000);
-  }, 100);
+  if(el) el.value = url;
+  try{ localStorage.setItem(GS_URL_KEY, url); }catch(e){}
+  // Auto-load immediately
+  setTimeout(function(){ loadFromGSheets(true); }, 150);
 })();
 
 function loadFromGSheets(silent){
@@ -377,45 +374,32 @@ function loadFromGSheets(silent){
 
   // Fetch via JSONP-style URL (Apps Script needs ?callback= for CORS, or use no-cors mode)
   // We use fetch with no-cors as fallback, but Apps Script with "Anyone" access supports CORS
-  // JSONP to bypass CORS
-  var cbName = 'gs_cb_' + Date.now();
-  var script = document.createElement('script');
-  var timeout = setTimeout(function(){
-    if(btn) btn.disabled = false;
-    pg(0,'');
-    setGsStatus('❌ Timeout — Apps Script não respondeu.','err');
-    delete window[cbName];
-    if(script.parentNode) script.parentNode.removeChild(script);
-  }, 15000);
-
-  window[cbName] = function(data){
-    clearTimeout(timeout);
-    delete window[cbName];
-    if(script.parentNode) script.parentNode.removeChild(script);
-    if(btn) btn.disabled = false;
-    if(data.error){ pg(0,''); setGsStatus('❌ '+data.error,'err'); return; }
-    pg(100,'✅ Dados Google Sheets carregados!');
-    var meta = data._meta || {};
-    var label = 'Google Sheets';
-    if(meta.generated){
-      var d = new Date(meta.generated);
-      label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
-    }
-    setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
-    var updEl = document.getElementById('tbUpd');
-    if(updEl) updEl.textContent = '⟳ ' + label;
-    initData(data, label);
-  };
-
-  script.src = url + (url.indexOf('?')>=0?'&':'?') + 'callback=' + cbName;
-  script.onerror = function(){
-    clearTimeout(timeout);
-    if(btn) btn.disabled = false;
-    pg(0,'');
-    setGsStatus('❌ Erro ao carregar — verifica o URL.','err');
-    delete window[cbName];
-  };
-  document.head.appendChild(script);
+  fetch(url)
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    })
+    .then(function(data){
+      if(data.error) throw new Error(data.error);
+      if(btn) btn.disabled = false;
+      pg(100,'✅ Dados Google Sheets carregados!');
+      var meta = data._meta || {};
+      var label = 'Google Sheets';
+      if(meta.generated){
+        var d = new Date(meta.generated);
+        label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      }
+      setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
+      var updEl = document.getElementById('tbUpd');
+      if(updEl) updEl.textContent = '⟳ ' + label;
+      initData(data, label);
+    })
+    .catch(function(err){
+      if(btn) btn.disabled = false;
+      pg(0,'');
+      setGsStatus('❌ Erro: ' + err.message + ' — verifica o URL e as permissões.','err');
+      console.error('GSheets load error:', err);
+    });
 }
 
 function setGsStatus(msg, cls){

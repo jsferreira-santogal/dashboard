@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -207,6 +208,7 @@ footer{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);font-size:10
       <button class="nb" onclick="showPanel('cascais',this)"><span class="nd" style="background:#d42b2b"></span>Cascais</button>
       <button class="nb" onclick="showPanel('loures',this)"><span class="nd" style="background:#d4a017"></span>Loures</button>
       <button class="nb" onclick="showPanel('lisboa',this)"><span class="nd" style="background:#1a9e4a"></span>Lisboa</button>
+      <button class="nb" onclick="showPanel('contab',this)"><span class="nd" style="background:linear-gradient(135deg,#7b1fa2,#4a148c)"></span>Dem. Resultados</button>
     </div>
     <div class="tb-r">
       <div class="clk"><div class="clk-d" id="tbd"></div><div class="clk-t" id="tbt"></div></div>
@@ -246,6 +248,7 @@ footer{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);font-size:10
     <div id="p-cascais" class="panel"></div>
     <div id="p-loures" class="panel"></div>
     <div id="p-lisboa" class="panel"></div>
+    <div id="p-contab" class="panel"></div>
   </div>
   <footer>
     <span>Free2Move Rent &middot; <strong>Santogal</strong> &middot; Dashboard</span>
@@ -1238,6 +1241,290 @@ function setYear(y,btn){
 
 
 
+
+
+// ═══════════════════════════════════════════════
+//  DEMONSTRAÇÃO DE RESULTADOS — CONTABILIDADE
+// ═══════════════════════════════════════════════
+const CONTAB = {"2025": {"CAC\u00c9M": {"jan": 1566, "fev": -6630, "mar": -5501, "abr": -78, "mai": -4748, "jun": 6241, "jul": 1690, "ago": 2033, "set": 167, "out": 5464, "nov": -1425, "dez": 10549, "acum": 9328}, "CASCAIS": {"jan": -3028, "fev": 3217, "mar": -4270, "abr": -1267, "mai": -2472, "jun": 7194, "jul": -190, "ago": -6489, "set": -6248, "out": -6676, "nov": -3291, "dez": 27106, "acum": 3586}, "LISBOA": {"jan": 1503, "fev": -965, "mar": 1980, "abr": 9054, "mai": -6477, "jun": 18023, "jul": 556, "ago": 6947, "set": 2153, "out": 5455, "nov": -1147, "dez": -5257, "acum": 31825}, "LOURES": {"jan": 3049, "fev": 1484, "mar": -4443, "abr": 8567, "mai": -432, "jun": 5002, "jul": 14253, "ago": -5392, "set": -4045, "out": 6063, "nov": -8922, "dez": 6519, "acum": 21703}, "TOTAL": {"jan": 3090, "fev": -2894, "mar": -12234, "abr": 16276, "mai": -14129, "jun": 36460, "jul": 16309, "ago": -2901, "set": -7973, "out": 10306, "nov": -14785, "dez": 38917, "acum": 66442}}, "2026": {"CAC\u00c9M": {"jan": 2315, "fev": -1074, "mar": 18762, "abr": 2841, "mai": -2615, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 20229}, "CASCAIS": {"jan": -732, "fev": 12877, "mar": 17679, "abr": 7342, "mai": 1136, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 38302}, "LISBOA": {"jan": 3318, "fev": 5453, "mar": 18939, "abr": -79, "mai": 2791, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 30422}, "LOURES": {"jan": 169, "fev": -360, "mar": 15718, "abr": 668, "mai": 2589, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 18784}, "TOTAL": {"jan": 5070, "fev": 16896, "mar": 71098, "abr": 10772, "mai": 3901, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 107737}}};
+
+const MESES_CONTAB = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MESES_LABEL  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const BALCOES_CONTAB = ['CACÉM','CASCAIS','LISBOA','LOURES'];
+const COR_CONTAB = {'CACÉM':'#1a7fd4','CASCAIS':'#d42b2b','LISBOA':'#1a9e4a','LOURES':'#d4a017'};
+
+function eC(v){
+  if(v==null||isNaN(v)) return '—';
+  var abs=Math.abs(v), s=abs.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+  return (v<0?'-':'')+s+' €';
+}
+
+let contabChart = null;
+
+function buildContabPanel(){
+  const p = document.getElementById('p-contab');
+  if(p.innerHTML.trim()) return; // already built
+
+  const d25 = CONTAB['2025'], d26 = CONTAB['2026'];
+  const tot25 = d25['TOTAL'], tot26 = d26['TOTAL'];
+
+  // detect last month with data in 2026
+  let lastMesIdx = -1;
+  MESES_CONTAB.forEach(function(m,i){ if(tot26[m]!==0) lastMesIdx=i; });
+  const activeMeses = MESES_CONTAB.slice(0, lastMesIdx+1);
+  const activeLabels = MESES_LABEL.slice(0, lastMesIdx+1);
+
+  // acumulado 2026 comparado 2025 (mesmo período)
+  let acum26=0, acum25periodo=0;
+  activeMeses.forEach(function(m){ acum26+=tot26[m]; acum25periodo+=tot25[m]; });
+  var varAcum = acum25periodo!==0 ? ((acum26-acum25periodo)/Math.abs(acum25periodo)*100) : null;
+  var varAcumStr = varAcum!==null ? (varAcum>=0?'+':'')+varAcum.toFixed(1)+'%' : '—';
+  var varAcumCor = varAcum!==null&&varAcum>=0 ? '#00e6b4' : '#ff4d6d';
+
+  // ── KPI CARDS TOPO ──
+  var kpiHtml = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;">';
+  
+  // Acumulado 2026
+  var acumCor26 = acum26>=0?'#00e6b4':'#ff4d6d';
+  kpiHtml += '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Resultado Acumulado 2026</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+acumCor26+';">'+eC(acum26)+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Jan–'+activeLabels[activeLabels.length-1]+'</div>'
+    +'</div>';
+
+  // Acumulado 2025 (ano completo)
+  var acumCor25 = tot25.acum>=0?'#00e6b4':'#ff4d6d';
+  kpiHtml += '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Resultado Acumulado 2025</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+acumCor25+';">'+eC(tot25.acum)+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Ano completo</div>'
+    +'</div>';
+
+  // Variação
+  kpiHtml += '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Variação vs 2025 (mesmo período)</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+varAcumCor+';">'+varAcumStr+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">'+eC(acum26-acum25periodo)+'</div>'
+    +'</div>';
+
+  // Melhor balcão 2026
+  var bestB='', bestV=-Infinity;
+  BALCOES_CONTAB.forEach(function(b){ var v=d26[b].acum; if(v>bestV){bestV=v;bestB=b;} });
+  kpiHtml += '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Melhor Balcão 2026</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+COR_CONTAB[bestB]+';">'+bestB+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">'+eC(bestV)+' acumulado</div>'
+    +'</div>';
+
+  kpiHtml += '</div>';
+
+  // ── TABELA POR BALCÃO ──
+  var tblHtml = '<div style="overflow-x:auto;margin-bottom:24px;">'
+    +'<table style="width:100%;border-collapse:collapse;font-size:12px;">'
+    +'<thead><tr style="border-bottom:2px solid rgba(255,255,255,.1);">'
+    +'<th style="padding:10px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);">Balcão</th>';
+  
+  activeLabels.forEach(function(l){
+    tblHtml += '<th style="padding:10px 4px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);">'+l+'</th>';
+  });
+  tblHtml += '<th style="padding:10px 8px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);">Acum.</th>'
+    +'<th style="padding:10px 8px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);">vs 2025</th>'
+    +'</tr></thead><tbody>';
+
+  BALCOES_CONTAB.forEach(function(b, bi){
+    var cor = COR_CONTAB[b];
+    var rowBg = bi%2===0?'rgba(255,255,255,.02)':'transparent';
+    tblHtml += '<tr style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);">'
+      +'<td style="padding:10px 8px;font-weight:700;color:'+cor+';white-space:nowrap;">'
+      +'<span style="display:inline-block;width:8px;height:8px;background:'+cor+';border-radius:50%;margin-right:6px;vertical-align:middle;"></span>'+b+'</td>';
+    
+    activeMeses.forEach(function(m){
+      var v = d26[b][m];
+      var vc = v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
+      tblHtml += '<td style="padding:10px 4px;text-align:right;color:'+vc+';font-weight:600;white-space:nowrap;">'+eC(v)+'</td>';
+    });
+    
+    var acumB26 = d26[b].acum;
+    var acumB25p = 0; activeMeses.forEach(function(m){ acumB25p+=d25[b][m]; });
+    var varB = acumB25p!==0?((acumB26-acumB25p)/Math.abs(acumB25p)*100):null;
+    var acumBCor = acumB26>=0?'#00e6b4':'#ff4d6d';
+    var varBCor = varB!==null&&varB>=0?'#00e6b4':'#ff4d6d';
+    
+    tblHtml += '<td style="padding:10px 8px;text-align:right;color:'+acumBCor+';font-weight:800;white-space:nowrap;">'+eC(acumB26)+'</td>'
+      +'<td style="padding:10px 8px;text-align:right;color:'+varBCor+';font-weight:700;white-space:nowrap;">'+(varB!==null?(varB>=0?'+':'')+varB.toFixed(1)+'%':'—')+'</td>'
+      +'</tr>';
+  });
+
+  // TOTAL ROW
+  var totBg = 'rgba(0,230,180,.06)';
+  tblHtml += '<tr style="background:'+totBg+';border-top:2px solid rgba(0,230,180,.2);">'
+    +'<td style="padding:11px 8px;font-weight:800;color:#00e6b4;white-space:nowrap;">TOTAL</td>';
+  activeMeses.forEach(function(m){
+    var v=tot26[m]; var vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
+    tblHtml += '<td style="padding:11px 4px;text-align:right;color:'+vc+';font-weight:700;white-space:nowrap;">'+eC(v)+'</td>';
+  });
+  var totAcum25p=0; activeMeses.forEach(function(m){totAcum25p+=tot25[m];});
+  var totVarA = totAcum25p!==0?((acum26-totAcum25p)/Math.abs(totAcum25p)*100):null;
+  var totAcumCor = acum26>=0?'#00e6b4':'#ff4d6d';
+  var totVarCor = totVarA!==null&&totVarA>=0?'#00e6b4':'#ff4d6d';
+  tblHtml += '<td style="padding:11px 8px;text-align:right;color:'+totAcumCor+';font-weight:800;white-space:nowrap;">'+eC(acum26)+'</td>'
+    +'<td style="padding:11px 8px;text-align:right;color:'+totVarCor+';font-weight:800;white-space:nowrap;">'+(totVarA!==null?(totVarA>=0?'+':'')+totVarA.toFixed(1)+'%':'—')+'</td>'
+    +'</tr>';
+  tblHtml += '</tbody></table></div>';
+
+  // ── COMPARAÇÃO 2025 COMPLETO POR BALCÃO ──
+  var cmp25Html = '<div style="margin-bottom:24px;">'
+    +'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:12px;">2025 — Ano Completo por Balcão</div>'
+    +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">';
+  
+  BALCOES_CONTAB.forEach(function(b){
+    var cor = COR_CONTAB[b];
+    var v25 = d25[b].acum;
+    var v26 = d26[b].acum;
+    var varV = v25!==0?((v26-v25)/Math.abs(v25)*100):null;
+    var cor25 = v25>=0?'#00e6b4':'#ff4d6d';
+    var cor26 = v26>=0?'#00e6b4':'#ff4d6d';
+    var varCor2 = varV!==null&&varV>=0?'#00e6b4':'#ff4d6d';
+    cmp25Html += '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:3px solid '+cor+';border-radius:12px;padding:14px;">'
+      +'<div style="font-size:12px;font-weight:800;color:'+cor+';margin-bottom:10px;">'+b+'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:6px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">2025 (ano)</span>'
+      +'<span style="font-size:12px;font-weight:700;color:'+cor25+';">'+eC(v25)+'</span>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:8px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">2026 (acum.)</span>'
+      +'<span style="font-size:12px;font-weight:700;color:'+cor26+';">'+eC(v26)+'</span>'
+      +'</div>'
+      +'<div style="background:rgba(255,255,255,.06);border-radius:6px;padding:6px 8px;text-align:center;">'
+      +'<span style="font-size:13px;font-weight:800;color:'+varCor2+';">'+(varV!==null?(varV>=0?'▲ +':'▼ ')+Math.abs(varV).toFixed(1)+'%':'—')+'</span>'
+      +'</div>'
+      +'</div>';
+  });
+  cmp25Html += '</div></div>';
+
+  // ── GRÁFICO EVOLUÇÃO MENSAL ──
+  var chartHtml = '<div style="margin-bottom:24px;">'
+    +'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:12px;">Evolução Mensal — Resultado Total (€)</div>'
+    +'<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;">'
+    +'<canvas id="contab-chart" height="120"></canvas>'
+    +'</div></div>';
+
+  // ── TABELA 2025 COMPLETO ──
+  var tbl25Html = '<div style="overflow-x:auto;">'
+    +'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:12px;">2025 — Detalhe Mensal por Balcão</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:12px;">'
+    +'<thead><tr style="border-bottom:2px solid rgba(255,255,255,.1);">'
+    +'<th style="padding:10px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);">Balcão</th>';
+  MESES_LABEL.forEach(function(l){
+    tbl25Html += '<th style="padding:10px 4px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);">'+l+'</th>';
+  });
+  tbl25Html += '<th style="padding:10px 8px;text-align:right;font-size:10px;font-weight:700;color:rgba(255,255,255,.45);">Acum.</th></tr></thead><tbody>';
+
+  BALCOES_CONTAB.forEach(function(b,bi){
+    var cor=COR_CONTAB[b]; var rowBg=bi%2===0?'rgba(255,255,255,.02)':'transparent';
+    tbl25Html += '<tr style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);">'
+      +'<td style="padding:10px 8px;font-weight:700;color:'+cor+';">'+b+'</td>';
+    MESES_CONTAB.forEach(function(m){
+      var v=d25[b][m]; var vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
+      tbl25Html += '<td style="padding:10px 4px;text-align:right;color:'+vc+';font-weight:600;white-space:nowrap;">'+eC(v)+'</td>';
+    });
+    var acumBCor=d25[b].acum>=0?'#00e6b4':'#ff4d6d';
+    tbl25Html += '<td style="padding:10px 8px;text-align:right;color:'+acumBCor+';font-weight:800;white-space:nowrap;">'+eC(d25[b].acum)+'</td></tr>';
+  });
+  // total 2025
+  tbl25Html += '<tr style="background:rgba(0,230,180,.06);border-top:2px solid rgba(0,230,180,.2);">'
+    +'<td style="padding:11px 8px;font-weight:800;color:#00e6b4;">TOTAL</td>';
+  MESES_CONTAB.forEach(function(m){
+    var v=tot25[m]; var vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
+    tbl25Html += '<td style="padding:11px 4px;text-align:right;color:'+vc+';font-weight:700;white-space:nowrap;">'+eC(v)+'</td>';
+  });
+  var totAcum25Cor=tot25.acum>=0?'#00e6b4':'#ff4d6d';
+  tbl25Html += '<td style="padding:11px 8px;text-align:right;color:'+totAcum25Cor+';font-weight:800;white-space:nowrap;">'+eC(tot25.acum)+'</td></tr>';
+  tbl25Html += '</tbody></table></div>';
+
+  // ── ASSEMBLE PANEL ──
+  p.innerHTML = '<div style="padding:20px 16px;max-width:1400px;margin:0 auto;">'
+    +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">'
+    +'<div style="width:4px;height:32px;background:linear-gradient(180deg,#7b1fa2,#4a148c);border-radius:2px;"></div>'
+    +'<div>'
+    +'<div style="font-size:18px;font-weight:800;color:#fff;">Demonstração de Resultados</div>'
+    +'<div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:2px;">FREE2MOVE RENT — 4 Balcões — Contabilidade 2025 vs 2026</div>'
+    +'</div></div>'
+    + kpiHtml
+    +'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:12px;">2026 — Resultado Mensal por Balcão</div>'
+    + tblHtml
+    + cmp25Html
+    + chartHtml
+    + tbl25Html;
+
+  // ── DRAW CHART ──
+  setTimeout(function(){
+    var ctx = document.getElementById('contab-chart');
+    if(!ctx) return;
+    if(contabChart) contabChart.destroy();
+    var datasets = [];
+    BALCOES_CONTAB.forEach(function(b){
+      datasets.push({
+        label: b,
+        data: activeMeses.map(function(m){ return d26[b][m]; }),
+        borderColor: COR_CONTAB[b],
+        backgroundColor: COR_CONTAB[b]+'33',
+        borderWidth: 2,
+        pointRadius: 4,
+        tension: 0.3,
+        fill: false
+      });
+    });
+    // Total 2025 linha tracejada
+    datasets.push({
+      label: 'Total 2025',
+      data: activeMeses.map(function(m){ return tot25[m]; }),
+      borderColor: 'rgba(255,255,255,.3)',
+      borderWidth: 2,
+      borderDash: [6,4],
+      pointRadius: 3,
+      tension: 0.3,
+      fill: false
+    });
+    // Total 2026
+    datasets.push({
+      label: 'Total 2026',
+      data: activeMeses.map(function(m){ return tot26[m]; }),
+      borderColor: '#00e6b4',
+      backgroundColor: 'rgba(0,230,180,.08)',
+      borderWidth: 3,
+      pointRadius: 5,
+      tension: 0.3,
+      fill: true
+    });
+    contabChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: activeLabels, datasets: datasets },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: 'rgba(255,255,255,.6)', font: { size: 11 } } },
+          datalabels: { display: false }
+        },
+        scales: {
+          x: { ticks: { color: 'rgba(255,255,255,.4)' }, grid: { color: 'rgba(255,255,255,.05)' } },
+          y: {
+            ticks: { color: 'rgba(255,255,255,.4)', callback: function(v){ return eC(v); } },
+            grid: { color: 'rgba(255,255,255,.05)' },
+            border: { dash: [4,4] }
+          }
+        }
+      }
+    });
+  }, 100);
+}
+
+// Hook into showPanel
+var _origShowPanel = showPanel;
+function showPanel(id, btn){
+  _origShowPanel(id, btn);
+  if(id==='contab') buildContabPanel();
+}
 
 </script>
 </body>

@@ -1245,8 +1245,320 @@ function setYear(y,btn){
 // ═══════════════════════════════════════════════
 //  DEMONSTRAÇÃO DE RESULTADOS — CONTABILIDADE
 // ═══════════════════════════════════════════════
-const CONTAB = {"2025": {"CAC\u00c9M": {"jan": 1566, "fev": -6630, "mar": -5501, "abr": -78, "mai": -4748, "jun": 6241, "jul": 1690, "ago": 2033, "set": 167, "out": 5464, "nov": -1425, "dez": 10549, "acum": 9328}, "CASCAIS": {"jan": -3028, "fev": 3217, "mar": -4270, "abr": -1267, "mai": -2472, "jun": 7194, "jul": -190, "ago": -6489, "set": -6248, "out": -6676, "nov": -3291, "dez": 27106, "acum": 3586}, "LISBOA": {"jan": 1503, "fev": -965, "mar": 1980, "abr": 9054, "mai": -6477, "jun": 18023, "jul": 556, "ago": 6947, "set": 2153, "out": 5455, "nov": -1147, "dez": -5257, "acum": 31825}, "LOURES": {"jan": 3049, "fev": 1484, "mar": -4443, "abr": 8567, "mai": -432, "jun": 5002, "jul": 14253, "ago": -5392, "set": -4045, "out": 6063, "nov": -8922, "dez": 6519, "acum": 21703}, "TOTAL": {"jan": 3090, "fev": -2894, "mar": -12234, "abr": 16276, "mai": -14129, "jun": 36460, "jul": 16309, "ago": -2901, "set": -7973, "out": 10306, "nov": -14785, "dez": 38917, "acum": 66442}}, "2026": {"CAC\u00c9M": {"jan": 2315, "fev": -1074, "mar": 18762, "abr": 2841, "mai": -2615, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 20229}, "CASCAIS": {"jan": -732, "fev": 12877, "mar": 17679, "abr": 7342, "mai": 1136, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 38302}, "LISBOA": {"jan": 3318, "fev": 5453, "mar": 18939, "abr": -79, "mai": 2791, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 30422}, "LOURES": {"jan": 169, "fev": -360, "mar": 15718, "abr": 668, "mai": 2589, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 18784}, "TOTAL": {"jan": 5070, "fev": 16896, "mar": 71098, "abr": 10772, "mai": 3901, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 107737}}};
+const CONTAB = {"2025": {"CAC\u00c9M": {"jan": 1566, "fev": -6630, "mar": -5501, "abr": -78, "mai": -4748, "jun": 6241, "jul": 1690, "ago": 2033, "set": 167, "out": 5464, "nov": -1425, "dez": 10549, "acum": 9328, "orc": -10538, "desv": 19866}, "CASCAIS": {"jan": -3028, "fev": 3217, "mar": -4270, "abr": -1267, "mai": -2472, "jun": 7194, "jul": -190, "ago": -6489, "set": -6248, "out": -6676, "nov": -3291, "dez": 27106, "acum": 3586, "orc": -20449, "desv": 24035}, "LISBOA": {"jan": 1503, "fev": -965, "mar": 1980, "abr": 9054, "mai": -6477, "jun": 18023, "jul": 556, "ago": 6947, "set": 2153, "out": 5455, "nov": -1147, "dez": -5257, "acum": 31825, "orc": 30525, "desv": 1300}, "LOURES": {"jan": 3049, "fev": 1484, "mar": -4443, "abr": 8567, "mai": -432, "jun": 5002, "jul": 14253, "ago": -5392, "set": -4045, "out": 6063, "nov": -8922, "dez": 6519, "acum": 21703, "orc": 2592, "desv": 19111}, "TOTAL": {"jan": 3090, "fev": -2894, "mar": -12234, "abr": 16276, "mai": -14129, "jun": 36460, "jul": 16309, "ago": -2901, "set": -7973, "out": 10306, "nov": -14785, "dez": 38917, "acum": 66442, "orc": 2130, "desv": 64312}}, "2026": {"CAC\u00c9M": {"jan": 2315, "fev": -1074, "mar": 18762, "abr": 2841, "mai": -2615, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 20229, "orc": 6776, "desv": 13453}, "CASCAIS": {"jan": -732, "fev": 12877, "mar": 17679, "abr": 7342, "mai": 1136, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 38302, "orc": 5377, "desv": 32925}, "LISBOA": {"jan": 3318, "fev": 5453, "mar": 18939, "abr": -79, "mai": 2791, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 30422, "orc": 24470, "desv": 5952}, "LOURES": {"jan": 169, "fev": -360, "mar": 15718, "abr": 668, "mai": 2589, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 18784, "orc": 14390, "desv": 4394}, "TOTAL": {"jan": 5070, "fev": 16896, "mar": 71098, "abr": 10772, "mai": 3901, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 107737, "orc": 51013, "desv": 56724}}};
+const MESES_CONTAB = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MESES_LABEL  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const BALCOES_CONTAB = ['CACÉM','CASCAIS','LISBOA','LOURES'];
+const COR_CONTAB = {'CACÉM':'#1a7fd4','CASCAIS':'#d42b2b','LISBOA':'#1a9e4a','LOURES':'#d4a017'};
 
+function eC(v){
+  if(v==null||isNaN(v)) return '—';
+  var abs=Math.abs(v), s=abs.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+  return (v<0?'-':'')+s+' €';
+}
+
+let contabChart = null;
+
+function buildContabPanel(){
+  const p = document.getElementById('p-contab');
+  p.innerHTML = ''; // always rebuild
+
+  const d25 = CONTAB['2025'], d26 = CONTAB['2026'];
+  const tot25 = d25['TOTAL'], tot26 = d26['TOTAL'];
+
+  // detect last month with data in 2026
+  let lastMesIdx = -1;
+  MESES_CONTAB.forEach(function(m,i){ if(tot26[m]!==0) lastMesIdx=i; });
+  const activeMeses = MESES_CONTAB.slice(0, lastMesIdx+1);
+  const activeLabels = MESES_LABEL.slice(0, lastMesIdx+1);
+
+  // acumulado 2026 vs 2025 mesmo período
+  let acum26=0, acum25periodo=0;
+  activeMeses.forEach(function(m){ acum26+=tot26[m]; acum25periodo+=tot25[m]; });
+  var varAcum = acum25periodo!==0 ? ((acum26-acum25periodo)/Math.abs(acum25periodo)*100) : null;
+  var varAcumStr = varAcum!==null ? (varAcum>=0?'+':'')+varAcum.toFixed(1)+'%' : '—';
+  var varAcumCor = varAcum!==null&&varAcum>=0 ? '#00e6b4' : '#ff4d6d';
+
+  // ── KPI CARDS TOPO ──
+  var acumCor26 = acum26>=0?'#00e6b4':'#ff4d6d';
+  var acumCor25 = tot25.acum>=0?'#00e6b4':'#ff4d6d';
+  var bestB='', bestV=-Infinity;
+  BALCOES_CONTAB.forEach(function(b){ var v=d26[b].acum; if(v>bestV){bestV=v;bestB=b;} });
+
+  var kpiHtml = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px;">'
+    +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Resultado Acumulado 2026</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+acumCor26+';">'+eC(acum26)+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Jan–'+activeLabels[activeLabels.length-1]+'</div>'
+    +'</div>'
+    +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Resultado Acumulado 2025</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+acumCor25+';">'+eC(tot25.acum)+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Ano completo</div>'
+    +'</div>'
+    +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Variação vs 2025 (mesmo período)</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+varAcumCor+';">'+varAcumStr+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">'+eC(acum26-acum25periodo)+'</div>'
+    +'</div>'
+    +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">ORC Acumulado 2026</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+(tot26.orc>=0?'#00e6b4':'#ff4d6d')+';">'+eC(tot26.orc)+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Desvio: '+eC(tot26.desv)+'</div>'
+    +'</div>'
+    +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;">'
+    +'<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);margin-bottom:8px;">Melhor Balcão 2026</div>'
+    +'<div style="font-size:22px;font-weight:800;color:'+COR_CONTAB[bestB]+';">'+bestB+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">'+eC(bestV)+' acumulado</div>'
+    +'</div>'
+    +'</div>';
+
+  // ── FUNÇÃO AUXILIAR TABELA ──
+  function buildTable(ano, d, activeMesesT, activeLabelsT, titulo) {
+    var tot = d['TOTAL'];
+    var thStyle = 'padding:10px 4px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);white-space:nowrap;';
+    var thStyleL = 'padding:10px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.45);';
+    
+    var html = '<div style="margin-bottom:28px;">'
+      +'<div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">'+titulo+'</div>'
+      +'<div style="overflow-x:auto;">'
+      +'<table style="width:100%;border-collapse:collapse;font-size:12px;">'
+      +'<thead><tr style="border-bottom:2px solid rgba(255,255,255,.1);">'
+      +'<th style="'+thStyleL+'">Balcão</th>';
+
+    activeLabelsT.forEach(function(l){
+      html += '<th style="'+thStyle+'">'+l+'</th>';
+    });
+    html += '<th style="'+thStyle+'background:rgba(0,230,180,.06);color:#00e6b4;">Acumulado</th>'
+      +'<th style="'+thStyle+'background:rgba(75,142,245,.06);color:#4b8ef5;">ORC/Acum.</th>'
+      +'<th style="'+thStyle+'background:rgba(255,213,79,.06);color:#ffd54f;">Desvio</th>'
+      +'</tr></thead><tbody>';
+
+    BALCOES_CONTAB.forEach(function(b, bi){
+      var cor = COR_CONTAB[b];
+      var rowBg = bi%2===0?'rgba(255,255,255,.02)':'transparent';
+      html += '<tr style="background:'+rowBg+';border-bottom:1px solid rgba(255,255,255,.04);">'
+        +'<td style="padding:10px 8px;font-weight:700;color:'+cor+';white-space:nowrap;">'
+        +'<span style="display:inline-block;width:8px;height:8px;background:'+cor+';border-radius:50%;margin-right:6px;vertical-align:middle;"></span>'+b+'</td>';
+
+      activeMesesT.forEach(function(m){
+        var v = d[b][m];
+        var vc = v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
+        html += '<td style="padding:10px 4px;text-align:right;color:'+vc+';font-weight:600;white-space:nowrap;">'+eC(v)+'</td>';
+      });
+
+      var acumV = d[b].acum, orcV = d[b].orc, desvV = d[b].desv;
+      var acumC = acumV>=0?'#00e6b4':'#ff4d6d';
+      var orcC  = orcV>=0?'#4b8ef5':'#ff4d6d';
+      var desvC = desvV>=0?'#ffd54f':'#ff4d6d';
+
+      html += '<td style="padding:10px 8px;text-align:right;color:'+acumC+';font-weight:800;white-space:nowrap;background:rgba(0,230,180,.03);">'+eC(acumV)+'</td>'
+        +'<td style="padding:10px 8px;text-align:right;color:'+orcC+';font-weight:700;white-space:nowrap;background:rgba(75,142,245,.03);">'+eC(orcV)+'</td>'
+        +'<td style="padding:10px 8px;text-align:right;color:'+desvC+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.03);">'+eC(desvV)+'</td>'
+        +'</tr>';
+    });
+
+    // TOTAL ROW
+    var tAcumC = tot.acum>=0?'#00e6b4':'#ff4d6d';
+    var tOrcC  = tot.orc>=0?'#4b8ef5':'#ff4d6d';
+    var tDesvC = tot.desv>=0?'#ffd54f':'#ff4d6d';
+    html += '<tr style="background:rgba(0,230,180,.06);border-top:2px solid rgba(0,230,180,.2);">'
+      +'<td style="padding:11px 8px;font-weight:800;color:#00e6b4;white-space:nowrap;">TOTAL</td>';
+    activeMesesT.forEach(function(m){
+      var v=tot[m]; var vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
+      html += '<td style="padding:11px 4px;text-align:right;color:'+vc+';font-weight:700;white-space:nowrap;">'+eC(v)+'</td>';
+    });
+    html += '<td style="padding:11px 8px;text-align:right;color:'+tAcumC+';font-weight:900;white-space:nowrap;background:rgba(0,230,180,.06);">'+eC(tot.acum)+'</td>'
+      +'<td style="padding:11px 8px;text-align:right;color:'+tOrcC+';font-weight:900;white-space:nowrap;background:rgba(75,142,245,.06);">'+eC(tot.orc)+'</td>'
+      +'<td style="padding:11px 8px;text-align:right;color:'+tDesvC+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.06);">'+eC(tot.desv)+'</td>'
+      +'</tr>';
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // ── TABELA 2026 ──
+  var tbl26 = buildTable('2026', d26, activeMeses, activeLabels, '2026 — Resultado Mensal por Balcão (Jan–'+activeLabels[activeLabels.length-1]+')');
+
+  // ── CARDS COMPARAÇÃO POR BALCÃO ──
+  var cmpHtml = '<div style="margin-bottom:24px;">'
+    +'<div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">Comparação 2025 vs 2026 por Balcão</div>'
+    +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">';
+
+  BALCOES_CONTAB.forEach(function(b){
+    var cor = COR_CONTAB[b];
+    var v25 = d25[b].acum, v26 = d26[b].acum;
+    var orc25 = d25[b].orc, orc26 = d26[b].orc;
+    var desv25 = d25[b].desv, desv26 = d26[b].desv;
+    var varV = v25!==0?((v26-v25)/Math.abs(v25)*100):null;
+    var cor25 = v25>=0?'#00e6b4':'#ff4d6d';
+    var cor26 = v26>=0?'#00e6b4':'#ff4d6d';
+    var varCor = varV!==null&&varV>=0?'#00e6b4':'#ff4d6d';
+
+    cmpHtml += '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:3px solid '+cor+';border-radius:12px;padding:14px;">'
+      +'<div style="font-size:13px;font-weight:800;color:'+cor+';margin-bottom:12px;">'+b+'</div>'
+      // 2025
+      +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px;">2025</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">Acumulado</span>'
+      +'<span style="font-size:12px;font-weight:700;color:'+cor25+';">'+eC(v25)+'</span>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">ORC/Acum.</span>'
+      +'<span style="font-size:11px;font-weight:600;color:#4b8ef5;">'+eC(orc25)+'</span>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:10px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">Desvio</span>'
+      +'<span style="font-size:11px;font-weight:600;color:#ffd54f;">'+eC(desv25)+'</span>'
+      +'</div>'
+      // separator
+      +'<div style="height:1px;background:rgba(255,255,255,.07);margin-bottom:10px;"></div>'
+      // 2026
+      +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px;">2026</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">Acumulado</span>'
+      +'<span style="font-size:12px;font-weight:700;color:'+cor26+';">'+eC(v26)+'</span>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:3px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">ORC/Acum.</span>'
+      +'<span style="font-size:11px;font-weight:600;color:#4b8ef5;">'+eC(orc26)+'</span>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:10px;">'
+      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">Desvio</span>'
+      +'<span style="font-size:11px;font-weight:600;color:#ffd54f;">'+eC(desv26)+'</span>'
+      +'</div>'
+      // variação
+      +'<div style="background:rgba(255,255,255,.06);border-radius:6px;padding:8px;text-align:center;">'
+      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:3px;">Variação Acum. 2026 vs 2025</div>'
+      +'<span style="font-size:15px;font-weight:800;color:'+varCor+';">'+(varV!==null?(varV>=0?'▲ +':'▼ ')+Math.abs(varV).toFixed(1)+'%':'—')+'</span>'
+      +'</div>'
+      +'</div>';
+  });
+  cmpHtml += '</div></div>';
+
+  // ── GRÁFICO ──
+  var chartHtml = '<div style="margin-bottom:24px;">'
+    +'<div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">Evolução Mensal — Resultado Total (€)</div>'
+    +'<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;">'
+    +'<canvas id="contab-chart" height="120"></canvas>'
+    +'</div></div>';
+
+  // ── TABELA 2025 COMPLETO ──
+  var allMeses = MESES_CONTAB, allLabels = MESES_LABEL;
+  var tbl25 = buildTable('2025', d25, allMeses, allLabels, '2025 — Ano Completo por Balcão (Jan–Dez)');
+
+  // ── ASSEMBLE ──
+  p.innerHTML = '<div style="padding:20px 16px;max-width:1400px;margin:0 auto;">'
+    +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">'
+    +'<div style="width:4px;height:32px;background:linear-gradient(180deg,#7b1fa2,#4a148c);border-radius:2px;"></div>'
+    +'<div>'
+    +'<div style="font-size:18px;font-weight:800;color:#fff;">Demonstração de Resultados</div>'
+    +'<div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:2px;">FREE2MOVE RENT — 4 Balcões — Contabilidade 2025 vs 2026</div>'
+    +'</div></div>'
+    + kpiHtml
+    + tbl26
+    + cmpHtml
+    + chartHtml
+    + tbl25;
+
+  // ── GRÁFICO ──
+  setTimeout(function(){
+    var ctx = document.getElementById('contab-chart');
+    if(!ctx) return;
+    if(contabChart) contabChart.destroy();
+    var datasets = [];
+    BALCOES_CONTAB.forEach(function(b){
+      datasets.push({
+        label: b+' 2026',
+        data: activeMeses.map(function(m){ return d26[b][m]; }),
+        borderColor: COR_CONTAB[b],
+        backgroundColor: 'transparent',
+        borderWidth: 2, pointRadius: 4, tension: 0.3, fill: false
+      });
+    });
+    BALCOES_CONTAB.forEach(function(b){
+      datasets.push({
+        label: b+' 2025',
+        data: activeMeses.map(function(m){ return d25[b][m]; }),
+        borderColor: COR_CONTAB[b],
+        backgroundColor: 'transparent',
+        borderWidth: 1.5, pointRadius: 3, tension: 0.3, fill: false,
+        borderDash: [5,4]
+      });
+    });
+    datasets.push({
+      label: 'Total 2026',
+      data: activeMeses.map(function(m){ return tot26[m]; }),
+      borderColor: '#00e6b4', backgroundColor: 'rgba(0,230,180,.08)',
+      borderWidth: 3, pointRadius: 5, tension: 0.3, fill: true
+    });
+    datasets.push({
+      label: 'Total 2025',
+      data: activeMeses.map(function(m){ return tot25[m]; }),
+      borderColor: 'rgba(255,255,255,.3)', backgroundColor: 'transparent',
+      borderWidth: 2, pointRadius: 3, tension: 0.3, fill: false, borderDash: [6,4]
+    });
+    contabChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: activeLabels, datasets: datasets },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: 'rgba(255,255,255,.6)', font: { size: 11 } } },
+          datalabels: { display: false }
+        },
+        scales: {
+          x: { ticks: { color: 'rgba(255,255,255,.4)' }, grid: { color: 'rgba(255,255,255,.05)' } },
+          y: {
+            ticks: { color: 'rgba(255,255,255,.4)', callback: function(v){ return eC(v); } },
+            grid: { color: 'rgba(255,255,255,.05)' }
+          }
+        }
+      }
+    });
+  }, 100);
+}
+
+  if(id==='contab') buildContabPanel();
+}
+function setPeriod(p,btn){
+  document.querySelectorAll('[data-p]').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');S.p=p;S.months.clear();
+  if(S.data)rebuildCurrent();
+}
+function toggleM(m,btn){
+  document.querySelectorAll('[data-p="acum"]').forEach(function(b){b.classList.remove('active');});
+  S.p='custom';
+  if(S.months.has(m)){S.months.delete(m);btn.classList.remove('active');
+    if(S.months.size===0){S.p='acum';document.querySelectorAll('[data-p="acum"]').forEach(function(b){b.classList.add('active');});}
+  }else{S.months.add(m);btn.classList.add('active');}
+  if(S.data)rebuildCurrent();
+}
+function setYear(y,btn){
+  document.querySelectorAll('[data-y]').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');S.y=y;
+  if(S.data)rebuildCurrent();
+}
+
+// Começa sempre no ecrã de upload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ═══════════════════════════════════════════════
+//  DEMONSTRAÇÃO DE RESULTADOS — CONTABILIDADE
+// ═══════════════════════════════════════════════
+const CONTAB = {"2025": {"CAC\u00c9M": {"jan": 1566, "fev": -6630, "mar": -5501, "abr": -78, "mai": -4748, "jun": 6241, "jul": 1690, "ago": 2033, "set": 167, "out": 5464, "nov": -1425, "dez": 10549, "acum": 9328, "orc": -10538, "desv": 19866}, "CASCAIS": {"jan": -3028, "fev": 3217, "mar": -4270, "abr": -1267, "mai": -2472, "jun": 7194, "jul": -190, "ago": -6489, "set": -6248, "out": -6676, "nov": -3291, "dez": 27106, "acum": 3586, "orc": -20449, "desv": 24035}, "LISBOA": {"jan": 1503, "fev": -965, "mar": 1980, "abr": 9054, "mai": -6477, "jun": 18023, "jul": 556, "ago": 6947, "set": 2153, "out": 5455, "nov": -1147, "dez": -5257, "acum": 31825, "orc": 30525, "desv": 1300}, "LOURES": {"jan": 3049, "fev": 1484, "mar": -4443, "abr": 8567, "mai": -432, "jun": 5002, "jul": 14253, "ago": -5392, "set": -4045, "out": 6063, "nov": -8922, "dez": 6519, "acum": 21703, "orc": 2592, "desv": 19111}, "TOTAL": {"jan": 3090, "fev": -2894, "mar": -12234, "abr": 16276, "mai": -14129, "jun": 36460, "jul": 16309, "ago": -2901, "set": -7973, "out": 10306, "nov": -14785, "dez": 38917, "acum": 66442, "orc": 2130, "desv": 64312}}, "2026": {"CAC\u00c9M": {"jan": 2315, "fev": -1074, "mar": 18762, "abr": 2841, "mai": -2615, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 20229, "orc": 6776, "desv": 13453}, "CASCAIS": {"jan": -732, "fev": 12877, "mar": 17679, "abr": 7342, "mai": 1136, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 38302, "orc": 5377, "desv": 32925}, "LISBOA": {"jan": 3318, "fev": 5453, "mar": 18939, "abr": -79, "mai": 2791, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 30422, "orc": 24470, "desv": 5952}, "LOURES": {"jan": 169, "fev": -360, "mar": 15718, "abr": 668, "mai": 2589, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 18784, "orc": 14390, "desv": 4394}, "TOTAL": {"jan": 5070, "fev": 16896, "mar": 71098, "abr": 10772, "mai": 3901, "jun": 0, "jul": 0, "ago": 0, "set": 0, "out": 0, "nov": 0, "dez": 0, "acum": 107737, "orc": 51013, "desv": 56724}}};
 const MESES_CONTAB = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const MESES_LABEL  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const BALCOES_CONTAB = ['CACÉM','CASCAIS','LISBOA','LOURES'];
@@ -1523,4 +1835,5 @@ function buildContabPanel(){
 </script>
 </body>
 </html>
+
 

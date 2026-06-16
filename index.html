@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -1241,7 +1239,8 @@ function buildContabPanel(){
   var kpi='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px;">'
     +card('Resultado Acumulado 2026',eC(acum26),'Jan–'+activeLabels[activeLabels.length-1],acum26>=0?'#00e6b4':'#ff4d6d')
     +card('Resultado Acumulado 2025',eC(tot25.acum),'Ano completo',tot25.acum>=0?'#00e6b4':'#ff4d6d')
-    +card('Variação vs 2025 (mesmo período)',(varAcum!==null?(varAcum>=0?'+':'')+varAcum.toFixed(1)+'%':'—'),eC(acum26-acum25p),varAcumCor)
+    +card('Resultado 2025 (mesmo período)',eC(acum25p),'Jan–'+activeLabels[activeLabels.length-1]+(acum25p<0?' (negativo)':' (positivo)'),'rgba(255,255,255,.6)')
+    +card('Diferença 2026 vs 2025',eC(acum26-acum25p),'Variação absoluta no mesmo período',acum26-acum25p>=0?'#00e6b4':'#ff4d6d')
     +card('ORC Acumulado 2026',eC(tot26.orc),'Desvio: '+eC(tot26.desv),tot26.orc>=0?'#00e6b4':'#ff4d6d')
     +card('Melhor Balcão 2026',bestB,eC(bestV)+' acumulado',COR_CONTAB[bestB])
     +'</div>';
@@ -1254,80 +1253,81 @@ function buildContabPanel(){
       +'</div>';
   }
 
-  function buildTable(d,mesesT,labelsT,titulo){
-    var tot=d['TOTAL'];
-    var thS='padding:10px 4px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.45);white-space:nowrap;';
-    var thL='padding:10px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.45);';
-    var h='<div style="margin-bottom:28px;"><div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">'+titulo+'</div>'
-      +'<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;">'
-      +'<thead><tr style="border-bottom:2px solid rgba(255,255,255,.1);">'
+  function buildTableComparada(){
+    var tot25=d25['TOTAL'],tot26c=d26['TOTAL'];
+    var thS='padding:7px 3px;text-align:right;font-size:9px;font-weight:700;text-transform:uppercase;white-space:nowrap;';
+    var thL='padding:8px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.45);white-space:nowrap;';
+    var h='<div style="margin-bottom:28px;">'
+      +'<div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">Comparação 2025 vs 2026 — Mês a Mês por Balcão</div>'
+      +'<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:10px;">'
+      +'<thead>'
+      +'<tr style="border-bottom:1px solid rgba(255,255,255,.05);">'
       +'<th style="'+thL+'">Balcão</th>';
-    labelsT.forEach(function(l){h+='<th style="'+thS+'">'+l+'</th>';});
-    h+='<th style="'+thS+'background:rgba(0,230,180,.06);color:#00e6b4;">Acumulado</th>'
-      +'<th style="'+thS+'background:rgba(75,142,245,.06);color:#4b8ef5;">ORC/Acum.</th>'
-      +'<th style="'+thS+'background:rgba(255,213,79,.06);color:#ffd54f;">Desvio</th>'
+    MESES_LABEL.forEach(function(l,i){
+      var act=i<activeMeses.length;
+      var bg=act?'rgba(0,230,180,.05)':'rgba(255,255,255,.01)';
+      var cor=act?'rgba(0,230,180,.8)':'rgba(255,255,255,.2)';
+      h+='<th colspan="2" style="'+thS+'background:'+bg+';color:'+cor+';border-left:1px solid rgba(255,255,255,.06);padding:5px 3px;">'+l+'</th>';
+    });
+    h+='<th colspan="2" style="'+thS+'background:rgba(0,230,180,.1);color:#00e6b4;border-left:2px solid rgba(0,230,180,.4);padding:5px 4px;">ACUM.</th>'
+      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.3);padding:5px 4px;">ORC 26</th>'
+      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.3);padding:5px 4px;">DESVIO</th>'
+      +'</tr>'
+      +'<tr style="border-bottom:2px solid rgba(255,255,255,.08);">'
+      +'<th style="'+thL+'"></th>';
+    MESES_LABEL.forEach(function(l,i){
+      var act=i<activeMeses.length;
+      var bg=act?'rgba(0,230,180,.03)':'rgba(255,255,255,.01)';
+      h+='<th style="'+thS+'background:'+bg+';color:rgba(255,255,255,.3);border-left:1px solid rgba(255,255,255,.05);">'25</th>'
+        +'<th style="'+thS+'background:'+bg+';color:'+(act?'#00e6b4':'rgba(255,255,255,.2)')+';font-weight:900;">'26</th>';
+    });
+    h+='<th style="'+thS+'background:rgba(0,230,180,.05);color:rgba(255,255,255,.4);border-left:2px solid rgba(0,230,180,.2);">'25</th>'
+      +'<th style="'+thS+'background:rgba(0,230,180,.1);color:#00e6b4;font-weight:900;">'26</th>'
+      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.2);">'26</th>'
+      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.2);">'26</th>'
       +'</tr></thead><tbody>';
+
+    function cel(v,extra){
+      var vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.2)';
+      return '<td style="padding:7px 3px;text-align:right;color:'+vc+';font-weight:600;white-space:nowrap;font-size:10px;'+(extra||'')+'">'+eC(v)+'</td>';
+    }
+
     BALCOES_CONTAB.forEach(function(b,bi){
-      var cor=COR_CONTAB[b],bg=bi%2===0?'rgba(255,255,255,.02)':'transparent';
-      h+='<tr style="background:'+bg+';border-bottom:1px solid rgba(255,255,255,.04);">'
-        +'<td style="padding:10px 8px;font-weight:700;color:'+cor+';white-space:nowrap;"><span style="display:inline-block;width:8px;height:8px;background:'+cor+';border-radius:50%;margin-right:6px;vertical-align:middle;"></span>'+b+'</td>';
-      mesesT.forEach(function(m){
-        var v=d[b][m],vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
-        h+='<td style="padding:10px 4px;text-align:right;color:'+vc+';font-weight:600;white-space:nowrap;">'+eC(v)+'</td>';
+      var cor=COR_CONTAB[b],bg=bi%2===0?'rgba(255,255,255,.025)':'transparent';
+      h+='<tr style="background:'+bg+';border-bottom:1px solid rgba(255,255,255,.03);">'
+        +'<td style="padding:7px 8px;font-weight:700;color:'+cor+';white-space:nowrap;font-size:11px;">'
+        +'<span style="display:inline-block;width:7px;height:7px;background:'+cor+';border-radius:50%;margin-right:5px;vertical-align:middle;"></span>'+b+'</td>';
+      MESES_CONTAB.forEach(function(m,i){
+        var act=i<activeMeses.length;
+        var bg2=act?'background:rgba(0,230,180,.015);':'';
+        var bl='border-left:1px solid rgba(255,255,255,.04);';
+        h+=cel(d25[b][m],bl+bg2)+cel(d26[b][m],bg2);
       });
-      var ac=d[b].acum,or=d[b].orc,dv=d[b].desv;
-      h+='<td style="padding:10px 8px;text-align:right;color:'+(ac>=0?'#00e6b4':'#ff4d6d')+';font-weight:800;white-space:nowrap;background:rgba(0,230,180,.03);">'+eC(ac)+'</td>'
-        +'<td style="padding:10px 8px;text-align:right;color:'+(or>=0?'#4b8ef5':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(75,142,245,.03);">'+eC(or)+'</td>'
-        +'<td style="padding:10px 8px;text-align:right;color:'+(dv>=0?'#ffd54f':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.03);">'+eC(dv)+'</td>'
-        +'</tr>';
+      h+=cel(d25[b].acum,'border-left:2px solid rgba(0,230,180,.15);background:rgba(0,230,180,.03);')
+        +cel(d26[b].acum,'background:rgba(0,230,180,.06);font-weight:800;');
+      var or=d26[b].orc,dv=d26[b].desv;
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(or>=0?'#4b8ef5':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(75,142,245,.04);border-left:1px solid rgba(75,142,245,.15);">'+eC(or)+'</td>';
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(dv>=0?'#ffd54f':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.04);border-left:1px solid rgba(255,213,79,.15);">'+eC(dv)+'</td></tr>';
     });
-    h+='<tr style="background:rgba(0,230,180,.06);border-top:2px solid rgba(0,230,180,.2);">'
-      +'<td style="padding:11px 8px;font-weight:800;color:#00e6b4;">TOTAL</td>';
-    mesesT.forEach(function(m){
-      var v=tot[m],vc=v>0?'#00e6b4':v<0?'#ff4d6d':'rgba(255,255,255,.35)';
-      h+='<td style="padding:11px 4px;text-align:right;color:'+vc+';font-weight:700;white-space:nowrap;">'+eC(v)+'</td>';
+
+    h+='<tr style="background:rgba(0,230,180,.07);border-top:2px solid rgba(0,230,180,.25);">'
+      +'<td style="padding:8px 8px;font-weight:800;color:#00e6b4;font-size:11px;">TOTAL</td>';
+    MESES_CONTAB.forEach(function(m,i){
+      var act=i<activeMeses.length;
+      var bg2=act?'background:rgba(0,230,180,.04);':'';
+      var bl='border-left:1px solid rgba(255,255,255,.06);';
+      h+=cel(tot25[m],bl+bg2)+cel(tot26c[m],bg2);
     });
-    h+='<td style="padding:11px 8px;text-align:right;color:'+(tot.acum>=0?'#00e6b4':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(0,230,180,.06);">'+eC(tot.acum)+'</td>'
-      +'<td style="padding:11px 8px;text-align:right;color:'+(tot.orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(75,142,245,.06);">'+eC(tot.orc)+'</td>'
-      +'<td style="padding:11px 8px;text-align:right;color:'+(tot.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.06);">'+eC(tot.desv)+'</td>'
+    h+=cel(tot25.acum,'border-left:2px solid rgba(0,230,180,.2);background:rgba(0,230,180,.05);')
+      +cel(tot26c.acum,'background:rgba(0,230,180,.09);font-weight:900;');
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(75,142,245,.07);border-left:1px solid rgba(75,142,245,.2);">'+eC(tot26c.orc)+'</td>';
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.07);border-left:1px solid rgba(255,213,79,.2);">'+eC(tot26c.desv)+'</td>'
       +'</tr></tbody></table></div></div>';
     return h;
   }
 
-  function cmpCards(){
-    var h='<div style="margin-bottom:24px;"><div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">Comparação 2025 vs 2026 por Balcão</div>'
-      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">';
-    BALCOES_CONTAB.forEach(function(b){
-      var cor=COR_CONTAB[b],v25=d25[b].acum,v26=d26[b].acum;
-      var varV=v25!==0?((v26-v25)/Math.abs(v25)*100):null;
-      var varCor=varV!==null&&varV>=0?'#00e6b4':'#ff4d6d';
-      h+='<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-top:3px solid '+cor+';border-radius:12px;padding:14px;">'
-        +'<div style="font-size:13px;font-weight:800;color:'+cor+';margin-bottom:12px;">'+b+'</div>'
-        +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px;">2025</div>'
-        +row('Acumulado',eC(v25),v25>=0?'#00e6b4':'#ff4d6d')
-        +row('ORC/Acum.',eC(d25[b].orc),'#4b8ef5')
-        +row('Desvio',eC(d25[b].desv),'#ffd54f')
-        +'<div style="height:1px;background:rgba(255,255,255,.07);margin:8px 0;"></div>'
-        +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px;">2026</div>'
-        +row('Acumulado',eC(v26),v26>=0?'#00e6b4':'#ff4d6d')
-        +row('ORC/Acum.',eC(d26[b].orc),'#4b8ef5')
-        +row('Desvio',eC(d26[b].desv),'#ffd54f')
-        +'<div style="background:rgba(255,255,255,.06);border-radius:6px;padding:8px;text-align:center;margin-top:8px;">'
-        +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:3px;">Variação Acum. 2026 vs 2025</div>'
-        +'<span style="font-size:15px;font-weight:800;color:'+varCor+';">'+(varV!==null?(varV>=0?'▲ +':'▼ ')+Math.abs(varV).toFixed(1)+'%':'—')+'</span>'
-        +'</div></div>';
-    });
-    return h+'</div></div>';
-  }
-
-  function row(lbl,val,cor){
-    return '<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'
-      +'<span style="font-size:10px;color:rgba(255,255,255,.4);">'+lbl+'</span>'
-      +'<span style="font-size:11px;font-weight:700;color:'+cor+';">'+val+'</span></div>';
-  }
-
-  var tbl26=buildTable(d26,activeMeses,activeLabels,'2026 — Resultado Mensal por Balcão (Jan–'+activeLabels[activeLabels.length-1]+')');
-  var tbl25=buildTable(d25,MESES_CONTAB,MESES_LABEL,'2025 — Ano Completo por Balcão (Jan–Dez)');
+  var tbl26=buildTableComparada();
+  var tbl25=''
 
   var chartHtml='<div style="margin-bottom:24px;"><div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid rgba(255,255,255,.08);">Evolução Mensal — Resultado Total (€)</div>'
     +'<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;">'
@@ -1339,7 +1339,7 @@ function buildContabPanel(){
     +'<div><div style="font-size:18px;font-weight:800;color:#fff;">Demonstração de Resultados</div>'
     +'<div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:2px;">FREE2MOVE RENT — 4 Balcões — Contabilidade 2025 vs 2026</div>'
     +'</div></div>'
-    +kpi+tbl26+cmpCards()+chartHtml+tbl25+'</div>';
+    +kpi+tbl26+cmpCards()+chartHtml+'</div>';
 
   setTimeout(function(){
     var ctx=document.getElementById('contab-chart');

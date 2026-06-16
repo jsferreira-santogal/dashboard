@@ -348,16 +348,13 @@ var GS_URL_KEY = 'f2m_gs_url';
 var GS_DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxCfCptq5o7zpEakokGvb8VtSZhAliM2YU4h96K7Yg7BqgBcM8piFNkMm95X18EU5ZT4g/exec';
 
 (function initGS(){
-  // Use saved URL or fall back to default embedded URL
-  var saved = localStorage.getItem(GS_URL_KEY) || GS_DEFAULT_URL;
-  if(saved){
-    var el = document.getElementById('gsUrl');
-    if(el) el.value = saved;
-    // Save default if nothing saved yet
-    try{ if(!localStorage.getItem(GS_URL_KEY)) localStorage.setItem(GS_URL_KEY, saved); }catch(e){}
-    // Auto-load immediately
-    setTimeout(function(){ loadFromGSheets(true); }, 150);
-  }
+  // Always use default URL - never depend on localStorage
+  var url = GS_DEFAULT_URL;
+  var el = document.getElementById('gsUrl');
+  if(el) el.value = url;
+  try{ localStorage.setItem(GS_URL_KEY, url); }catch(e){}
+  // Auto-load immediately
+  setTimeout(function(){ loadFromGSheets(true); }, 150);
 })();
 
 function loadFromGSheets(silent){
@@ -1835,5 +1832,7 @@ function buildContabPanel(){
 </script>
 </body>
 </html>
+
+
 
 

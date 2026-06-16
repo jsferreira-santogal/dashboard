@@ -349,16 +349,14 @@ var GS_URL_KEY = 'f2m_gs_url';
 var GS_DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbxEzQWKyhHDm85_Ewi--qJCjER055YNPT8u3oLrr6ZW3BqAzx-paVqXxf-TZuvjhNMiCQ/exec';
 
 (function initGS(){
-  // Set URL in field
   var el = document.getElementById('gsUrl');
   if(el) el.value = GS_DEFAULT_URL;
   try{ localStorage.setItem(GS_URL_KEY, GS_DEFAULT_URL); }catch(e){}
-  // Load embedded data immediately so dashboard opens right away
-  setTimeout(function(){ 
-    usarEmbutidos();
-    // Then try to refresh from GSheets in background
-    setTimeout(function(){ loadFromGSheets(true); }, 2000);
-  }, 100);
+  // Mostrar loading e esperar pelo Sheets
+  setGsStatus('&#128260; A carregar dados do Google Sheets...','loading');
+  pg(10,'A ligar ao Google Sheets...');
+  // Tentar carregar do Sheets primeiro
+  loadFromGSheets(false);
 })();
 
 function loadFromGSheets(silent){
@@ -383,7 +381,12 @@ function loadFromGSheets(silent){
   var timeout = setTimeout(function(){
     if(btn) btn.disabled = false;
     pg(0,'');
-    setGsStatus('❌ Timeout — Apps Script demorou mais de 45s.','err');
+    if(!silent){
+      setGsStatus('⚠️ Sheets demorou — a usar dados embutidos.','err');
+      usarEmbutidos();
+    } else {
+      setGsStatus('❌ Timeout — Apps Script demorou mais de 45s.','err');
+    }
     delete window[cbName];
     if(script.parentNode) script.parentNode.removeChild(script);
   }, 45000);

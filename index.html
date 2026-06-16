@@ -373,52 +373,75 @@ function loadFromGSheets(silent){
   setGsStatus('&#128260; A sincronizar com Google Sheets...','loading');
   pg(10,'A ligar ao Google Sheets...');
 
-  // Fetch via JSONP-style URL (Apps Script needs ?callback= for CORS, or use no-cors mode)
-  // We use fetch with no-cors as fallback, but Apps Script with "Anyone" access supports CORS
-  // JSONP to bypass CORS
-  var cbName = 'gs_cb_' + Date.now();
-  var script = document.createElement('script');
-  var timeout = setTimeout(function(){
+  // Usar fetch() com CORS — funciona em PC e telemóvel sem precisar de sessão Google
+  var fetchUrl = url + (url.indexOf('?')>=0?'&':'?') + 't=' + Date.now();
+  var fetchTimeout = setTimeout(function(){
     if(btn) btn.disabled = false;
     pg(0,'');
-    if(!silent){
-      setGsStatus('⚠️ Sheets demorou — a usar dados embutidos.','err');
-      usarEmbutidos();
-    } else {
-      setGsStatus('❌ Timeout — Apps Script demorou mais de 45s.','err');
-    }
-    delete window[cbName];
-    if(script.parentNode) script.parentNode.removeChild(script);
+    setGsStatus('❌ Timeout — Apps Script demorou mais de 45s.','err');
   }, 45000);
 
-  window[cbName] = function(data){
-    clearTimeout(timeout);
-    delete window[cbName];
-    if(script.parentNode) script.parentNode.removeChild(script);
-    if(btn) btn.disabled = false;
-    if(data.error){ pg(0,''); setGsStatus('❌ '+data.error,'err'); return; }
-    pg(100,'✅ Dados Google Sheets carregados!');
-    var meta = data._meta || {};
-    var label = 'Google Sheets';
-    if(meta.generated){
-      var d = new Date(meta.generated);
-      label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
-    }
-    setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
-    var updEl = document.getElementById('tbUpd');
-    if(updEl) updEl.textContent = '⟳ ' + label;
-    initData(data, label);
-  };
-
-  script.src = url + (url.indexOf('?')>=0?'&':'?') + 'callback=' + cbName;
-  script.onerror = function(){
-    clearTimeout(timeout);
-    if(btn) btn.disabled = false;
-    pg(0,'');
-    setGsStatus('❌ Erro ao carregar — verifica o URL.','err');
-    delete window[cbName];
-  };
-  document.head.appendChild(script);
+  fetch(fetchUrl, {method:'GET', cache:'no-cache'})
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(data){
+      clearTimeout(fetchTimeout);
+      if(btn) btn.disabled = false;
+      if(data.error){ pg(0,''); setGsStatus('❌ '+data.error,'err'); return; }
+      pg(100,'✅ Dados Google Sheets carregados!');
+      var meta = data._meta || {};
+      var label = 'Google Sheets';
+      if(meta.generated){
+        var d = new Date(meta.generated);
+        label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      }
+      setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
+      var updEl = document.getElementById('tbUpd');
+      if(updEl) updEl.textContent = '⟳ ' + label;
+      initData(data, label);
+    })
+    .catch(function(err){
+      clearTimeout(fetchTimeout);
+      // Fallback JSONP para compatibilidade
+      var cbName = 'gs_cb_' + Date.now();
+      var script = document.createElement('script');
+      var t2 = setTimeout(function(){
+        if(btn) btn.disabled = false;
+        pg(0,'');
+        setGsStatus('❌ Erro ao carregar — verifica o URL.','err');
+        delete window[cbName];
+        if(script.parentNode) script.parentNode.removeChild(script);
+      }, 30000);
+      window[cbName] = function(data){
+        clearTimeout(t2);
+        delete window[cbName];
+        if(script.parentNode) script.parentNode.removeChild(script);
+        if(btn) btn.disabled = false;
+        if(data.error){ pg(0,''); setGsStatus('❌ '+data.error,'err'); return; }
+        pg(100,'✅ Dados Google Sheets carregados!');
+        var meta = data._meta || {};
+        var label = 'Google Sheets';
+        if(meta.generated){
+          var d = new Date(meta.generated);
+          label = 'GSheets · ' + pad(d.getDate()) + '/' + pad(d.getMonth()+1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+        }
+        setGsStatus('✅ Sincronizado: ' + (meta.generated ? new Date(meta.generated).toLocaleString('pt-PT') : 'OK'),'ok');
+        var updEl = document.getElementById('tbUpd');
+        if(updEl) updEl.textContent = '⟳ ' + label;
+        initData(data, label);
+      };
+      script.src = url + (url.indexOf('?')>=0?'&':'?') + 'callback=' + cbName;
+      script.onerror = function(){
+        clearTimeout(t2);
+        if(btn) btn.disabled = false;
+        pg(0,'');
+        setGsStatus('❌ Erro ao carregar — verifica o URL.','err');
+        delete window[cbName];
+      };
+      document.head.appendChild(script);
+    });
 }
 
 function setGsStatus(msg, cls){

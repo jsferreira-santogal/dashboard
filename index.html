@@ -383,10 +383,10 @@ function loadFromGSheets(silent){
   var timeout = setTimeout(function(){
     if(btn) btn.disabled = false;
     pg(0,'');
-    setGsStatus('❌ Timeout — Apps Script não respondeu.','err');
+    setGsStatus('❌ Timeout — Apps Script demorou mais de 45s.','err');
     delete window[cbName];
     if(script.parentNode) script.parentNode.removeChild(script);
-  }, 15000);
+  }, 45000);
 
   window[cbName] = function(data){
     clearTimeout(timeout);

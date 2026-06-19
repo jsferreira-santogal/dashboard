@@ -1077,7 +1077,7 @@ function buildBalcao(b){
   var kPacks=
     packKpi('Smart 20/21€',sumB(b,'m26','smart'),sumB(b,'m25','smart'),function(v){return v.toFixed(0)+' seg';},'#f5c842','kpi-smart')+
     packKpi('Relax 29/35€',sumB(b,'m26','relax'),sumB(b,'m25','relax'),function(v){return v.toFixed(0)+' seg';},'#00e676','kpi-relax')+
-    packKpi('Courtesy 10€',sumB(b,'m26','courtesy'),sumB(b,'m25','courtesy'),function(v){return v.toFixed(0)+' seg';},'#e53935','kpi-courtesy')+
+    packKpi('Courtesy 10/14€',sumB(b,'m26','courtesy'),sumB(b,'m25','courtesy'),function(v){return v.toFixed(0)+' seg';},'#e53935','kpi-courtesy')+
     packKpi('Fat. Seguros',sumB(b,'m26','fat_seg'),sumB(b,'m25','fat_seg'),fE,'#00e6b4','');
 
   var rkDefs=[
@@ -1202,7 +1202,7 @@ function buildBalcao(b){
     // Pack charts
     var sm=sumB(b,'m26','smart'),rl=sumB(b,'m26','relax'),ct=sumB(b,'m26','courtesy'),pv=sumB(b,'m26','fat_seg'),pn=sm+rl+ct||1;
     mkC(bid+'-pack','doughnut',{
-      labels:['Smart 20/21€ ('+sm.toFixed(0)+')','Relax 29/35€ ('+rl.toFixed(0)+')','Courtesy 10€ ('+ct.toFixed(0)+')'],
+      labels:['Smart 20/21€ ('+sm.toFixed(0)+')','Relax 29/35€ ('+rl.toFixed(0)+')','Courtesy 10/14€ ('+ct.toFixed(0)+')'],
       datasets:[{data:[sm,rl,ct],backgroundColor:PC_BG,borderColor:PC_BD,borderWidth:2}]
     },{});
     mkC(bid+'-pack-val','doughnut',{

@@ -573,6 +573,13 @@ function initData(d,label){
   document.getElementById('up').style.display='none';
   document.getElementById('db').style.display='block';
   document.getElementById('tbf').textContent=label||'—';
+
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('p-grupo').classList.add('active');
+  document.querySelectorAll('.tnav .nb')[0].classList.add('active');
+  S.panel='grupo';
+
   updateLabels();
   startAutoRefresh();
   updateWarnBadge();
@@ -1297,7 +1304,7 @@ function buildContabPanel(){
 
   // ── QUADRO 1: apenas 2026 (mês a mês) ──
   function buildTable2026(){
-    var tot26c=d26['TOTAL'];
+    var tot26c=d26['TOTAL'],tot25c=d25['TOTAL'];
     var thS='padding:7px 3px;text-align:right;font-size:9px;font-weight:700;text-transform:uppercase;white-space:nowrap;';
     var thL='padding:8px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.45);white-space:nowrap;';
     function cel(v,extra){
@@ -1315,9 +1322,12 @@ function buildContabPanel(){
       var cor=act?'#00e6b4':'rgba(255,255,255,.2)';
       h+='<th style="'+thS+'background:'+bg+';color:'+cor+';border-left:1px solid rgba(255,255,255,.06);padding:6px 5px;">'+l+'</th>';
     });
-    h+='<th style="'+thS+'background:rgba(0,230,180,.12);color:#00e6b4;border-left:2px solid rgba(0,230,180,.5);padding:6px 5px;">ACUM.</th>'
-      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.3);padding:6px 5px;">ORC</th>'
-      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.3);padding:6px 5px;">DESVIO</th>'
+    h+='<th style="'+thS+'background:rgba(0,230,180,.12);color:#00e6b4;border-left:2px solid rgba(0,230,180,.5);padding:6px 5px;">ACUM. 26</th>'
+      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.3);padding:6px 5px;">ORC 26</th>'
+      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.3);padding:6px 5px;">DESVIO 26</th>'
+      +'<th style="'+thS+'background:rgba(0,230,180,.05);color:rgba(0,230,180,.6);border-left:2px solid rgba(255,255,255,.15);padding:6px 5px;">ACUM. 25</th>'
+      +'<th style="'+thS+'background:rgba(75,142,245,.05);color:rgba(75,142,245,.65);border-left:1px solid rgba(255,255,255,.06);padding:6px 5px;">ORC 25</th>'
+      +'<th style="'+thS+'background:rgba(255,213,79,.05);color:rgba(255,213,79,.65);border-left:1px solid rgba(255,255,255,.06);padding:6px 5px;">DESVIO 25</th>'
       +'</tr></thead><tbody>';
     BALCOES_CONTAB.forEach(function(b,bi){
       var cor=COR_CONTAB[b],bg=bi%2===0?'rgba(255,255,255,.025)':'transparent';
@@ -1332,7 +1342,10 @@ function buildContabPanel(){
       });
       h+=cel(d26[b].acum,'border-left:2px solid rgba(0,230,180,.2);background:rgba(0,230,180,.07);font-weight:800;');
       h+='<td style="padding:7px 3px;text-align:right;color:'+(d26[b].orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(75,142,245,.04);border-left:1px solid rgba(75,142,245,.15);">'+eC(d26[b].orc)+'</td>';
-      h+='<td style="padding:7px 3px;text-align:right;color:'+(d26[b].desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.04);border-left:1px solid rgba(255,213,79,.15);">'+eC(d26[b].desv)+'</td></tr>';
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(d26[b].desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.04);border-left:1px solid rgba(255,213,79,.15);">'+eC(d26[b].desv)+'</td>';
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(d25[b].acum>=0?'rgba(0,230,180,.75)':'rgba(255,77,109,.75)')+';font-weight:700;white-space:nowrap;background:rgba(255,255,255,.02);border-left:2px solid rgba(255,255,255,.1);">'+eC(d25[b].acum)+'</td>';
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(d25[b].orc>=0?'rgba(75,142,245,.8)':'rgba(255,77,109,.75)')+';font-weight:600;white-space:nowrap;background:rgba(255,255,255,.02);">'+eC(d25[b].orc)+'</td>';
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(d25[b].desv>=0?'rgba(255,213,79,.8)':'rgba(255,77,109,.75)')+';font-weight:600;white-space:nowrap;background:rgba(255,255,255,.02);">'+eC(d25[b].desv)+'</td></tr>';
     });
     // linha total
     h+='<tr style="background:rgba(0,230,180,.07);border-top:2px solid rgba(0,230,180,.25);">'
@@ -1345,7 +1358,10 @@ function buildContabPanel(){
     });
     h+=cel(tot26c.acum,'border-left:2px solid rgba(0,230,180,.25);background:rgba(0,230,180,.1);font-weight:900;');
     h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(75,142,245,.07);border-left:1px solid rgba(75,142,245,.2);">'+eC(tot26c.orc)+'</td>';
-    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.07);border-left:1px solid rgba(255,213,79,.2);">'+eC(tot26c.desv)+'</td>'
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.07);border-left:1px solid rgba(255,213,79,.2);">'+eC(tot26c.desv)+'</td>';
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot25c.acum>=0?'#00e6b4':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,255,255,.04);border-left:2px solid rgba(255,255,255,.15);">'+eC(tot25c.acum)+'</td>';
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot25c.orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,255,255,.04);">'+eC(tot25c.orc)+'</td>';
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot25c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,255,255,.04);">'+eC(tot25c.desv)+'</td>'
       +'</tr></tbody></table></div></div>';
     return h;
   }

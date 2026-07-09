@@ -4,10 +4,10 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Free2Move Rent — Dashboard Deluxe</title>
-<link href="./Free2Move Rent — Dashboard Deluxe_files/css2" rel="stylesheet">
-<script src="./Free2Move Rent — Dashboard Deluxe_files/xlsx.full.min.js.download"></script>
-<script src="./Free2Move Rent — Dashboard Deluxe_files/chart.umd.min.js.download"></script>
-<script src="./Free2Move Rent — Dashboard Deluxe_files/chartjs-plugin-datalabels.min.js.download"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
 :root{--bg:#08081a;--teal:#00e6b4;--up:#00e6b4;--dn:#ff4d6d;--w:#fff;--mu:rgba(255,255,255,.60);--mu2:rgba(255,255,255,.35);}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -162,7 +162,7 @@ footer{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);font-size:10
 <body>
 <div class="page">
 
-<div id="up" style="display: none;">
+<div id="up">
   <div class="up-logo">
     <div class="up-stg">
       <div class="s1">◯ Free2move Rent</div>
@@ -175,7 +175,7 @@ footer{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);font-size:10
     <span class="dz-ico">📊</span>
     <div class="dz-t">Arrasta o ficheiro aqui</div>
     <div class="dz-h">ou clica para seleccionar</div>
-    <button class="btn-up" onclick="document.getElementById(&#39;fi&#39;).click();event.stopPropagation()">📂 Seleccionar .xlsx</button>
+    <button class="btn-up" onclick="document.getElementById('fi').click();event.stopPropagation()">📂 Seleccionar .xlsx</button>
     <input type="file" id="fi" accept=".xlsx,.xls">
     <p class="dz-note">GESTÃO VALORES VIATURAS FREE2MOVE RENT 2025/2026</p>
   </div>
@@ -197,16 +197,16 @@ footer{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);font-size:10
   <button class="btn-up btn-sec" onclick="usarEmbutidos()">▶ Usar Dados Embutidos</button>
 </div>
 
-<div id="db" style="display: block;">
+<div id="db">
   <div class="topbar">
     <div class="tb-santogal"><div class="ts1"><span class="tbdot"></span> ◯ Free2move Rent <span class="tb-deluxe">Deluxe</span></div><div class="ts2">SANTOGAL</div></div>
     <div class="tnav">
-      <button class="nb active" onclick="showPanel(&#39;grupo&#39;,this)"><span class="nd" style="background:linear-gradient(135deg,#1a7fd4,#d42b2b,#d4a017,#1a9e4a)"></span>Grupo</button>
-      <button class="nb" onclick="showPanel(&#39;cacem&#39;,this)"><span class="nd" style="background:#1a7fd4"></span>Cacém</button>
-      <button class="nb" onclick="showPanel(&#39;cascais&#39;,this)"><span class="nd" style="background:#d42b2b"></span>Cascais</button>
-      <button class="nb" onclick="showPanel(&#39;loures&#39;,this)"><span class="nd" style="background:#d4a017"></span>Loures</button>
-      <button class="nb" onclick="showPanel(&#39;lisboa&#39;,this)"><span class="nd" style="background:#1a9e4a"></span>Lisboa</button>
-      <button class="nb" onclick="showPanel(&#39;contab&#39;,this)"><span class="nd" style="background:linear-gradient(135deg,#7b1fa2,#4a148c)"></span>Dem. Resultados</button>
+      <button class="nb active" onclick="showPanel('grupo',this)"><span class="nd" style="background:linear-gradient(135deg,#1a7fd4,#d42b2b,#d4a017,#1a9e4a)"></span>Grupo</button>
+      <button class="nb" onclick="showPanel('cacem',this)"><span class="nd" style="background:#1a7fd4"></span>Cacém</button>
+      <button class="nb" onclick="showPanel('cascais',this)"><span class="nd" style="background:#d42b2b"></span>Cascais</button>
+      <button class="nb" onclick="showPanel('loures',this)"><span class="nd" style="background:#d4a017"></span>Loures</button>
+      <button class="nb" onclick="showPanel('lisboa',this)"><span class="nd" style="background:#1a9e4a"></span>Lisboa</button>
+      <button class="nb" onclick="showPanel('contab',this)"><span class="nd" style="background:linear-gradient(135deg,#7b1fa2,#4a148c)"></span>Dem. Resultados</button>
     </div>
     <div class="tb-r">
       <div class="clk"><div class="clk-d" id="tbd">Quinta, 09 Julho 2026</div><div class="clk-t" id="tbt">11:29:27</div></div>
@@ -218,26 +218,26 @@ footer{padding:13px 18px;border-top:1px solid rgba(255,255,255,.06);font-size:10
   </div>
   <div class="pbar">
     <span class="plbl">Período</span>
-    <button class="pb" data-p="acum" onclick="setPeriod(&#39;acum&#39;,this)">Acumulado</button>
+    <button class="pb" data-p="acum" onclick="setPeriod('acum',this)">Acumulado</button>
     <div class="psep"></div>
     <span class="plbl" style="color:rgba(0,230,180,.7)">Meses</span>
-    <button class="pb" data-p="jan" onclick="toggleM(&#39;jan&#39;,this)">Jan</button>
-    <button class="pb" data-p="fev" onclick="toggleM(&#39;fev&#39;,this)">Fev</button>
-    <button class="pb" data-p="mar" onclick="toggleM(&#39;mar&#39;,this)">Mar</button>
-    <button class="pb" data-p="abr" onclick="toggleM(&#39;abr&#39;,this)">Abr</button>
-    <button class="pb" data-p="mai" onclick="toggleM(&#39;mai&#39;,this)">Mai</button>
-    <button class="pb active" data-p="jun" onclick="toggleM(&#39;jun&#39;,this)">Jun</button>
-    <button class="pb" data-p="jul" onclick="toggleM(&#39;jul&#39;,this)">Jul</button>
-    <button class="pb" data-p="ago" onclick="toggleM(&#39;ago&#39;,this)">Ago</button>
-    <button class="pb" data-p="set" onclick="toggleM(&#39;set&#39;,this)">Set</button>
-    <button class="pb" data-p="out" onclick="toggleM(&#39;out&#39;,this)">Out</button>
-    <button class="pb" data-p="nov" onclick="toggleM(&#39;nov&#39;,this)">Nov</button>
-    <button class="pb" data-p="dez" onclick="toggleM(&#39;dez&#39;,this)">Dez</button>
+    <button class="pb" data-p="jan" onclick="toggleM('jan',this)">Jan</button>
+    <button class="pb" data-p="fev" onclick="toggleM('fev',this)">Fev</button>
+    <button class="pb" data-p="mar" onclick="toggleM('mar',this)">Mar</button>
+    <button class="pb" data-p="abr" onclick="toggleM('abr',this)">Abr</button>
+    <button class="pb" data-p="mai" onclick="toggleM('mai',this)">Mai</button>
+    <button class="pb active" data-p="jun" onclick="toggleM('jun',this)">Jun</button>
+    <button class="pb" data-p="jul" onclick="toggleM('jul',this)">Jul</button>
+    <button class="pb" data-p="ago" onclick="toggleM('ago',this)">Ago</button>
+    <button class="pb" data-p="set" onclick="toggleM('set',this)">Set</button>
+    <button class="pb" data-p="out" onclick="toggleM('out',this)">Out</button>
+    <button class="pb" data-p="nov" onclick="toggleM('nov',this)">Nov</button>
+    <button class="pb" data-p="dez" onclick="toggleM('dez',this)">Dez</button>
     <div class="psep"></div>
     <span class="plbl">Ano</span>
-    <button class="pb active" data-y="both" onclick="setYear(&#39;both&#39;,this)">2025 vs 2026</button>
-    <button class="pb" data-y="2025" onclick="setYear(&#39;2025&#39;,this)">2025</button>
-    <button class="pb" data-y="2026" onclick="setYear(&#39;2026&#39;,this)">2026</button>
+    <button class="pb active" data-y="both" onclick="setYear('both',this)">2025 vs 2026</button>
+    <button class="pb" data-y="2025" onclick="setYear('2025',this)">2025</button>
+    <button class="pb" data-y="2026" onclick="setYear('2026',this)">2026</button>
     <span class="ptxt" id="ptxt">· Jun 2026</span><span class="warn-badge">⚠ Jul em curso — dados parciais</span>
   </div>
   <div class="main">
@@ -1297,7 +1297,7 @@ function buildContabPanel(){
 
   // ── QUADRO 1: apenas 2026 (mês a mês) ──
   function buildTable2026(){
-    var tot26c=d26['TOTAL'],tot25c=d25['TOTAL'];
+    var tot26c=d26['TOTAL'];
     var thS='padding:7px 3px;text-align:right;font-size:9px;font-weight:700;text-transform:uppercase;white-space:nowrap;';
     var thL='padding:8px 8px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.45);white-space:nowrap;';
     function cel(v,extra){
@@ -1315,12 +1315,9 @@ function buildContabPanel(){
       var cor=act?'#00e6b4':'rgba(255,255,255,.2)';
       h+='<th style="'+thS+'background:'+bg+';color:'+cor+';border-left:1px solid rgba(255,255,255,.06);padding:6px 5px;">'+l+'</th>';
     });
-    h+='<th style="'+thS+'background:rgba(0,230,180,.12);color:#00e6b4;border-left:2px solid rgba(0,230,180,.5);padding:6px 5px;">ACUM. 26</th>'
-      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.3);padding:6px 5px;">ORC 26</th>'
-      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.3);padding:6px 5px;">DESVIO 26</th>'
-      +'<th style="'+thS+'background:rgba(180,100,255,.12);color:#c084fc;border-left:3px solid rgba(180,100,255,.5);padding:6px 5px;">ACUM. 25</th>'
-      +'<th style="'+thS+'background:rgba(180,100,255,.07);color:#a855f7;border-left:1px solid rgba(180,100,255,.3);padding:6px 5px;">ORC 25</th>'
-      +'<th style="'+thS+'background:rgba(180,100,255,.07);color:#a855f7;border-left:1px solid rgba(180,100,255,.3);padding:6px 5px;">DESVIO 25</th>'
+    h+='<th style="'+thS+'background:rgba(0,230,180,.12);color:#00e6b4;border-left:2px solid rgba(0,230,180,.5);padding:6px 5px;">ACUM.</th>'
+      +'<th style="'+thS+'background:rgba(75,142,245,.1);color:#4b8ef5;border-left:1px solid rgba(75,142,245,.3);padding:6px 5px;">ORC</th>'
+      +'<th style="'+thS+'background:rgba(255,213,79,.1);color:#ffd54f;border-left:1px solid rgba(255,213,79,.3);padding:6px 5px;">DESVIO</th>'
       +'</tr></thead><tbody>';
     BALCOES_CONTAB.forEach(function(b,bi){
       var cor=COR_CONTAB[b],bg=bi%2===0?'rgba(255,255,255,.025)':'transparent';
@@ -1335,11 +1332,7 @@ function buildContabPanel(){
       });
       h+=cel(d26[b].acum,'border-left:2px solid rgba(0,230,180,.2);background:rgba(0,230,180,.07);font-weight:800;');
       h+='<td style="padding:7px 3px;text-align:right;color:'+(d26[b].orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(75,142,245,.04);border-left:1px solid rgba(75,142,245,.15);">'+eC(d26[b].orc)+'</td>';
-      h+='<td style="padding:7px 3px;text-align:right;color:'+(d26[b].desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.04);border-left:1px solid rgba(255,213,79,.15);">'+eC(d26[b].desv)+'</td>';
-      // Colunas 2025
-      h+=cel(d25[b].acum,'border-left:3px solid rgba(180,100,255,.3);background:rgba(180,100,255,.07);font-weight:800;color:#c084fc;');
-      h+='<td style="padding:7px 3px;text-align:right;color:'+(d25[b].orc>=0?'#a855f7':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(180,100,255,.04);border-left:1px solid rgba(180,100,255,.15);">'+eC(d25[b].orc)+'</td>';
-      h+='<td style="padding:7px 3px;text-align:right;color:'+(d25[b].desv>=0?'#a855f7':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(180,100,255,.04);border-left:1px solid rgba(180,100,255,.15);">'+eC(d25[b].desv)+'</td></tr>';
+      h+='<td style="padding:7px 3px;text-align:right;color:'+(d26[b].desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:700;white-space:nowrap;background:rgba(255,213,79,.04);border-left:1px solid rgba(255,213,79,.15);">'+eC(d26[b].desv)+'</td></tr>';
     });
     // linha total
     h+='<tr style="background:rgba(0,230,180,.07);border-top:2px solid rgba(0,230,180,.25);">'
@@ -1352,11 +1345,7 @@ function buildContabPanel(){
     });
     h+=cel(tot26c.acum,'border-left:2px solid rgba(0,230,180,.25);background:rgba(0,230,180,.1);font-weight:900;');
     h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.orc>=0?'#4b8ef5':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(75,142,245,.07);border-left:1px solid rgba(75,142,245,.2);">'+eC(tot26c.orc)+'</td>';
-    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.07);border-left:1px solid rgba(255,213,79,.2);">'+eC(tot26c.desv)+'</td>';
-    // Total 2025
-    h+=cel(tot25c.acum,'border-left:3px solid rgba(180,100,255,.3);background:rgba(180,100,255,.1);font-weight:900;color:#c084fc;');
-    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot25c.orc>=0?'#a855f7':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(180,100,255,.07);border-left:1px solid rgba(180,100,255,.2);">'+eC(tot25c.orc)+'</td>';
-    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot25c.desv>=0?'#a855f7':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(180,100,255,.07);border-left:1px solid rgba(180,100,255,.2);">'+eC(tot25c.desv)+'</td>'
+    h+='<td style="padding:8px 3px;text-align:right;color:'+(tot26c.desv>=0?'#ffd54f':'#ff4d6d')+';font-weight:900;white-space:nowrap;background:rgba(255,213,79,.07);border-left:1px solid rgba(255,213,79,.2);">'+eC(tot26c.desv)+'</td>'
       +'</tr></tbody></table></div></div>';
     return h;
   }

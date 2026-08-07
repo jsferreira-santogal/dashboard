@@ -112,6 +112,16 @@
   .intro-btn:hover{transform:scale(1.04); box-shadow:0 0 36px rgba(0,229,255,.7);}
   .intro-foot{margin-top:26px; font-family:'Space Mono',monospace; font-size:11px; color:var(--text-muted); letter-spacing:.05em;}
 
+  /* PENDING QUARTER PLACEHOLDER */
+  .pending-card{
+    margin-top:36px; padding:34px 30px; border-radius:20px;
+    background:var(--card-bg); border:1px dashed var(--card-border);
+    text-align:center; max-width:640px;
+  }
+  .pending-ico{font-size:38px; margin-bottom:14px;}
+  .pending-title{font-family:'Poppins',sans-serif; font-weight:700; font-size:20px; margin-bottom:8px;}
+  .pending-sub{color:var(--text-muted); font-size:14.5px; line-height:1.7;}
+
   section{position:relative; z-index:1; padding:70px 28px; max-width:1180px; margin:0 auto;}
   .view{display:none;}
   .view.active{display:block; animation:fadeIn .5s ease;}
@@ -449,6 +459,12 @@
   <button class="tab-btn active" data-view="resumo">Resumo Q2</button>
   <button class="tab-btn" data-view="vencedor">🏆 Vencedor &amp; Prémio Q2</button>
   <button class="tab-btn" data-view="q2">🔎 Q2 em Detalhe</button>
+  <button class="tab-btn" data-view="resumoq3">Resumo Q3</button>
+  <button class="tab-btn" data-view="vencedorq3">🏆 Vencedor &amp; Prémio Q3</button>
+  <button class="tab-btn" data-view="q3detalhe">🔎 Q3 em Detalhe</button>
+  <button class="tab-btn" data-view="resumoq4">Resumo Q4</button>
+  <button class="tab-btn" data-view="vencedorq4">🏆 Vencedor &amp; Prémio Q4</button>
+  <button class="tab-btn" data-view="q4detalhe">🔎 Q4 em Detalhe</button>
   <button class="tab-btn" data-view="semestre">📈 1º Semestre</button>
   <button class="tab-btn" data-view="pnl">📊 Demonstração de Resultados</button>
   <button class="tab-btn" data-view="hipay">🌐 Aluguer Externos</button>
@@ -729,6 +745,88 @@
     <button class="month-btn" data-month="Q2TOTAL">Acumulado Q2</button>
   </div>
   <div class="grid4" id="month-grid"></div>
+</section>
+
+<!-- RESUMO Q3 (pendente) -->
+<section class="view" id="view-resumoq3">
+  <div class="hero">
+    <div class="eyebrow">Free2Move Rent Santogal · 4 Balcões</div>
+    <h1 class="title-xl">Resultados<br>3º Trimestre 2026</h1>
+    <p class="subtitle">Cacém, Cascais, Loures e Lisboa — comparação Julho–Setembro 2026 vs período homólogo de 2025.</p>
+    <div class="pending-card">
+      <div class="pending-ico">⏳</div>
+      <div class="pending-title">Dados de Q3 ainda não disponíveis</div>
+      <div class="pending-sub">Este separador é preenchido automaticamente assim que Marco enviar os fecho mensais de Julho, Agosto e Setembro. A estrutura já está pronta — só falta o conteúdo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VENCEDOR Q3 (pendente) -->
+<section class="view" id="view-vencedorq3">
+  <div class="sec-head">
+    <div class="eyebrow">Reconhecimento do trimestre</div>
+    <h2 class="title-md">Vencedor &amp; Prémio · 3º Trimestre 2026</h2>
+  </div>
+  <div class="pending-card">
+    <div class="pending-ico">🏆</div>
+    <div class="pending-title">Ainda por atribuir</div>
+    <div class="pending-sub">O vencedor do trimestre e a atribuição do prémio DDV aparecem aqui assim que Q3 estiver fechado.</div>
+  </div>
+</section>
+
+<!-- Q3 DETALHE (pendente) -->
+<section class="view" id="view-q3detalhe">
+  <div class="sec-head">
+    <div class="eyebrow">Lupa sobre o trimestre</div>
+    <h2 class="title-md">2026 vs 2025, mês a mês — todos os KPIs</h2>
+    <p class="subtitle">Julho, Agosto e Setembro 2026 — comparação mês a mês por balcão.</p>
+  </div>
+  <div class="pending-card">
+    <div class="pending-ico">📊</div>
+    <div class="pending-title">Detalhe mensal ainda por preencher</div>
+    <div class="pending-sub">Assim que os fechos mensais de Q3 chegarem, esta vista passa a mostrar Faturação, Ocupação, Contratos, Seguros e Resultado por balcão, mês a mês.</div>
+  </div>
+</section>
+
+<!-- RESUMO Q4 (pendente) -->
+<section class="view" id="view-resumoq4">
+  <div class="hero">
+    <div class="eyebrow">Free2Move Rent Santogal · 4 Balcões</div>
+    <h1 class="title-xl">Resultados<br>4º Trimestre 2026</h1>
+    <p class="subtitle">Cacém, Cascais, Loures e Lisboa — comparação Outubro–Dezembro 2026 vs período homólogo de 2025.</p>
+    <div class="pending-card">
+      <div class="pending-ico">⏳</div>
+      <div class="pending-title">Dados de Q4 ainda não disponíveis</div>
+      <div class="pending-sub">Este separador é preenchido automaticamente assim que Marco enviar os fechos mensais de Outubro, Novembro e Dezembro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VENCEDOR Q4 (pendente) -->
+<section class="view" id="view-vencedorq4">
+  <div class="sec-head">
+    <div class="eyebrow">Reconhecimento do trimestre</div>
+    <h2 class="title-md">Vencedor &amp; Prémio · 4º Trimestre 2026</h2>
+  </div>
+  <div class="pending-card">
+    <div class="pending-ico">🏆</div>
+    <div class="pending-title">Ainda por atribuir</div>
+    <div class="pending-sub">O vencedor do trimestre e a atribuição do prémio DDV aparecem aqui assim que Q4 estiver fechado.</div>
+  </div>
+</section>
+
+<!-- Q4 DETALHE (pendente) -->
+<section class="view" id="view-q4detalhe">
+  <div class="sec-head">
+    <div class="eyebrow">Lupa sobre o trimestre</div>
+    <h2 class="title-md">2026 vs 2025, mês a mês — todos os KPIs</h2>
+    <p class="subtitle">Outubro, Novembro e Dezembro 2026 — comparação mês a mês por balcão.</p>
+  </div>
+  <div class="pending-card">
+    <div class="pending-ico">📊</div>
+    <div class="pending-title">Detalhe mensal ainda por preencher</div>
+    <div class="pending-sub">Assim que os fechos mensais de Q4 chegarem, esta vista passa a mostrar Faturação, Ocupação, Contratos, Seguros e Resultado por balcão, mês a mês.</div>
+  </div>
 </section>
 
 <!-- SEMESTRE -->

@@ -871,7 +871,7 @@
 
   <div class="pnl-kpis">
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum26">—</div><div class="l">Resultado Acumulado 2026</div><div class="l2">Jan–Jun</div></div>
-    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-ano">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Jan–Jun (mesmo período)</div></div>
+    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-ano">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Jan–Jul (mesmo período)</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-periodo">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Ano completo (contexto)</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-diff">—</div><div class="l">Diferença 2026 vs 2025</div><div class="l2">Variação absoluta no mesmo período</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-orc">—</div><div class="l">ORC Acumulado 2026</div><div class="l2" id="pnl-orc-desvio">—</div></div>
@@ -1072,20 +1072,20 @@ const DATA = {
 // Demonstração de Resultados — contabilidade real (Resultado líquido), fonte: RESULTADOS CONTABILIDADE 2025/2026
 const PNL = {
   branches:['CACEM','CASCAIS','LOURES','LISBOA'],
-  m2026: { // jan a jun — valores contabilísticos fechados
-    CACEM:   {vals:[2315,-1074,18762,2841,-2615,3227], acum:23456, orc:7356, desvio:16100},
-    CASCAIS: {vals:[-732,12877,17679,7342,1136,3071], acum:41373, orc:5242, desvio:36131},
-    LOURES:  {vals:[169,-360,15718,668,2589,9451], acum:28235, orc:16470, desvio:11765},
-    LISBOA:  {vals:[3318,5453,18939,-79,2791,4962], acum:35384, orc:28176, desvio:7208}
+  m2026: { // jan a jul — valores contabilísticos fechados
+    CACEM:   {vals:[2315,-1074,18762,2841,-2615,3227,14980], acum:38436, orc:10471, desvio:27965},
+    CASCAIS: {vals:[-732,12877,17679,7342,1136,3071,-9388], acum:31985, orc:5875, desvio:26110},
+    LOURES:  {vals:[169,-360,15718,668,2589,9451,17308], acum:45543, orc:18329, desvio:27214},
+    LISBOA:  {vals:[3318,5453,18939,-79,2791,4962,2457], acum:37841, orc:31650, desvio:6191}
   },
-  totals2026:{vals:[5070,16896,71098,10772,3901,20711], acum:128448, orc:57244, desvio:71204},
-  y2025: { // Jan–Jun 2025 (mesmo período) — fonte: DRE consolidada
-    CACEM:   {acumAno:9328, acumPeriodo:-9150, orc:580, desvio:2647},
-    CASCAIS: {acumAno:3586, acumPeriodo:-626, orc:-135, desvio:3207},
-    LOURES:  {acumAno:21703, acumPeriodo:13227, orc:2080, desvio:7371},
-    LISBOA:  {acumAno:31825, acumPeriodo:23118, orc:3706, desvio:1255}
+  totals2026:{vals:[5070,16896,71098,10772,3901,20711,25357], acum:153805, orc:66325, desvio:87480},
+  y2025: { // Jan–Jul 2025 (mesmo período) — fonte: DRE consolidada
+    CACEM:   {acumAno:9328, acumPeriodo:-7459, orc:3115, desvio:11865},
+    CASCAIS: {acumAno:3586, acumPeriodo:-815, orc:633, desvio:-10021},
+    LOURES:  {acumAno:21703, acumPeriodo:27480, orc:1858, desvio:15450},
+    LISBOA:  {acumAno:31825, acumPeriodo:23673, orc:3474, desvio:-1017}
   },
-  totals2025:{acumAno:66442, acumPeriodo:26569, orc:6231, desvio:14480}
+  totals2025:{acumAno:66442, acumPeriodo:42879, orc:9080, desvio:16277}
 };
 
 // Reparações F2M-Insurance (sinistros) — calculado linha a linha a partir do mapa de processos/sinistros
@@ -1503,7 +1503,7 @@ function renderNetGrid(){
 }
 
 function renderPNL(){
-  const months=['Jan','Fev','Mar','Abr','Mai','Jun'];
+  const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul'];
   const t26=PNL.totals2026, t25=PNL.totals2025;
   document.getElementById('pnl-acum26').textContent = fmtEUR0(t26.acum);
   document.getElementById('pnl-acum25-ano').textContent = fmtEUR0(t25.acumPeriodo);

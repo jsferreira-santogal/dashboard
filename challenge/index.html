@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenge Seguros Opcionais 2026 – Free2Move Rent Santogal</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+:root{
+  --f2m-navy:#0a1628; --f2m-blue:#003DA5; --f2m-teal:#00b4d8; --f2m-teal2:#0077b6;
+  --f2m-cyan:#90e0ef; --f2m-orange:#ff6b35; --f2m-orange2:#e85d04;
+  --surface:#0e1e3a; --surface2:#132240; --border:rgba(0,180,216,0.18);
+  --border2:rgba(255,255,255,0.08); --text:#e8f4fd; --muted:#6b8caa;
+  --green:#06d6a0; --red:#ef476f;
+  --cacem:#4472C4; --cascais:#FF0000; --loures:#FFC000; --lisboa:#00B050;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--f2m-navy);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* ══ HERO ══ */
+.hero{position:relative;text-align:center;padding:60px 24px 70px;overflow:hidden;
+  background:linear-gradient(145deg,#030b1a 0%,#061530 30%,#003580 60%,#006994 80%,#00b4d8 100%);}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(0,180,216,0.22) 0%,transparent 65%);pointer-events:none;}
+.hero-wave{position:absolute;bottom:-1px;left:0;right:0;height:60px;overflow:hidden;}
+.hero-wave svg{display:block;width:100%;height:100%;}
+
+.f2m-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:7px 20px;margin-bottom:30px;
+  font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.f2m-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--f2m-teal);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero-logos{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:20px;flex-wrap:wrap;}
+.hero-logo-img{height:42px;width:auto;filter:drop-shadow(0 3px 14px rgba(0,180,216,.45));}
+.hero-logo-santogal{height:30px;}
+
+/* SUMMER + CHALLENGE VENDA DE — GRANDES E ANIMADOS */
+.hero-summer{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(28px,5vw,54px);
+  font-weight:700;letter-spacing:4px;
+  color:#fff;margin-bottom:4px;
+  animation:summer-pulse 2.5s ease-in-out infinite;
+  text-shadow:0 0 30px rgba(255,220,0,0.4),0 0 60px rgba(255,160,0,0.2);
+}
+@keyframes summer-pulse{
+  0%,100%{text-shadow:0 0 20px rgba(255,220,0,0.3),0 0 40px rgba(255,160,0,0.15);transform:scale(1);}
+  50%{text-shadow:0 0 40px rgba(255,220,0,0.8),0 0 80px rgba(255,160,0,0.4);transform:scale(1.03);}
+}
+
+.hero-challenge-venda{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(22px,4vw,44px);
+  font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:#fff;margin-bottom:8px;
+  animation:venda-pulse 2.5s ease-in-out infinite 0.3s;
+  text-shadow:0 0 24px rgba(255,255,255,0.3);
+}
+@keyframes venda-pulse{
+  0%,100%{opacity:0.9;text-shadow:0 0 16px rgba(255,255,255,0.2);}
+  50%{opacity:1;text-shadow:0 0 36px rgba(255,255,255,0.7),0 0 70px rgba(144,224,239,0.3);}
+}
+
+.hero-challenge{
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(44px,9vw,96px);
+  font-weight:700;line-height:0.92;
+  background:linear-gradient(135deg,#ffffff 0%,#90e0ef 35%,#00b4d8 65%,#0077b6 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shimmer-title 3.5s linear infinite, pulse-size 3s ease-in-out infinite;
+  margin-bottom:6px;
+}
+@keyframes shimmer-title{0%{background-position:0% center}100%{background-position:200% center}}
+@keyframes pulse-size{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+
+.hero-seguros{font-family:'Rajdhani',sans-serif;font-size:clamp(18px,3vw,34px);
+  font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--f2m-orange);margin-bottom:4px;
+  animation:glow-orange 2.5s ease-in-out infinite;}
+@keyframes glow-orange{0%,100%{text-shadow:0 0 10px rgba(255,107,53,0.4)}50%{text-shadow:0 0 28px rgba(255,107,53,0.9),0 0 50px rgba(255,107,53,0.4)}}
+
+.hero-rede{font-family:'Rajdhani',sans-serif;font-size:clamp(12px,2vw,17px);font-weight:500;
+  color:rgba(255,255,255,0.45);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;}
+
+.hero-period{display:inline-block;background:linear-gradient(135deg,rgba(0,61,165,0.7),rgba(0,105,148,0.5));
+  border:1px solid rgba(0,180,216,0.5);border-radius:100px;padding:9px 30px;font-size:14px;
+  font-weight:700;color:#fff;letter-spacing:1px;margin-bottom:32px;}
+
+.countdown-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:30px;}
+.cd-box{background:rgba(0,20,50,0.6);border:1px solid rgba(0,180,216,0.35);border-radius:14px;
+  padding:14px 18px;text-align:center;min-width:74px;backdrop-filter:blur(10px);}
+.cd-num{font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:var(--f2m-cyan);line-height:1;}
+.cd-label{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
+
+.hero-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:100px;font-size:13px;
+  font-weight:700;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;font-family:'Inter',sans-serif;}
+.btn-primary{background:linear-gradient(135deg,var(--f2m-teal2),var(--f2m-teal));color:#fff;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,180,216,0.45);}
+.btn-secondary{background:rgba(255,107,53,0.15);color:var(--f2m-orange);border:1px solid rgba(255,107,53,0.4);}
+.btn-secondary:hover{background:rgba(255,107,53,0.25);transform:translateY(-2px);}
+
+/* ══ MODAL ══ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(3,11,26,0.9);
+  backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:linear-gradient(160deg,#0e2147,#061530);border:1px solid rgba(0,180,216,0.3);
+  border-radius:20px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:36px;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;
+  color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;transition:background 0.2s;}
+.modal-close:hover{background:var(--f2m-teal2);}
+.modal-title{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--f2m-teal);
+  margin-bottom:20px;text-transform:uppercase;letter-spacing:2px;}
+.modal-section{margin-bottom:18px;}
+.modal-section h3{font-size:12px;font-weight:700;color:var(--f2m-cyan);text-transform:uppercase;
+  letter-spacing:1.5px;margin-bottom:10px;border-bottom:1px solid rgba(0,180,216,0.2);padding-bottom:6px;}
+.modal-section p,.modal-section li{font-size:13px;color:rgba(255,255,255,0.78);line-height:1.75;margin-bottom:5px;}
+.modal-section ul{padding-left:18px;}
+.prize-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;}
+.prize-card{background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.25);border-radius:10px;padding:12px;text-align:center;}
+.prize-pos{font-size:22px;margin-bottom:4px;}
+.prize-val{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--f2m-cyan);}
+.prize-lbl{font-size:11px;color:var(--muted);}
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px;}
+.cat-pill{background:rgba(0,61,165,0.35);border:1px solid rgba(0,180,216,0.2);border-radius:8px;padding:8px 12px;font-size:12px;}
+.cat-pill strong{color:var(--f2m-cyan);}
+
+/* ══ LAYOUT ══ */
+.section{padding:0 24px 36px;max-width:1320px;margin:0 auto;}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--f2m-teal);
+  text-transform:uppercase;letter-spacing:2px;margin-bottom:18px;display:flex;align-items:center;gap:12px;padding-top:40px;}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,180,216,0.5),transparent);}
+
+/* ══ MULTI-MÊS SELECTOR ══ */
+.month-selector{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:20px 22px;margin-bottom:20px;}
+.ms-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;}
+.ms-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.ms-btn{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:10px;
+  padding:10px 20px;font-size:13px;color:var(--muted);cursor:pointer;transition:all 0.2s;
+  font-family:'Inter',sans-serif;font-weight:500;user-select:none;
+}
+.ms-btn:hover{border-color:var(--f2m-teal);color:var(--f2m-teal);}
+.ms-btn.sel{background:var(--f2m-teal2);border-color:var(--f2m-teal);color:#fff;font-weight:700;}
+.ms-divider{width:1px;height:32px;background:var(--border2);margin:0 4px;}
+.ms-btn.all{background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(255,107,53,0.1));
+  border-color:rgba(255,107,53,0.4);color:var(--f2m-orange);}
+.ms-btn.all.sel{background:linear-gradient(135deg,var(--f2m-orange2),var(--f2m-orange));
+  border-color:var(--f2m-orange);color:#fff;}
+.periodo-label{font-size:12px;color:var(--muted);margin-top:12px;}
+.periodo-label span{color:var(--f2m-teal);font-weight:600;}
+
+/* ══ KPI ══ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:28px;}
+.kpi-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:20px;
+  position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.5);}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
+.kpi-card.teal::before{background:linear-gradient(90deg,var(--f2m-teal2),var(--f2m-teal));}
+.kpi-card.orange::before{background:linear-gradient(90deg,var(--f2m-orange2),var(--f2m-orange));}
+.kpi-card.green::before{background:var(--green);}
+.kpi-card.balcao{padding-top:18px;}
+.kpi-card.balcao .kpi-balcao-name{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.kpi-card.balcao .bdot-lg{width:11px;height:11px;border-radius:50%;display:inline-block;}
+.kpi-card.balcao .kpi-twocol{display:flex;gap:18px;margin-top:4px;}
+.kpi-card.balcao .kpi-twocol > div{flex:1;}
+.kpi-icon{font-size:20px;margin-bottom:8px;}
+.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;}
+.kpi-value{font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:#fff;line-height:1.1;}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.kpi-delta{font-size:12px;margin-top:5px;font-weight:600;}
+.up{color:var(--green);}.down{color:var(--red);}.neutral{color:var(--muted);}
+
+/* ══ RANKING PRINCIPAL (Santogal + Nacional 2025) ══ */
+.rank-main{background:var(--surface2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px;}
+.rank-header{
+  display:grid;
+  grid-template-columns:44px 130px repeat(3,1fr) 1px repeat(3,1fr) 80px;
+  gap:0;
+  background:rgba(0,180,216,0.08);
+  border-bottom:1px solid var(--border);
+  padding:0;
+}
+.rh-cell{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);
+  padding:10px 10px;font-weight:600;white-space:nowrap;}
+.rh-divider{background:var(--border);width:1px;}
+.rh-group{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;
+  padding:6px 10px 0;grid-column:span 3;}
+.rh-group.santogal{color:var(--f2m-teal);}
+.rh-group.nacional{color:rgba(255,215,0,0.7);}
+
+/* Tabela simplificada */
+.rank-table{width:100%;border-collapse:collapse;}
+.rank-table th{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);
+  padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;background:rgba(0,180,216,0.05);}
+.rank-table th.th-sep{background:rgba(255,215,0,0.06);color:rgba(255,215,0,0.7);}
+.rank-table td{padding:13px 12px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;vertical-align:middle;}
+.rank-table tr:last-child td{border-bottom:none;}
+.rank-table tr:hover td{background:rgba(0,180,216,0.04);}
+.rank-table .sep-col{background:rgba(255,215,0,0.04);border-left:1px solid rgba(255,215,0,0.15);border-right:1px solid rgba(255,215,0,0.15);}
+.rpos{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;}
+.r1{color:#FFD700;text-shadow:0 0 12px rgba(255,215,0,0.5);}
+.r2{color:#C0C0C0;}.r3{color:#CD7F32;}.r4{color:var(--muted);}
+.bdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+.bname{font-weight:600;font-size:14px;}
+.pbar-w{background:rgba(255,255,255,0.07);border-radius:100px;height:6px;overflow:hidden;min-width:60px;}
+.pbar{height:100%;border-radius:100px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.vchip{display:inline-block;padding:3px 8px;border-radius:100px;font-size:11px;font-weight:700;}
+.vup{background:rgba(6,214,160,0.12);color:var(--green);}
+.vdown{background:rgba(239,71,111,0.12);color:var(--red);}
+.vneutral{background:rgba(255,255,255,0.07);color:var(--muted);}
+
+/* Nacional 2025 col */
+.nat25-val{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:rgba(255,215,0,0.85);}
+.nat25-pos{font-size:11px;color:rgba(255,215,0,0.55);margin-top:2px;}
+.nat25-diff{font-size:11px;font-weight:600;margin-top:2px;}
+
+.dnote{font-size:11px;color:var(--muted);text-align:center;padding:10px;border-top:1px solid var(--border);}
+
+/* ══ CHARTS ══ */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:28px;}
+.chart-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.chart-card h3{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;color:var(--f2m-cyan);}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.chart-wrap{position:relative;height:200px;}
+
+/* ══ HOF ══ */
+.hof-banner{background:linear-gradient(135deg,rgba(0,61,165,0.3),rgba(0,180,216,0.1));border:1px solid rgba(0,180,216,0.3);border-radius:14px;padding:18px 22px;margin-bottom:20px;font-size:13px;line-height:1.75;color:rgba(255,255,255,0.8);}
+.hof-banner strong{color:var(--f2m-cyan);}
+.hof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-bottom:22px;}
+.hof-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;}
+.hof-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--f2m-teal2),var(--f2m-teal),var(--f2m-cyan));}
+.hof-cat-lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--f2m-teal);font-weight:700;margin-bottom:14px;}
+.hof-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.hof-row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.hof-medal{font-size:22px;min-width:28px;}
+.hof-info{flex:1;}
+.hof-name{font-size:13px;font-weight:600;color:#fff;line-height:1.3;}
+.hof-name.sant{color:var(--f2m-orange);}
+.hof-fat{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--f2m-teal);}
+.hof-fat.sant{color:#FFD700;}
+.hof-prize{font-size:11px;color:var(--green);font-weight:600;}
+.hof-alert{font-size:11px;color:var(--f2m-orange);font-weight:600;}
+.nat-wrap{background:var(--surface2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:24px;}
+.nat-tabs{display:flex;border-bottom:1px solid var(--border);}
+.nat-tab{flex:1;padding:12px;text-align:center;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;cursor:pointer;color:var(--muted);transition:all 0.2s;border:none;background:transparent;}
+.nat-tab.active{color:var(--f2m-teal);border-bottom:2px solid var(--f2m-teal);}
+.nat-tab:hover:not(.active){color:#fff;}
+.nat-table{width:100%;border-collapse:collapse;display:none;}
+.nat-table.vis{display:table;}
+.nat-table th{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);padding:8px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06);}
+.nat-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;}
+.nat-table tr:last-child td{border-bottom:none;}
+.nat-table .sant td{background:rgba(255,107,53,0.07);}
+.nat-table .sant td:first-child{border-left:3px solid var(--f2m-orange);}
+.pbadge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;background:rgba(255,215,0,0.12);color:#FFD700;}
+.footer{text-align:center;padding:36px 24px;border-top:1px solid var(--border);margin-top:24px;}
+.footer-logo{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+.footer-logo span{color:var(--f2m-teal);}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media(max-width:700px){
+  .hero{padding:40px 16px 56px;}
+  .section{padding:0 14px 28px;}
+  .kpi-value{font-size:24px;}
+  .chart-wrap{height:170px;}
+  .rank-table th:nth-child(n+8),.rank-table td:nth-child(n+8){display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-logos">
+    <img class="hero-logo-img" src="data:image/png;base64,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" alt="Free2Move Rent">
+    <img class="hero-logo-img hero-logo-santogal" src="data:image/png;base64,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" alt="Santogal">
+  </div>
+  <div class="f2m-badge"><span class="dot"></span>Free2Move Rent · Santogal · Challenge Ativo</div>
+
+  <div class="hero-summer">☀️ Verão 2026 ☀️</div>
+  <div class="hero-challenge-venda">Challenge Venda de</div>
+  <div class="hero-challenge">Seguros Opcionais</div>
+  <div class="hero-seguros">Rede Free2Move Rent 2026</div>
+  <div class="hero-rede">Cacém · Cascais · Loures · Lisboa</div>
+  <div class="hero-period">🗓️ 1 de Junho → 30 de Setembro 2026</div>
+
+  <div class="countdown-row">
+    <div class="cd-box"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Dias</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Horas</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Min</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Seg</div></div>
+  </div>
+  <div class="hero-btns">
+    <button class="btn btn-primary" onclick="document.getElementById('mReg').classList.add('open')">📋 Regulamento 2026</button>
+    <a class="btn btn-secondary" href="https://www.free2move.com/pt-PT/knowledge-base/rent/challenge-verao-2026-regulamento" target="_blank">🔗 Free2Move Oficial</a>
+  </div>
+  <div class="hero-wave"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C360,70 720,10 1080,40 C1260,55 1380,30 1440,40 L1440,60 L0,60 Z" fill="#0a1628"/></svg></div>
+</div>
+
+<!-- ══ MODAL REGULAMENTO ══ -->
+<div class="modal-overlay" id="mReg" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('mReg').classList.remove('open')">✕</button>
+    <div class="modal-title">📋 Regulamento · Challenge Verão 2026</div>
+    <div class="modal-section"><h3>Período & Âmbito</h3>
+      <p>☀️ <strong style="color:#fff">1 de Junho a 30 de Setembro de 2026</strong> — todas as marcas Stellantis com Free2Move Rent (Citroën, Peugeot, Opel, DS, Fiat, Jeep, Alfa Romeo).</p></div>
+    <div class="modal-section"><h3>Prémios por Categoria</h3>
+      <div class="prize-grid">
+        <div class="prize-card"><div class="prize-pos">🥇</div><div class="prize-val">350€</div><div class="prize-lbl">1º Classificado</div></div>
+        <div class="prize-card"><div class="prize-pos">🥈</div><div class="prize-val">250€</div><div class="prize-lbl">2º Classificado</div></div>
+        <div class="prize-card"><div class="prize-pos">🥉</div><div class="prize-val">150€</div><div class="prize-lbl">3º Classificado</div></div>
+      </div></div>
+    <div class="modal-section"><h3>Categorias (frota total)</h3>
+      <div class="cat-grid">
+        <div class="cat-pill"><strong>Cat 1</strong> → Frota ≥ 13 viaturas</div>
+        <div class="cat-pill"><strong>Cat 2</strong> → Frota 8–12 viaturas</div>
+        <div class="cat-pill"><strong>Cat 3</strong> → Frota 4–7 viaturas</div>
+        <div class="cat-pill"><strong>Cat 4</strong> → Frota ≤ 3 viaturas</div>
+      </div></div>
+    <div class="modal-section"><h3>Condições de Participação</h3>
+      <ul>
+        <li>Contrato de seguro opcional assinado até 1 Jun 2026</li>
+        <li>Mínimo contratos/mês: <strong style="color:#fff">Cat1→30 · Cat2→20 · Cat3→10 · Cat4→5</strong></li>
+        <li>Faturação mínima acumulada Jun–Set: <strong style="color:#fff">Cat1→3.000€ · Cat2→2.500€ · Cat3→1.800€ · Cat4→1.300€</strong></li>
+        <li>Contratos com suporte afiliado no seguro <strong style="color:var(--red)">não contam</strong></li>
+        <li>Taxa mínima de penetração (PR) de <strong style="color:#fff">15%</strong> durante todo o período</li>
+      </ul></div>
+    <div style="text-align:center;margin-top:16px"><a class="btn btn-primary" href="https://www.free2move.com/pt-PT/knowledge-base/rent/challenge-verao-2026-regulamento" target="_blank">🔗 Regulamento Completo F2M</a></div>
+  </div>
+</div>
+
+<!-- ══ MODAL EMAIL ══ -->
+<div class="modal-overlay" id="mEmail" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box" style="max-width:740px">
+    <button class="modal-close" onclick="document.getElementById('mEmail').classList.remove('open')">✕</button>
+    <div class="modal-title">✉️ Email Semanal · Pronto a Enviar</div>
+
+    <div style="margin-bottom:16px;">
+      <div class="ms-title" style="margin-bottom:8px;">Tipo de Resultados</div>
+      <div class="ms-row">
+        <button class="ms-btn sel" id="tipo-prov" onclick="setTipoResultado('prov')">⏳ Provisórios (Santogal)</button>
+        <button class="ms-btn" id="tipo-fecho" onclick="setTipoResultado('fecho')">✅ Fecho do Mês (Oficial)</button>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <div class="ms-title" style="margin-bottom:8px;">Destinatários</div>
+      <div class="ms-row" id="recipientRow">
+        <label class="ms-btn sel" data-email="jsferreira@santogal.pt" onclick="toggleRecipient(this)" style="cursor:pointer;">☑️ Marco (eu)</label>
+        <label class="ms-btn" data-email="mstaborda@santogal.pt,grtavares@santogal.pt" onclick="toggleRecipient(this)" style="cursor:pointer;">🔵 Cacém</label>
+        <label class="ms-btn" data-email="macosta@santogal.pt" onclick="toggleRecipient(this)" style="cursor:pointer;">🔴 Cascais</label>
+        <label class="ms-btn" data-email="dcmartins@santogal.pt" onclick="toggleRecipient(this)" style="cursor:pointer;">🟡 Loures</label>
+        <label class="ms-btn" data-email="cldias@santogal.pt" onclick="toggleRecipient(this)" style="cursor:pointer;">🟢 Lisboa</label>
+        <div class="ms-divider"></div>
+        <button class="ms-btn all" onclick="selecionarTodosDestinatarios()">👥 Todos</button>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">O botão abaixo abre o teu Gmail/Outlook já com destinatários e assunto preenchidos — só falta colar o corpo (copia primeiro) e enviar.</p>
+    <div id="emailSubject" style="background:rgba(0,180,216,0.08);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:12px;font-weight:600;"></div>
+    <div id="emailPreview" style="background:#fff;color:#0a1628;border-radius:12px;padding:24px;font-family:Arial,sans-serif;max-height:42vh;overflow-y:auto;"></div>
+
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="abrirGmail()">📧 Abrir no Gmail</button>
+      <button class="btn btn-secondary" onclick="abrirMailto()">✉️ Abrir no Outlook/Mail</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn" style="background:rgba(255,255,255,0.08);color:#fff;font-size:12px;padding:8px 18px;" onclick="copiarEmail()">📋 Copiar corpo (HTML)</button>
+      <button class="btn" style="background:rgba(255,255,255,0.08);color:#fff;font-size:12px;padding:8px 18px;" onclick="copiarTextoSimples()">📝 Copiar corpo (texto)</button>
+    </div>
+    <div id="copyStatus" style="text-align:center;font-size:12px;color:var(--green);margin-top:10px;display:none;">✅ Copiado! Cola no corpo do email.</div>
+    <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:10px;">💡 Nota: o Gmail/Outlook abrem o email pronto, mas o corpo formatado (tabela a cores) tens de colar manualmente — é uma limitação dos protocolos de email, não nossa.</div>
+  </div>
+</div>
+
+<!-- ══ SELETOR DE MESES ══ -->
+<div class="section">
+  <div class="section-title">🏁 Resultados Challenge · Seleciona o Período</div>
+  <div class="month-selector">
+    <div class="ms-title">Clica num ou vários meses para ver o acumulado</div>
+    <div class="ms-row">
+      <button class="ms-btn sel" id="m-jun" onclick="toggleMes('jun')">☀️ Junho 2026</button>
+      <button class="ms-btn" id="m-jul" onclick="toggleMes('jul')">🌞 Julho 2026</button>
+      <button class="ms-btn" id="m-ago" onclick="toggleMes('ago')">🏖️ Agosto 2026</button>
+      <button class="ms-btn" id="m-set" onclick="toggleMes('set')">🍂 Setembro 2026</button>
+      <div class="ms-divider"></div>
+      <button class="ms-btn all" id="m-all" onclick="selecionarTodos()">🏆 Jun→Set Total</button>
+    </div>
+    <div class="periodo-label" id="pLabel">📌 A mostrar: <span id="pSpan">Junho 2026</span> · vs homólogo 2025</div>
+    <button class="btn btn-secondary" style="margin-top:14px" onclick="gerarEmail()">✉️ Gerar Email para os Balcões</button>
+  </div>
+</div>
+
+<!-- ══ KPIs ══ -->
+<div class="section">
+  <div class="section-title">⚡ KPIs Grupo · 4 Balcões</div>
+  <div class="kpi-grid">
+    <div class="kpi-card teal">
+      <div class="kpi-icon">🛡️</div>
+      <div class="kpi-label">Seguros Vendidos 2026</div>
+      <div class="kpi-value" id="k-s26">—</div>
+      <div class="kpi-sub" id="k-s25">2025 homólogo: —</div>
+      <div class="kpi-delta neutral" id="k-sv">🕐 Seleciona um período</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-icon">💶</div>
+      <div class="kpi-label">Faturação Seguros 2026</div>
+      <div class="kpi-value" id="k-f26">—</div>
+      <div class="kpi-sub" id="k-f25"></div>
+      <div class="kpi-delta neutral" id="k-fv"></div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-icon">🏆</div>
+      <div class="kpi-label">Líder Santogal</div>
+      <div class="kpi-value" id="k-lider" style="font-size:18px">—</div>
+      <div class="kpi-sub" id="k-lider-s">A apurar</div>
+      <div class="kpi-delta neutral" id="k-lider-v"></div>
+    </div>
+  </div>
+
+  <div class="ms-title" style="margin-top:8px;margin-bottom:12px;">Por Balcão</div>
+  <div class="kpi-grid" id="balcaoCards"></div>
+</div>
+
+<!-- ══ RANKING SANTOGAL + REFERÊNCIA NACIONAL 2025 ══ -->
+<div class="section">
+  <div class="section-title">🥊 Ranking Santogal vs Referência Nacional 2025</div>
+  <div class="rank-main">
+    <table class="rank-table" id="rankTable">
+      <thead>
+        <tr>
+          <th>Pos</th>
+          <th>Balcão</th>
+          <th style="color:var(--f2m-teal)">Seg 2026</th>
+          <th style="color:var(--f2m-teal)">Fat 2026</th>
+          <th style="color:var(--f2m-teal)">Var Seg</th>
+          <th style="color:var(--f2m-teal)">Var Fat</th>
+          <th style="min-width:70px;color:var(--f2m-teal)">Progresso</th>
+          <!-- Separador -->
+          <th class="th-sep">Seg 2025</th>
+          <th class="th-sep">Fat 2025</th>
+        </tr>
+      </thead>
+      <tbody id="rankBody"></tbody>
+    </table>
+    <div class="dnote" id="dNote">📊 Período Jun–Set 2026 vs Jun–Set 2025 · Referência nacional: pódio Cat1 de 2025 (Cacém 17.391€ · Lisboa 14.031€ · S&YOU Carnaxide 13.812€)</div>
+  </div>
+</div>
+
+<!-- ══ MÉTRICA PRINCIPAL — TAXA DE PENETRAÇÃO (SEGUROS/CONTRATOS) ══ -->
+<div class="section">
+  <div class="section-title">🎯 Taxa de Penetração · Seguros / Contratos</div>
+  <div class="hof-banner" style="border-color:rgba(6,214,160,0.35);background:linear-gradient(135deg,rgba(6,214,160,0.1),rgba(0,180,216,0.06));">
+    🏆 <strong>Métrica principal de avaliação comercial:</strong> Nº Seguros Vendidos ÷ Nº Contratos/Alugueres × 100. Mede a eficácia de cada balcão a converter oportunidades reais de venda — de cada cliente que aluga um carro, quantos compraram seguro opcional. É o "attach rate" padrão da indústria e o critério mais justo para comparar Cacém, Cascais, Loures e Lisboa entre si.
+  </div>
+
+  <div class="kpi-grid" id="penetracaoCards"></div>
+
+  <div class="chart-grid" style="margin-top:18px;">
+    <div class="chart-card">
+      <h3>Taxa de Penetração · %</h3>
+      <div class="chart-sub">Mês mais recente com dados · 2026 vs 2025</div>
+      <div class="chart-wrap"><canvas id="cPenetracao"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Nº Contratos/Alugueres</h3>
+      <div class="chart-sub">4 Balcões · 2026 vs 2025</div>
+      <div class="chart-wrap"><canvas id="cContratos"></canvas></div>
+    </div>
+  </div>
+
+  <div class="rank-wrap" style="margin-top:18px;">
+    <table class="rank-table">
+      <thead><tr>
+        <th>Pos</th>
+        <th>Balcão</th>
+        <th>Contratos 2026</th>
+        <th>Seguros 2026</th>
+        <th style="color:var(--green)">Taxa 2026</th>
+        <th>Contratos 2025</th>
+        <th>Seguros 2025</th>
+        <th>Taxa 2025</th>
+        <th>Variação</th>
+      </tr></thead>
+      <tbody id="penetracaoBody"></tbody>
+    </table>
+    <div class="dnote" id="dnotePenetracao">📊 Taxa de Penetração = Nº Seguros Vendidos ÷ Nº Contratos/Alugueres × 100 · 2026 vs 2025 · Fonte: Google Sheets "FREE2MOVE FATURAÇÃO TOTAL 4 LOCAIS"</div>
+  </div>
+</div>
+
+<!-- ══ GRÁFICOS ══ -->
+<div class="section">
+  <div class="section-title">📊 Análise Visual</div>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Seguros Vendidos · Nº</h3>
+      <div class="chart-sub">4 Balcões · 2026 vs 2025 homólogo</div>
+      <div class="chart-wrap"><canvas id="cS"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Faturação Seguros · €</h3>
+      <div class="chart-sub">4 Balcões · 2026 vs 2025 homólogo</div>
+      <div class="chart-wrap"><canvas id="cF"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Evolução Mensal · Grupo</h3>
+      <div class="chart-sub">Total seguros vendidos Jun Jul Ago Set</div>
+      <div class="chart-wrap"><canvas id="cM"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MÉTRICA SECUNDÁRIA — INTENSIDADE: SEGUROS VS DIAS DE ALUGUER ══ -->
+<div class="section">
+  <div class="section-title">📐 Intensidade Comercial · Seguros / Dias de Aluguer <span style="font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;">(métrica secundária)</span></div>
+  <div class="hof-banner" style="border-color:rgba(0,180,216,0.3);background:linear-gradient(135deg,rgba(0,180,216,0.1),rgba(0,61,165,0.08));">
+    📊 <strong>O que mede esta taxa:</strong> Seguros Vendidos ÷ Dias de Aluguer Vendidos × 100. Complementa a penetração por cliente — mostra quantos seguros estão a ser gerados relativamente ao volume de negócio (dias de frota ocupada) de cada balcão. Útil para detectar dias "descobertos" de seguro em renovações/extensões de contrato.
+  </div>
+
+  <div class="kpi-grid" id="intensidadeCards"></div>
+
+  <div class="chart-grid" style="margin-top:18px;">
+    <div class="chart-card">
+      <h3>Taxa Seguros/Dias · %</h3>
+      <div class="chart-sub">Mês mais recente com dados · 2026 vs 2025</div>
+      <div class="chart-wrap"><canvas id="cIntensidade"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Dias de Aluguer Vendidos</h3>
+      <div class="chart-sub">4 Balcões · 2026 vs 2025</div>
+      <div class="chart-wrap"><canvas id="cDias"></canvas></div>
+    </div>
+  </div>
+
+  <div class="rank-wrap" style="margin-top:18px;">
+    <table class="rank-table">
+      <thead><tr>
+        <th>Balcão</th>
+        <th>Dias Aluguer 2026</th>
+        <th>Seguros 2026</th>
+        <th style="color:var(--f2m-teal)">Taxa 2026</th>
+        <th>Dias Aluguer 2025</th>
+        <th>Seguros 2025</th>
+        <th>Taxa 2025</th>
+        <th>Variação</th>
+      </tr></thead>
+      <tbody id="intensidadeBody"></tbody>
+    </table>
+    <div class="dnote" id="dnoteIntensidade">📊 Taxa = Nº Seguros Vendidos ÷ Dias de Aluguer Vendidos × 100 · 2026 vs 2025 · Fonte: Google Sheets "FREE2MOVE FATURAÇÃO TOTAL 4 LOCAIS"</div>
+  </div>
+</div>
+
+<!-- ══ HOF 2026 — RESULTADOS NACIONAIS JUNHO 2026 ══ -->
+<div class="section">
+  <div class="section-title">🏆 Hall of Fame · Challenge 2026 · Rankings Nacionais</div>
+  <div class="hof-banner" style="border-color:rgba(0,180,216,0.3);background:linear-gradient(135deg,rgba(0,180,216,0.08),rgba(0,61,165,0.06));">
+    📋 <strong>Resultados Junho 2026 — 1º mês do Challenge</strong> · Nota: ainda ninguém reúne condições de prémio (exige mínimo de contratos/mês e faturação acumulada Jun–Set). Estes são os rankings provisórios do 1º mês — o pódio final decide-se em Setembro!
+  </div>
+
+  <!-- PÓDIOS POR CATEGORIA -->
+  <div class="hof-grid">
+    <!-- CAT 1 -->
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏟️ Categoria 1 · Frota ≥ 13 · Junho 2026</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">S&YOU – Carnaxide (P)</div><div class="hof-fat">5.696 €</div><div class="hof-prize">💰 Prémio em jogo: 350€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Cacém (P)</div><div class="hof-fat sant">4.471 €</div><div class="hof-prize">💰 Prémio em jogo: 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name">S&YOU – Carnaxide (D)</div><div class="hof-fat">4.154 €</div><div class="hof-prize">💰 Prémio em jogo: 150€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">4º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Lisboa (P) · 3.613€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">7º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Loures (P) · 1.707€</div></div></div>
+    </div>
+    <!-- CAT 2 -->
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏪 Categoria 2 · Frota 8–12 · Junho 2026</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">CARBY – V.N. de Gaia (P)</div><div class="hof-fat">3.364 €</div><div class="hof-prize">💰 Prémio em jogo: 350€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Cacém (O)</div><div class="hof-fat sant">3.003 €</div><div class="hof-prize">💰 Prémio em jogo: 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Cacém (C)</div><div class="hof-fat sant">1.695 €</div><div class="hof-prize">💰 Prémio em jogo: 150€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">4º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Cascais (P) · 924€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">6º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Loures (O) · 706€</div></div></div>
+    </div>
+    <!-- CAT 3 -->
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏬 Categoria 3 · Frota 4–7 · Junho 2026</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">CARBY – V.F. de Xira (P)</div><div class="hof-fat">2.779 €</div><div class="hof-prize">💰 Prémio em jogo: 350€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name">CARBY – V.N. de Gaia (C)</div><div class="hof-fat">2.146 €</div><div class="hof-prize">💰 Prémio em jogo: 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name">CAETANO GAMOBAR – S. Tirso (P)</div><div class="hof-fat">1.560 €</div><div class="hof-prize">💰 Prémio em jogo: 150€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">6º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Lisboa (C) · 740€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">11º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Lisboa (O) · 620€</div></div></div>
+    </div>
+    <!-- CAT 4 -->
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏷️ Categoria 4 · Frota ≤ 3 · Junho 2026</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">CARBY – V.F. de Xira (O)</div><div class="hof-fat">1.943 €</div><div class="hof-prize">💰 Prémio em jogo: 350€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name">CARBY – V.F. de Xira (F)</div><div class="hof-fat">1.769 €</div><div class="hof-prize">💰 Prémio em jogo: 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Cascais (J)</div><div class="hof-fat sant">915 €</div><div class="hof-prize">💰 Prémio em jogo: 150€</div></div></div>
+    </div>
+  </div>
+
+  <!-- TABS — TOP 10 POR CATEGORIA + RANKING SANTOGAL -->
+  <div class="nat-wrap">
+    <div class="nat-tabs">
+      <button class="nat-tab active" onclick="showTab26(1,this)">Cat 1</button>
+      <button class="nat-tab" onclick="showTab26(2,this)">Cat 2</button>
+      <button class="nat-tab" onclick="showTab26(3,this)">Cat 3</button>
+      <button class="nat-tab" onclick="showTab26(4,this)">Cat 4</button>
+      <button class="nat-tab" onclick="showTab26(5,this)" style="color:var(--f2m-orange);border-color:rgba(255,107,53,0.3)">⭐ Santogal</button>
+    </div>
+
+    <!-- CAT 1 — TOP 10 -->
+    <table class="nat-table vis" id="nt26-1">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Frota</th><th>Contratos</th><th>Penetração</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>S&YOU – Carnaxide (P)</td><td>5.696 €</td><td>58</td><td>45</td><td>6,2%</td></tr>
+        <tr class="sant"><td>🥈 2º</td><td>⭐ SANTOGAL – Cacém (P)</td><td>4.471 €</td><td>16</td><td>27</td><td>12,8%</td></tr>
+        <tr><td>🥉 3º</td><td>S&YOU – Carnaxide (D)</td><td>4.154 €</td><td>29</td><td>35</td><td>10,3%</td></tr>
+        <tr class="sant"><td>4º</td><td>⭐ SANTOGAL – Lisboa (P)</td><td>3.613 €</td><td>19</td><td>27</td><td>10,4%</td></tr>
+        <tr><td>5º</td><td>S&YOU – Amadora (F)</td><td>3.145 €</td><td>23</td><td>15</td><td>9,8%</td></tr>
+        <tr><td>6º</td><td>S&YOU – Sacavém (C)</td><td>1.980 €</td><td>44</td><td>23</td><td>6,0%</td></tr>
+        <tr class="sant"><td>7º</td><td>⭐ SANTOGAL – Loures (P)</td><td>1.707 €</td><td>19</td><td>25</td><td>5,9%</td></tr>
+        <tr><td>8º</td><td>S&YOU – Sacavém (P)</td><td>1.516 €</td><td>23</td><td>13</td><td>6,8%</td></tr>
+        <tr><td>9º</td><td>MSCAR – Faro (P)</td><td>1.436 €</td><td>14</td><td>10</td><td>4,8%</td></tr>
+        <tr><td>10º</td><td>S&YOU – Sacavém (O)</td><td>938 €</td><td>20</td><td>13</td><td>4,8%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- CAT 2 — TOP 10 -->
+    <table class="nat-table" id="nt26-2">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Frota</th><th>Contratos</th><th>Penetração</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>CARBY – V.N. de Gaia (P)</td><td>3.364 €</td><td>8</td><td>5</td><td>14,9%</td></tr>
+        <tr class="sant"><td>🥈 2º</td><td>⭐ SANTOGAL – Cacém (O)</td><td>3.003 €</td><td>9</td><td>12</td><td>18,0%</td></tr>
+        <tr class="sant"><td>🥉 3º</td><td>⭐ SANTOGAL – Cacém (C)</td><td>1.695 €</td><td>9</td><td>13</td><td>11,7%</td></tr>
+        <tr class="sant"><td>4º</td><td>⭐ SANTOGAL – Cascais (P)</td><td>924 €</td><td>11</td><td>11</td><td>8,9%</td></tr>
+        <tr><td>5º</td><td>S&YOU – Carnaxide (C)</td><td>790 €</td><td>8</td><td>6</td><td>6,0%</td></tr>
+        <tr class="sant"><td>6º</td><td>⭐ SANTOGAL – Loures (O)</td><td>706 €</td><td>9</td><td>10</td><td>4,7%</td></tr>
+        <tr><td>7º</td><td>AUTO BENFICA – Lisboa (C)</td><td>588 €</td><td>9</td><td>1</td><td>3,4%</td></tr>
+        <tr><td>8º</td><td>TERAUTO – Angra do Heroísmo (C)</td><td>464 €</td><td>12</td><td>3</td><td>4,1%</td></tr>
+        <tr><td>9º</td><td>F. MARQUES & FILHOS – Mem Martins</td><td>451 €</td><td>12</td><td>5</td><td>5,0%</td></tr>
+        <tr><td>10º</td><td>AUTO BENFICA – Amadora (C)</td><td>336 €</td><td>8</td><td>5</td><td>3,1%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- CAT 3 — TOP 10 -->
+    <table class="nat-table" id="nt26-3">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Frota</th><th>Contratos</th><th>Penetração</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>CARBY – V.F. de Xira (P)</td><td>2.779 €</td><td>4</td><td>4</td><td>19,1%</td></tr>
+        <tr><td>🥈 2º</td><td>CARBY – V.N. de Gaia (C)</td><td>2.146 €</td><td>6</td><td>4</td><td>15,8%</td></tr>
+        <tr><td>🥉 3º</td><td>CAETANO GAMOBAR – S. Tirso (P)</td><td>1.560 €</td><td>4</td><td>2</td><td>20,1%</td></tr>
+        <tr><td>4º</td><td>CARBY – V.F. de Xira (C)</td><td>1.247 €</td><td>4</td><td>3</td><td>14,4%</td></tr>
+        <tr><td>5º</td><td>PNEUSMIR – Mira (P)</td><td>1.045 €</td><td>6</td><td>11</td><td>22,4%</td></tr>
+        <tr class="sant"><td>6º</td><td>⭐ SANTOGAL – Lisboa (C)</td><td>740 €</td><td>7</td><td>10</td><td>7,5%</td></tr>
+        <tr><td>7º</td><td>MSCAR – Faro (O)</td><td>731 €</td><td>4</td><td>7</td><td>12,1%</td></tr>
+        <tr><td>8º</td><td>S&YOU – Sacavém (AR)</td><td>698 €</td><td>4</td><td>4</td><td>17,5%</td></tr>
+        <tr><td>9º</td><td>CRUZ E ALLEN – Gondomar (C)</td><td>667 €</td><td>4</td><td>5</td><td>7,8%</td></tr>
+        <tr><td>10º</td><td>MSCAR – Portimão (P)</td><td>651 €</td><td>6</td><td>3</td><td>6,0%</td></tr>
+        <tr class="sant"><td>11º</td><td>⭐ SANTOGAL – Lisboa (O)</td><td>620 €</td><td>6</td><td>5</td><td>7,4%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- CAT 4 — TOP 10 -->
+    <table class="nat-table" id="nt26-4">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Frota</th><th>Contratos</th><th>Penetração</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>CARBY – V.F. de Xira (O)</td><td>1.943 €</td><td>3</td><td>3</td><td>17,6%</td></tr>
+        <tr><td>🥈 2º</td><td>CARBY – V.F. de Xira (F)</td><td>1.769 €</td><td>3</td><td>3</td><td>14,1%</td></tr>
+        <tr class="sant"><td>🥉 3º</td><td>⭐ SANTOGAL – Cascais (J)</td><td>915 €</td><td>3</td><td>8</td><td>26,6%</td></tr>
+        <tr><td>4º</td><td>A MATOSCAR BEIRAS – Covilhã (C)</td><td>812 €</td><td>3</td><td>1</td><td>12,1%</td></tr>
+        <tr><td>5º</td><td>AUTOMECLIS – Lisboa (F)</td><td>542 €</td><td>2</td><td>6</td><td>19,5%</td></tr>
+        <tr><td>6º</td><td>M. PISSARRA & FILHOS – Lisboa (F)</td><td>462 €</td><td>3</td><td>2</td><td>25,0%</td></tr>
+        <tr><td>7º</td><td>FILINTO MOTA – Guimarães (O)</td><td>435 €</td><td>3</td><td>1</td><td>10,6%</td></tr>
+        <tr><td>8º</td><td>AUTOGARSILVA – Lousã (C)</td><td>288 €</td><td>2</td><td>9</td><td>15,7%</td></tr>
+        <tr><td>9º</td><td>FILINTO MOTA – Porto (P)</td><td>252 €</td><td>3</td><td>2</td><td>7,9%</td></tr>
+        <tr><td>10º</td><td>S&YOU – Sacavém (J)</td><td>246 €</td><td>2</td><td>4</td><td>10,8%</td></tr>
+      </tbody>
+    </table>
+
+    <!-- RANKING SANTOGAL CONSOLIDADO -->
+    <table class="nat-table" id="nt26-5">
+      <thead><tr><th>Cat</th><th>Pos Nacional</th><th>Balcão · Marca</th><th>Faturação</th><th>Frota</th><th>Contratos</th><th>Penetração</th></tr></thead>
+      <tbody>
+        <tr class="sant"><td style="color:var(--f2m-teal);font-weight:700">Cat 1</td><td>🥈 2º</td><td>⭐ Cacém (P)</td><td>4.471 €</td><td>16</td><td>27</td><td>12,8%</td></tr>
+        <tr class="sant"><td style="color:var(--f2m-teal);font-weight:700">Cat 1</td><td>4º</td><td>Lisboa (P)</td><td>3.613 €</td><td>19</td><td>27</td><td>10,4%</td></tr>
+        <tr class="sant"><td style="color:var(--f2m-teal);font-weight:700">Cat 1</td><td>7º</td><td>Loures (P)</td><td>1.707 €</td><td>19</td><td>25</td><td>5,9%</td></tr>
+        <tr class="sant"><td style="color:var(--cascais);font-weight:700">Cat 2</td><td>🥈 2º</td><td>⭐ Cacém (O)</td><td>3.003 €</td><td>9</td><td>12</td><td>18,0%</td></tr>
+        <tr class="sant"><td style="color:var(--cascais);font-weight:700">Cat 2</td><td>🥉 3º</td><td>⭐ Cacém (C)</td><td>1.695 €</td><td>9</td><td>13</td><td>11,7%</td></tr>
+        <tr class="sant"><td style="color:var(--cascais);font-weight:700">Cat 2</td><td>4º</td><td>Cascais (P)</td><td>924 €</td><td>11</td><td>11</td><td>8,9%</td></tr>
+        <tr class="sant"><td style="color:var(--cascais);font-weight:700">Cat 2</td><td>6º</td><td>Loures (O)</td><td>706 €</td><td>9</td><td>10</td><td>4,7%</td></tr>
+        <tr class="sant"><td style="color:var(--loures);font-weight:700">Cat 3</td><td>6º</td><td>Lisboa (C)</td><td>740 €</td><td>7</td><td>10</td><td>7,5%</td></tr>
+        <tr class="sant"><td style="color:var(--loures);font-weight:700">Cat 3</td><td>11º</td><td>Lisboa (O)</td><td>620 €</td><td>6</td><td>5</td><td>7,4%</td></tr>
+        <tr class="sant"><td style="color:var(--loures);font-weight:700">Cat 3</td><td>24º</td><td>Cacém (F)</td><td>278 €</td><td>5</td><td>4</td><td>5,5%</td></tr>
+        <tr class="sant"><td style="color:var(--loures);font-weight:700">Cat 3</td><td>25º</td><td>Cascais (O)</td><td>247 €</td><td>6</td><td>5</td><td>11,4%</td></tr>
+        <tr class="sant"><td style="color:var(--loures);font-weight:700">Cat 3</td><td>33º</td><td>Cascais (F)</td><td>63 €</td><td>4</td><td>1</td><td>1,7%</td></tr>
+        <tr class="sant"><td style="color:var(--loures);font-weight:700">Cat 3</td><td>35º</td><td>Loures (C)</td><td>20 €</td><td>4</td><td>1</td><td>0,9%</td></tr>
+        <tr class="sant"><td style="color:var(--lisboa);font-weight:700">Cat 4</td><td>🥉 3º</td><td>⭐ Cascais (J)</td><td>915 €</td><td>3</td><td>8</td><td>26,6%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="dnote">📋 Rankings Nacionais · Challenge Seguros Opcionais · Junho 2026 · Fonte: Free2Move Portugal · Balcões Santogal ⭐ destacados · Nenhum reúne ainda condições de prémio (acumulado Jun–Set)</div>
+  </div>
+</div>
+
+<!-- ══ HOF 2025 ══ -->
+<div class="section">
+  <div class="section-title">🏆 Hall of Fame · Challenge 2025 · Onde estamos vs a concorrência</div>
+  <div class="hof-banner">
+    🎯 <strong>Os nossos resultados nacionais em 2025 — isto é o que temos de superar e melhorar!</strong><br>
+    Fomos <strong>1º e 2º nacionais na Cat 1</strong>, <strong>2º na Cat 2</strong>, <strong>2º na Cat 3</strong>. Cascais ficou a <strong>apenas 6€ do 3º lugar Cat 2!</strong> Em 2026 vamos a todos os pódios! 💪
+  </div>
+  <div class="hof-grid">
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏟️ Categoria 1 · Frota ≥ 13 · Líderes nacionais</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Cacém (P)</div><div class="hof-fat sant">17.391 €</div><div class="hof-prize">1º Nacional · Prémio 350€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Lisboa (P)</div><div class="hof-fat sant">14.031 €</div><div class="hof-prize">2º Nacional · Prémio 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name">S&YOU – Carnaxide (P)</div><div class="hof-fat">13.812 €</div><div class="hof-prize">3º · Prémio 150€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">5º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Loures (P)</div><div class="hof-fat" style="color:var(--muted);font-size:13px">9.239 €</div></div></div>
+    </div>
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏪 Categoria 2 · Frota 8–12 viaturas</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">CARBY – Vila Nova de Gaia</div><div class="hof-fat">11.831 €</div><div class="hof-prize">1º · Prémio 350€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Cacém (C)</div><div class="hof-fat sant">5.714 €</div><div class="hof-prize">2º Nacional · Prémio 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name">S&YOU – Amadora (J)</div><div class="hof-fat">5.554 €</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--f2m-orange)">4º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Cascais (P)</div><div class="hof-fat" style="color:var(--muted);font-size:13px">5.548 €</div><div class="hof-alert">⚡ A apenas 6€ do 3º lugar!</div></div></div>
+    </div>
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏬 Categoria 3 · Frota 4–7 viaturas</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">CARBY – V.N. de Gaia (C)</div><div class="hof-fat">8.931 €</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥈</div><div class="hof-info"><div class="hof-name sant">⭐ SANTOGAL – Lisboa (C)</div><div class="hof-fat sant">8.111 €</div><div class="hof-prize">2º Nacional · Prémio 250€</div></div></div>
+      <div class="hof-row"><div class="hof-medal">🥉</div><div class="hof-info"><div class="hof-name">CARBY – Almada (O)</div><div class="hof-fat">7.731 €</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:13px;color:var(--muted)">5/6/8º</div><div class="hof-info"><div class="hof-name sant">Cacém(O) 4.046€ · Lisboa(O) 3.814€ · Cascais(O) 3.073€</div></div></div>
+    </div>
+    <div class="hof-card">
+      <div class="hof-cat-lbl">🏷️ Categoria 4 · Frota ≤ 3 viaturas</div>
+      <div class="hof-row"><div class="hof-medal">🥇</div><div class="hof-info"><div class="hof-name">CARBY – V.F. de Xira (C)</div><div class="hof-fat">6.843 €</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">5º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Cascais (AR) · 1.655€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:14px;color:var(--muted)">6º</div><div class="hof-info"><div class="hof-name sant">SANTOGAL – Cascais (F) · 1.517€</div></div></div>
+      <div class="hof-row"><div class="hof-medal" style="font-size:13px;color:var(--muted)">9/11º</div><div class="hof-info"><div class="hof-name sant">Cacém(F) 1.300€ · Cascais(J) 1.037€</div></div></div>
+    </div>
+  </div>
+
+  <div class="nat-wrap">
+    <div class="nat-tabs">
+      <button class="nat-tab active" onclick="showTab(1,this)">Cat 1</button>
+      <button class="nat-tab" onclick="showTab(2,this)">Cat 2</button>
+      <button class="nat-tab" onclick="showTab(3,this)">Cat 3</button>
+      <button class="nat-tab" onclick="showTab(4,this)">Cat 4</button>
+    </div>
+    <table class="nat-table vis" id="nt1">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Prémio</th></tr></thead>
+      <tbody>
+        <tr class="sant"><td>🥇 1º</td><td>⭐ SANTOGAL – Cacém (P)</td><td>17.391 €</td><td><span class="pbadge">350€</span></td></tr>
+        <tr class="sant"><td>🥈 2º</td><td>⭐ SANTOGAL – Lisboa (P)</td><td>14.031 €</td><td><span class="pbadge">250€</span></td></tr>
+        <tr><td>🥉 3º</td><td>S&YOU – Carnaxide (P)</td><td>13.812 €</td><td><span class="pbadge">150€</span></td></tr>
+        <tr><td>4º</td><td>S&YOU – Amadora (F)</td><td>10.426 €</td><td>—</td></tr>
+        <tr class="sant"><td>5º</td><td>⭐ SANTOGAL – Loures (P)</td><td>9.239 €</td><td>—</td></tr>
+        <tr><td>6º</td><td>S&YOU – Carnaxide (D)</td><td>8.189 €</td><td>—</td></tr>
+        <tr><td>7º</td><td>S&YOU – Sacavém (C)</td><td>7.083 €</td><td>—</td></tr>
+        <tr><td>8º</td><td>S&YOU – Sacavém (P)</td><td>5.510 €</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <table class="nat-table" id="nt2">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Prémio</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>CARBY – Vila Nova de Gaia (P)</td><td>11.831 €</td><td><span class="pbadge">350€</span></td></tr>
+        <tr class="sant"><td>🥈 2º</td><td>⭐ SANTOGAL – Cacém (C)</td><td>5.714 €</td><td><span class="pbadge">250€</span></td></tr>
+        <tr><td>🥉 3º</td><td>S&YOU – Amadora (J)</td><td>5.554 €</td><td><span class="pbadge">150€</span></td></tr>
+        <tr class="sant"><td>4º ⚡</td><td>⭐ SANTOGAL – Cascais (P) <small style="color:var(--f2m-orange)">-6€ do 3º</small></td><td>5.548 €</td><td>—</td></tr>
+        <tr class="sant"><td>5º</td><td>⭐ SANTOGAL – Loures (O)</td><td>4.791 €</td><td>—</td></tr>
+        <tr class="sant"><td>6º</td><td>⭐ SANTOGAL – Cascais (C)</td><td>3.114 €</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <table class="nat-table" id="nt3">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Prémio</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>CARBY – Vila Nova de Gaia (C)</td><td>8.931 €</td><td><span class="pbadge">350€</span></td></tr>
+        <tr class="sant"><td>🥈 2º</td><td>⭐ SANTOGAL – Lisboa (C)</td><td>8.111 €</td><td><span class="pbadge">250€</span></td></tr>
+        <tr><td>🥉 3º</td><td>CARBY – Almada (O)</td><td>7.731 €</td><td><span class="pbadge">150€</span></td></tr>
+        <tr><td>4º</td><td>CAETANO GAMOBAR – Vila do Conde</td><td>4.709 €</td><td>—</td></tr>
+        <tr class="sant"><td>5º</td><td>⭐ SANTOGAL – Cacém (O)</td><td>4.046 €</td><td>—</td></tr>
+        <tr class="sant"><td>6º</td><td>⭐ SANTOGAL – Lisboa (O)</td><td>3.814 €</td><td>—</td></tr>
+        <tr class="sant"><td>8º</td><td>⭐ SANTOGAL – Cascais (O)</td><td>3.073 €</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <table class="nat-table" id="nt4">
+      <thead><tr><th>Pos</th><th>Balcão / Concessão</th><th>Faturação</th><th>Prémio</th></tr></thead>
+      <tbody>
+        <tr><td>🥇 1º</td><td>CARBY – V.F. de Xira (C)</td><td>6.843 €</td><td><span class="pbadge">350€</span></td></tr>
+        <tr><td>🥈 2º</td><td>TERAUTO – Angra do Heroísmo (F)</td><td>2.315 €</td><td><span class="pbadge">250€</span></td></tr>
+        <tr><td>🥉 3º</td><td>MECÂNICA AGRÍCOLA – Benavente (C)</td><td>2.282 €</td><td><span class="pbadge">150€</span></td></tr>
+        <tr><td>4º</td><td>MSCAR – AR</td><td>1.682 €</td><td>—</td></tr>
+        <tr class="sant"><td>5º</td><td>⭐ SANTOGAL – Cascais (AR)</td><td>1.655 €</td><td>—</td></tr>
+        <tr class="sant"><td>6º</td><td>⭐ SANTOGAL – Cascais (F)</td><td>1.517 €</td><td>—</td></tr>
+        <tr class="sant"><td>9º</td><td>⭐ SANTOGAL – Cacém (F)</td><td>1.300 €</td><td>—</td></tr>
+        <tr class="sant"><td>11º</td><td>⭐ SANTOGAL – Cascais (J)</td><td>1.037 €</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="dnote">📋 Rankings finais Challenge Jun–Set 2025 · Balcões Santogal destacados ⭐</div>
+  </div>
+</div>
+
+<div class="footer">
+  <div style="font-size:30px;margin-bottom:12px;animation:float 3s ease-in-out infinite">🏆</div>
+  <div class="footer-logo">SANTOGAL · <span>FREE2MOVE RENT</span></div>
+  <div style="font-size:11px;color:var(--muted);margin-top:8px">Cacém · Cascais · Loures · Lisboa · Challenge Jun→Set 2026</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.2);margin-top:8px" id="lastUp"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DADOS CHALLENGE JUN–SET (apenas este período)
+// Actualiza mensalmente — seg26/fat26 = 2026 actual · seg25/fat25 = homólogo 2025
+// ══════════════════════════════════════════════════════
+const DC={
+  jun:{
+    cacem:  {seg26:55, fat26:8529,  seg25:45, fat25:6253},
+    cascais:{seg26:30, fat26:2708,  seg25:41, fat25:2502},
+    loures: {seg26:36, fat26:2785,  seg25:34, fat25:1885},
+    lisboa: {seg26:42, fat26:4596,  seg25:35, fat25:6547},
+  },
+  jul:{
+    cacem:  {seg26:55, fat26:12324, seg25:54, fat25:9386},
+    cascais:{seg26:34, fat26:3857,  seg25:54, fat25:5992},
+    loures: {seg26:46, fat26:5903,  seg25:57, fat25:4721},
+    lisboa: {seg26:48, fat26:6505,  seg25:42, fat25:4939},
+  },
+  ago:{
+    cacem:  {seg26:5,  fat26:823,  seg25:45, fat25:6046},
+    cascais:{seg26:6,  fat26:1077, seg25:31, fat25:3516},
+    loures: {seg26:0,  fat26:0,    seg25:28, fat25:2595},
+    lisboa: {seg26:7,  fat26:1441, seg25:41, fat25:6325},
+  },
+  set:{
+    cacem:  {seg26:0, fat26:0, seg25:40, fat25:6346},
+    cascais:{seg26:0, fat26:0, seg25:53, fat25:3427},
+    loures: {seg26:0, fat26:0, seg25:55, fat25:3458},
+    lisboa: {seg26:0, fat26:0, seg25:65, fat25:8038},
+  },
+};
+
+// Evolução mensal grupo
+const MEN={meses:['Jun','Jul','Ago','Set'],seg26:[163,183,18,0],seg25:[155,207,145,213]};
+
+// Referência nacional 2025 Cat1 (faturação Jun–Set) para comparar
+// Vencedores por categoria em 2025 (Jun-Set, 4 meses)
+// Cacém/Lisboa/Loures → Cat1 → Cacém foi 1º com 17.391€
+// Cascais → Cat2 → CARBY V.N.Gaia foi 1º com 11.831€
+const POD25 = {
+  cacem:   { fat: 17391, nome: 'Cacém 2025 (Cat1)' },
+  cascais: { fat: 11831, nome: 'CARBY VNG 2025 (Cat2)' },
+  loures:  { fat:  9239, nome: 'Cacém 2025 (Cat1)' },
+  lisboa:  { fat: 14031, nome: 'Lisboa 2025 (Cat1)' },
+};
+
+// ── INTENSIDADE COMERCIAL: SEGUROS / DIAS DE ALUGUER ──
+// Fonte: Google Sheets "FREE2MOVE FATURAÇÃO TOTAL 4 LOCAIS" (2025 e 2026)
+// Por agora só Junho — actualizar mensalmente quando chegarem Jul/Ago/Set
+const DIAS_INTENSIDADE = {
+  jun: {
+    cacem:   { dias26: 820, seg26: 55, dias25: 728, seg25: 45 },
+    cascais: { dias26: 598, seg26: 30, dias25: 578, seg25: 41 },
+    loures:  { dias26: 855, seg26: 36, dias25: 653, seg25: 34 },
+    lisboa:  { dias26: 720, seg26: 42, dias25: 633, seg25: 35 },
+  },
+  jul: {
+    cacem:   { dias26: 884, seg26: 55, dias25: 778, seg25: 54 },
+    cascais: { dias26: 674, seg26: 34, dias25: 718, seg25: 54 },
+    loures:  { dias26: 767, seg26: 46, dias25: 691, seg25: 57 },
+    lisboa:  { dias26: 835, seg26: 48, dias25: 739, seg25: 42 },
+  },
+};
+
+// ── TAXA DE PENETRAÇÃO PRINCIPAL: SEGUROS / CONTRATOS ──
+// Fonte: Google Sheets "FREE2MOVE FATURAÇÃO TOTAL 4 LOCAIS" (2025 e 2026)
+const PENETRACAO = {
+  jun: {
+    cacem:   { contratos26: 85, seg26: 55, contratos25: 88,  seg25: 45 },
+    cascais: { contratos26: 66, seg26: 30, contratos25: 81,  seg25: 41 },
+    loures:  { contratos26: 94, seg26: 36, contratos25: 99,  seg25: 34 },
+    lisboa:  { contratos26: 82, seg26: 42, contratos25: 78,  seg25: 35 },
+  },
+  jul: {
+    cacem:   { contratos26: 86, seg26: 55, contratos25: 105, seg25: 54 },
+    cascais: { contratos26: 76, seg26: 34, contratos25:  88, seg25: 54 },
+    loures:  { contratos26: 97, seg26: 46, contratos25: 119, seg25: 57 },
+    lisboa:  { contratos26: 80, seg26: 48, contratos25:  98, seg25: 42 },
+  },
+};
+
+const KEYS=['cacem','cascais','loures','lisboa'];
+const BL=[
+  {nome:'Cacém',   cor:'#4472C4', cor25:'rgba(68,114,196,0.28)'},
+  {nome:'Cascais', cor:'#FF0000', cor25:'rgba(255,0,0,0.22)'},
+  {nome:'Loures',  cor:'#FFC000', cor25:'rgba(255,192,0,0.28)'},
+  {nome:'Lisboa',  cor:'#00B050', cor25:'rgba(0,176,80,0.28)'},
+];
+const MESES=['jun','jul','ago','set'];
+const MLAB={jun:'Junho 2026',jul:'Julho 2026',ago:'Agosto 2026',set:'Setembro 2026'};
+
+// Estado: meses seleccionados
+let selMeses=new Set(['jun']);
+
+function toggleMes(m){
+  document.getElementById('m-all').classList.remove('sel');
+  if(selMeses.has(m)){
+    if(selMeses.size>1)selMeses.delete(m);
+  } else {
+    selMeses.add(m);
+  }
+  MESES.forEach(x=>document.getElementById('m-'+x).classList.toggle('sel',selMeses.has(x)));
+  updateLabel();
+  build();
+}
+
+function selecionarTodos(){
+  selMeses=new Set(MESES);
+  MESES.forEach(x=>document.getElementById('m-'+x).classList.add('sel'));
+  document.getElementById('m-all').classList.add('sel');
+  updateLabel();
+  build();
+}
+
+function updateLabel(){
+  const arr=[...selMeses].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
+  const txt=arr.map(m=>MLAB[m]).join(' + ');
+  document.getElementById('pSpan').textContent=txt;
+}
+
+function getAcum(){
+  const r={};
+  KEYS.forEach(k=>{r[k]={seg26:0,fat26:0,seg25:0,fat25:0};});
+  selMeses.forEach(m=>{
+    KEYS.forEach(k=>{
+      r[k].seg26+=DC[m][k].seg26; r[k].fat26+=DC[m][k].fat26;
+      r[k].seg25+=DC[m][k].seg25; r[k].fat25+=DC[m][k].fat25;
+    });
+  });
+  return r;
+}
+
+function fN(n){return n.toLocaleString('pt-PT');}
+function fE(n){return n.toLocaleString('pt-PT',{minimumFractionDigits:0,maximumFractionDigits:0})+'€';}
+function vP(a,b){if(b===0)return a>0?'+∞%':'—';const v=((a-b)/b*100);return(v>=0?'+':'')+v.toFixed(1).replace('.',',')+'%';}
+function vS(a,b){return a>=b?'▲ ':'▼ ';}
+function vC(a,b){return a>=b?'vup':'vdown';}
+
+let charts={};
+function killC(){Object.values(charts).forEach(c=>{if(c)c.destroy();});charts={};}
+
+function build(){
+  const d=getAcum();
+  let ts26=0,tf26=0,ts25=0,tf25=0;
+  KEYS.forEach(k=>{ts26+=d[k].seg26;tf26+=d[k].fat26;ts25+=d[k].seg25;tf25+=d[k].fat25;});
+
+  const S=(id,v)=>document.getElementById(id).textContent=v;
+  const SC=(id,c)=>document.getElementById(id).className='kpi-delta '+c;
+
+  S('k-s26',ts26>0?fN(ts26):'—');
+  S('k-s25','2025 homólogo: '+fN(ts25));
+  S('k-sv',ts26>0?vS(ts26,ts25)+vP(ts26,ts25)+' vs 2025':'🕐 Dados chegam fim do mês');
+  SC('k-sv',ts26>0?(ts26>=ts25?'up':'down'):'neutral');
+
+  S('k-f26',tf26>0?fE(tf26):'—');
+  S('k-f25','2025: '+fE(tf25));
+  S('k-fv',tf26>0?vS(tf26,tf25)+vP(tf26,tf25)+' vs 2025':'');
+  SC('k-fv',tf26>0?(tf26>=tf25?'up':'down'):'neutral');
+
+  const sorted=[...KEYS].sort((a,b)=>d[b].fat26-d[a].fat26);
+  const lk=sorted[0],li=KEYS.indexOf(lk),lb=BL[li];
+  const lEl=document.getElementById('k-lider');
+  lEl.textContent=d[lk].fat26>0?'🏆 '+lb.nome:'—';
+  lEl.style.color=d[lk].fat26>0?lb.cor:'var(--muted)';
+  S('k-lider-s',d[lk].fat26>0?fN(d[lk].seg26)+' seg · '+fE(d[lk].fat26):'A apurar');
+  S('k-lider-v',d[lk].fat26>0?vS(d[lk].fat26,d[lk].fat25)+vP(d[lk].fat26,d[lk].fat25)+' vs 2025':'');
+  SC('k-lider-v',d[lk].fat26>0?(d[lk].fat26>=d[lk].fat25?'up':'down'):'neutral');
+
+  // ── Cards por balcão ──
+  const bcWrap=document.getElementById('balcaoCards');
+  bcWrap.innerHTML='';
+  KEYS.forEach((k,idx)=>{
+    const b=BL[idx];
+    const r=d[k];
+    const hasData=r.seg26>0||r.fat26>0;
+    const card=document.createElement('div');
+    card.className='kpi-card balcao';
+    card.style.setProperty('--bc','--bcard-'+idx);
+    card.innerHTML=`
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${b.cor};border-radius:16px 16px 0 0;"></div>
+      <div class="kpi-balcao-name"><span class="bdot-lg" style="background:${b.cor}"></span>${b.nome}</div>
+      <div class="kpi-twocol">
+        <div>
+          <div class="kpi-label">Seguros</div>
+          <div class="kpi-value" style="font-size:24px;color:${hasData?'#fff':'var(--muted)'}">${hasData?fN(r.seg26):'—'}</div>
+          <div class="kpi-delta ${hasData?vC(r.seg26,r.seg25):'neutral'}" style="font-size:11px">${hasData?vS(r.seg26,r.seg25)+vP(r.seg26,r.seg25):'2025: '+fN(r.seg25)}</div>
+        </div>
+        <div>
+          <div class="kpi-label">Faturação</div>
+          <div class="kpi-value" style="font-size:24px;color:${hasData?b.cor:'var(--muted)'}">${hasData?fE(r.fat26):'—'}</div>
+          <div class="kpi-delta ${hasData?vC(r.fat26,r.fat25):'neutral'}" style="font-size:11px">${hasData?vS(r.fat26,r.fat25)+vP(r.fat26,r.fat25):'2025: '+fE(r.fat25)}</div>
+        </div>
+      </div>
+    `;
+    bcWrap.appendChild(card);
+  });
+
+  // Ranking com referência nacional
+  const rData=sorted.map((k,i)=>({...d[k],key:k,idx:KEYS.indexOf(k),pos:i+1}));
+  const maxF=Math.max(...rData.map(r=>r.fat26),1);
+  const tbody=document.getElementById('rankBody');
+  tbody.innerHTML='';
+  const medals=['🥇','🥈','🥉','4º'];
+  const posC=['r1','r2','r3','r4'];
+
+  // Referência pódio 2025 proporcional ao período seleccionado
+  const nMeses=selMeses.size;
+
+  rData.forEach(r=>{
+    const b=BL[r.idx];
+    const pct=Math.round(r.fat26/maxF*100);
+    const pod25 = POD25[r.key];
+    const pod25periodo = Math.round(pod25.fat/4*nMeses);
+    const diffNat = r.fat26 - pod25periodo;
+    const jaBateu = diffNat >= 0;
+    const emoji = jaBateu ? '✅' : Math.abs(diffNat) < 1000 ? '🟡' : '🔴';
+    const diffTxt = jaBateu ? `+${fE(diffNat)}` : `-${fE(Math.abs(diffNat))}`;
+    const diffLabel = jaBateu ? 'acima do pódio!' : 'para o pódio';
+
+    const tr=document.createElement('tr');
+    if(r.pos===1&&r.fat26>0)tr.style.background='rgba(0,180,216,0.05)';
+    tr.innerHTML=`
+      <td><span class="rpos ${posC[r.pos-1]}">${medals[r.pos-1]}</span></td>
+      <td><span class="bdot" style="background:${b.cor}"></span><span class="bname">${b.nome}</span></td>
+      <td style="font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:${b.cor}">${r.seg26>0?fN(r.seg26):'—'}</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${b.cor}">${r.fat26>0?fE(r.fat26):'—'}</td>
+      <td><span class="vchip ${r.seg26>0?vC(r.seg26,r.seg25):'vneutral'}">${r.seg26>0?vS(r.seg26,r.seg25)+vP(r.seg26,r.seg25):'—'}</span></td>
+      <td><span class="vchip ${r.fat26>0?vC(r.fat26,r.fat25):'vneutral'}">${r.fat26>0?vS(r.fat26,r.fat25)+vP(r.fat26,r.fat25):'—'}</span></td>
+      <td><div class="pbar-w"><div class="pbar" style="width:${pct}%;background:${b.cor}"></div></div></td>
+      <td style="color:var(--muted)">${fN(r.seg25)}</td>
+      <td style="color:var(--muted)">${fE(r.fat25)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  S('dNote','📊 Período: '+[...selMeses].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b)).map(m=>MLAB[m]).join(' + ')+' · vs homólogo 2025 · Comparação de pódio nacional disponível no Hall of Fame 2026 abaixo');
+
+  // Gráficos
+  killC();
+  const nomes=BL.map(b=>b.nome);
+  const c26=BL.map(b=>b.cor);
+  const c25=BL.map(b=>b.cor25);
+  const cO={responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#6b8caa',font:{size:11}}},tooltip:{backgroundColor:'#0e1e3a',borderColor:'rgba(0,180,216,0.3)',borderWidth:1}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b8caa'}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b8caa'}}}};
+
+  charts.s=new Chart(document.getElementById('cS'),{type:'bar',data:{labels:nomes,datasets:[
+    {label:'2026',data:KEYS.map(k=>d[k].seg26),backgroundColor:c26,borderRadius:6},
+    {label:'2025',data:KEYS.map(k=>d[k].seg25),backgroundColor:c25,borderRadius:6},
+  ]},options:{...cO}});
+  charts.f=new Chart(document.getElementById('cF'),{type:'bar',data:{labels:nomes,datasets:[
+    {label:'2026 €',data:KEYS.map(k=>d[k].fat26),backgroundColor:c26,borderRadius:6},
+    {label:'2025 €',data:KEYS.map(k=>d[k].fat25),backgroundColor:c25,borderRadius:6},
+  ]},options:{...cO,scales:{...cO.scales,y:{...cO.scales.y,ticks:{color:'#6b8caa',callback:v=>v.toLocaleString('pt-PT')+'€'}}}}});
+  charts.m=new Chart(document.getElementById('cM'),{type:'line',data:{labels:MEN.meses,datasets:[
+    {label:'2026',data:MEN.seg26,borderColor:'#00b4d8',backgroundColor:'rgba(0,180,216,0.12)',tension:0.4,fill:true,pointRadius:5,pointBackgroundColor:'#00b4d8'},
+    {label:'2025',data:MEN.seg25,borderColor:'rgba(0,180,216,0.3)',backgroundColor:'transparent',tension:0.4,borderDash:[5,3],pointRadius:4,pointBackgroundColor:'rgba(0,180,216,0.4)'},
+  ]},options:{...cO}});
+
+  buildIntensidade();
+  buildPenetracao();
+}
+
+function buildIntensidade(){
+  // Por agora usa sempre Junho (único mês com dados de dias de aluguer)
+  // Usar meses seleccionados — acumular se vários, ou usar o mês único seleccionado
+  const mesesDI = [...selMeses].filter(m => DIAS_INTENSIDADE[m]);
+  if(mesesDI.length === 0) return;
+
+  // Acumular dados dos meses seleccionados
+  const di = {};
+  KEYS.forEach(k => {
+    di[k] = {dias26:0, seg26:0, dias25:0, seg25:0};
+    mesesDI.forEach(m => {
+      if(DIAS_INTENSIDADE[m] && DIAS_INTENSIDADE[m][k]) {
+        di[k].dias26 += DIAS_INTENSIDADE[m][k].dias26;
+        di[k].seg26  += DIAS_INTENSIDADE[m][k].seg26;
+        di[k].dias25 += DIAS_INTENSIDADE[m][k].dias25;
+        di[k].seg25  += DIAS_INTENSIDADE[m][k].seg25;
+      }
+    });
+  });
+  const labelDI = mesesDI.map(m=>MLAB[m]).join(' + ');
+  const cardsWrap = document.getElementById('intensidadeCards');
+  const tbody = document.getElementById('intensidadeBody');
+  if(!cardsWrap || !tbody) return;
+
+  cardsWrap.innerHTML = '';
+  tbody.innerHTML = '';
+
+  const nomes = [];
+  const taxas26 = [];
+  const taxas25 = [];
+  const dias26arr = [];
+  const dias25arr = [];
+  const cores = [];
+
+  KEYS.forEach((k, idx) => {
+    const b = BL[idx];
+    const r = di[k];
+    const taxa26 = (r.seg26 / r.dias26) * 100;
+    const taxa25 = (r.seg25 / r.dias25) * 100;
+    const varTaxa = taxa26 - taxa25;
+
+    nomes.push(b.nome);
+    taxas26.push(taxa26.toFixed(2));
+    taxas25.push(taxa25.toFixed(2));
+    dias26arr.push(r.dias26);
+    dias25arr.push(r.dias25);
+    cores.push(b.cor);
+
+    // Card
+    const card = document.createElement('div');
+    card.className = 'kpi-card balcao';
+    card.innerHTML = `
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${b.cor};border-radius:16px 16px 0 0;"></div>
+      <div class="kpi-balcao-name"><span class="bdot-lg" style="background:${b.cor}"></span>${b.nome}</div>
+      <div class="kpi-label" style="margin-top:8px;">Taxa Seguros/Dias</div>
+      <div class="kpi-value" style="font-size:26px;color:${b.cor}">${taxa26.toFixed(2)}%</div>
+      <div class="kpi-delta ${varTaxa>=0?'up':'down'}" style="font-size:11px">${varTaxa>=0?'▲ +':'▼ '}${Math.abs(varTaxa).toFixed(2)}pp vs 2025 (${taxa25.toFixed(2)}%)</div>
+    `;
+    cardsWrap.appendChild(card);
+
+    // Tabela
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="bdot" style="background:${b.cor}"></span><span class="bname">${b.nome}</span></td>
+      <td>${fN(r.dias26)}</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${b.cor}">${fN(r.seg26)}</td>
+      <td style="color:${b.cor};font-weight:700">${taxa26.toFixed(2)}%</td>
+      <td style="color:var(--muted)">${fN(r.dias25)}</td>
+      <td style="color:var(--muted)">${fN(r.seg25)}</td>
+      <td style="color:var(--muted)">${taxa25.toFixed(2)}%</td>
+      <td><span class="vchip ${varTaxa>=0?'vup':'vdown'}">${varTaxa>=0?'▲ +':'▼ '}${Math.abs(varTaxa).toFixed(2)}pp</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Gráficos de intensidade
+  if(charts.intensidade) charts.intensidade.destroy();
+  if(charts.dias) charts.dias.destroy();
+
+  const cO2 = {responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#6b8caa',font:{size:11}}},tooltip:{backgroundColor:'#0e1e3a',borderColor:'rgba(0,180,216,0.3)',borderWidth:1}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b8caa'}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b8caa'}}}};
+
+  charts.intensidade = new Chart(document.getElementById('cIntensidade'), {
+    type: 'bar',
+    data: { labels: nomes, datasets: [
+      { label: '2026 %', data: taxas26, backgroundColor: cores, borderRadius: 6 },
+      { label: '2025 %', data: taxas25, backgroundColor: cores.map(c=>c+'80'), borderRadius: 6 },
+    ]},
+    options: {...cO2, scales:{...cO2.scales, y:{...cO2.scales.y, ticks:{color:'#6b8caa', callback: v=>v+'%'}}}}
+  });
+
+  charts.dias = new Chart(document.getElementById('cDias'), {
+    type: 'bar',
+    data: { labels: nomes, datasets: [
+      { label: '2026', data: dias26arr, backgroundColor: cores, borderRadius: 6 },
+      { label: '2025', data: dias25arr, backgroundColor: cores.map(c=>c+'80'), borderRadius: 6 },
+    ]},
+    options: {...cO2}
+  });
+  const dnI = document.getElementById('dnoteIntensidade');
+  if(dnI) dnI.textContent = '📊 Taxa = Nº Seguros ÷ Dias de Aluguer × 100 · Período: ' + labelDI + ' · 2026 vs 2025 · Fonte: Google Sheets';
+}
+
+function buildPenetracao(){
+  // Por agora usa sempre Junho (único mês com dados de contratos)
+  // Usar meses seleccionados — acumular se vários
+  const mesesPEN = [...selMeses].filter(m => PENETRACAO[m]);
+  if(mesesPEN.length === 0) return;
+
+  const pen = {};
+  KEYS.forEach(k => {
+    pen[k] = {contratos26:0, seg26:0, contratos25:0, seg25:0};
+    mesesPEN.forEach(m => {
+      if(PENETRACAO[m] && PENETRACAO[m][k]) {
+        pen[k].contratos26 += PENETRACAO[m][k].contratos26;
+        pen[k].seg26       += PENETRACAO[m][k].seg26;
+        pen[k].contratos25 += PENETRACAO[m][k].contratos25;
+        pen[k].seg25       += PENETRACAO[m][k].seg25;
+      }
+    });
+  });
+  const labelPEN = mesesPEN.map(m=>MLAB[m]).join(' + ');
+  const cardsWrap = document.getElementById('penetracaoCards');
+  const tbody = document.getElementById('penetracaoBody');
+  if(!cardsWrap || !tbody) return;
+
+  cardsWrap.innerHTML = '';
+  tbody.innerHTML = '';
+
+  const nomes = [];
+  const taxas26 = [];
+  const taxas25 = [];
+  const cont26arr = [];
+  const cont25arr = [];
+  const cores = [];
+
+  // Ordenar por taxa de penetração 2026 (ranking)
+  const sorted = [...KEYS].sort((a,b) => {
+    const ra = pen[a], rb = pen[b];
+    return (rb.seg26/rb.contratos26) - (ra.seg26/ra.contratos26);
+  });
+
+  sorted.forEach((k) => {
+    const idx = KEYS.indexOf(k);
+    const b = BL[idx];
+    const r = pen[k];
+    const taxa26 = (r.seg26 / r.contratos26) * 100;
+    const taxa25 = (r.seg25 / r.contratos25) * 100;
+    const varTaxa = taxa26 - taxa25;
+
+    nomes.push(b.nome);
+    taxas26.push(taxa26.toFixed(1));
+    taxas25.push(taxa25.toFixed(1));
+    cont26arr.push(r.contratos26);
+    cont25arr.push(r.contratos25);
+    cores.push(b.cor);
+  });
+
+  const medals=['🥇','🥈','🥉','4º'];
+  const posC=['r1','r2','r3','r4'];
+
+  sorted.forEach((k, i) => {
+    const idx = KEYS.indexOf(k);
+    const b = BL[idx];
+    const r = pen[k];
+    const taxa26 = (r.seg26 / r.contratos26) * 100;
+    const taxa25 = (r.seg25 / r.contratos25) * 100;
+    const varTaxa = taxa26 - taxa25;
+
+    // Card
+    const card = document.createElement('div');
+    card.className = 'kpi-card balcao';
+    card.innerHTML = `
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${b.cor};border-radius:16px 16px 0 0;"></div>
+      <div class="kpi-balcao-name"><span class="bdot-lg" style="background:${b.cor}"></span>${b.nome} ${i===0?'<span style="font-size:14px">🏆</span>':''}</div>
+      <div class="kpi-label" style="margin-top:8px;">Taxa de Penetração</div>
+      <div class="kpi-value" style="font-size:28px;color:${b.cor}">${taxa26.toFixed(1)}%</div>
+      <div class="kpi-delta ${varTaxa>=0?'up':'down'}" style="font-size:11px">${varTaxa>=0?'▲ +':'▼ '}${Math.abs(varTaxa).toFixed(1)}pp vs 2025 (${taxa25.toFixed(1)}%)</div>
+    `;
+    cardsWrap.appendChild(card);
+
+    // Tabela
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="rpos ${posC[i]}">${medals[i]}</span></td>
+      <td><span class="bdot" style="background:${b.cor}"></span><span class="bname">${b.nome}</span></td>
+      <td>${fN(r.contratos26)}</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${b.cor}">${fN(r.seg26)}</td>
+      <td style="color:var(--green);font-weight:700">${taxa26.toFixed(1)}%</td>
+      <td style="color:var(--muted)">${fN(r.contratos25)}</td>
+      <td style="color:var(--muted)">${fN(r.seg25)}</td>
+      <td style="color:var(--muted)">${taxa25.toFixed(1)}%</td>
+      <td><span class="vchip ${varTaxa>=0?'vup':'vdown'}">${varTaxa>=0?'▲ +':'▼ '}${Math.abs(varTaxa).toFixed(1)}pp</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Gráficos
+  if(charts.penetracao) charts.penetracao.destroy();
+  if(charts.contratos) charts.contratos.destroy();
+
+  const cO3 = {responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#6b8caa',font:{size:11}}},tooltip:{backgroundColor:'#0e1e3a',borderColor:'rgba(0,180,216,0.3)',borderWidth:1}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b8caa'}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b8caa'}}}};
+
+  charts.penetracao = new Chart(document.getElementById('cPenetracao'), {
+    type: 'bar',
+    data: { labels: nomes, datasets: [
+      { label: '2026 %', data: taxas26, backgroundColor: cores, borderRadius: 6 },
+      { label: '2025 %', data: taxas25, backgroundColor: cores.map(c=>c+'80'), borderRadius: 6 },
+    ]},
+    options: {...cO3, scales:{...cO3.scales, y:{...cO3.scales.y, max:100, ticks:{color:'#6b8caa', callback: v=>v+'%'}}}}
+  });
+
+  charts.contratos = new Chart(document.getElementById('cContratos'), {
+    type: 'bar',
+    data: { labels: nomes, datasets: [
+      { label: '2026', data: cont26arr, backgroundColor: cores, borderRadius: 6 },
+      { label: '2025', data: cont25arr, backgroundColor: cores.map(c=>c+'80'), borderRadius: 6 },
+    ]},
+    options: {...cO3}
+  });
+  const dnP = document.getElementById('dnotePenetracao');
+  if(dnP) dnP.textContent = '📊 Taxa de Penetração = Nº Seguros ÷ Nº Contratos × 100 · Período: ' + labelPEN + ' · 2026 vs 2025 · Fonte: Google Sheets';
+}
+
+function showTab(n,el){
+  [1,2,3,4].forEach(i=>{const t=document.getElementById('nt'+i);if(t)t.classList.toggle('vis',i===n);});
+  const tabs=el.parentElement.querySelectorAll('.nat-tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function showTab26(n,el){
+  [1,2,3,4,5].forEach(i=>{const t=document.getElementById('nt26-'+i);if(t)t.classList.toggle('vis',i===n);});
+  const tabs=el.parentElement.querySelectorAll('.nat-tab');
+  tabs.forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function tick(){
+  const end=new Date('2026-09-30T23:59:59');
+  const now=new Date();
+  let diff=Math.max(0,end-now);
+  const d=Math.floor(diff/86400000);diff%=86400000;
+  const h=Math.floor(diff/3600000);diff%=3600000;
+  const m=Math.floor(diff/60000);
+  const s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+
+// ══════════ GERADOR DE EMAIL SEMANAL ══════════
+let emailHtmlCache='';
+let emailTextCache='';
+let emailSubjectCache='';
+
+// Destinatários — Marco seleccionado por defeito para testes
+let selRecipients=new Set(['jsferreira@santogal.pt']);
+
+function toggleRecipient(el){
+  const emails=el.getAttribute('data-email').split(',');
+  const allSel=emails.every(e=>selRecipients.has(e));
+  if(allSel){
+    emails.forEach(e=>selRecipients.delete(e));
+    el.classList.remove('sel');
+  } else {
+    emails.forEach(e=>selRecipients.add(e));
+    el.classList.add('sel');
+  }
+}
+
+function selecionarTodosDestinatarios(){
+  const labels=document.querySelectorAll('#recipientRow label');
+  labels.forEach(l=>{
+    l.getAttribute('data-email').split(',').forEach(e=>selRecipients.add(e));
+    l.classList.add('sel');
+  });
+}
+
+function getRecipientsString(){
+  return [...selRecipients].join(',');
+}
+
+let tipoResultado='prov'; // 'prov' ou 'fecho'
+
+function setTipoResultado(t){
+  tipoResultado=t;
+  document.getElementById('tipo-prov').classList.toggle('sel',t==='prov');
+  document.getElementById('tipo-fecho').classList.toggle('sel',t==='fecho');
+  gerarEmail();
+}
+
+function gerarEmail(){
+  // Usar os meses que o utilizador tem seleccionados
+  const mesesSel = [...selMeses].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
+  const ultimoMes = mesesSel[mesesSel.length-1] || 'jun';
+  const ultimoMesLabel = MLAB[ultimoMes];
+
+  // Acumulado = todos os meses seleccionados
+  const mesesComDados = mesesSel.filter(m=>KEYS.some(k=>DC[m][k].seg26>0));
+  const acumLabel = mesesComDados.length===0 ? ultimoMesLabel :
+                    mesesComDados.length===1 ? MLAB[mesesComDados[0]] :
+                    MLAB[mesesComDados[0]] + ' → ' + MLAB[mesesComDados[mesesComDados.length-1]];
+
+  // Dados do mês mais recente seleccionado
+  const dMes = {}; KEYS.forEach(k=>{dMes[k]={...DC[ultimoMes][k]};});
+  // Dados acumulados dos meses seleccionados
+  const dAcum = {}; KEYS.forEach(k=>{dAcum[k]={seg26:0,fat26:0,seg25:0,fat25:0};});
+  mesesSel.forEach(m=>{ KEYS.forEach(k=>{ dAcum[k].seg26+=DC[m][k].seg26; dAcum[k].fat26+=DC[m][k].fat26; dAcum[k].seg25+=DC[m][k].seg25; dAcum[k].fat25+=DC[m][k].fat25; }); });
+
+  const dataHoje=new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'});
+
+  // Totais mês
+  let tf26m=0,tf25m=0,ts26m=0,ts25m=0;
+  KEYS.forEach(k=>{tf26m+=dMes[k].fat26;tf25m+=dMes[k].fat25;ts26m+=dMes[k].seg26;ts25m+=dMes[k].seg25;});
+  // Totais acumulado
+  let tf26=0,tf25=0,ts26=0,ts25=0;
+  KEYS.forEach(k=>{tf26+=dAcum[k].fat26;tf25+=dAcum[k].fat25;ts26+=dAcum[k].seg26;ts25+=dAcum[k].seg25;});
+
+  const medals=['🥇','🥈','🥉','4º'];
+
+  // Função auxiliar para gerar tabela HTML
+  function gerarTabela(dados, label){
+    const sortedKeys=[...KEYS].sort((a,b)=>dados[b].fat26-dados[a].fat26);
+    let html='';
+    let txt='';
+    let liderNomeLocal='';
+    sortedKeys.forEach((k,i)=>{
+      const idx=KEYS.indexOf(k); const b=BL[idx]; const r=dados[k];
+      const varFat=r.fat25>0?(((r.fat26-r.fat25)/r.fat25)*100):0;
+      const varSeg=r.seg25>0?(((r.seg26-r.seg25)/r.seg25)*100):0;
+      const corVF=varFat>=0?'#06d6a0':'#ef476f';
+      const corVS=varSeg>=0?'#06d6a0':'#ef476f';
+      const isLeader=i===0;
+      if(isLeader)liderNomeLocal=b.nome;
+      html+=`<tr style="border-bottom:1px solid #eee;${isLeader?'background:#fff8ec;':''}">
+        <td style="padding:10px 6px;font-size:20px;text-align:center;">${medals[i]}</td>
+        <td style="padding:10px 6px;"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:${b.cor};margin-right:7px;vertical-align:middle;"></span><strong style="color:#0a1628;font-size:13px;">${b.nome}</strong>${isLeader?' <span style="background:#ff6b35;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:3px;">LÍDER</span>':''}</td>
+        <td style="padding:10px 6px;text-align:right;font-weight:700;color:#0a1628;font-size:13px;">${fN(r.seg26)}</td>
+        <td style="padding:10px 6px;text-align:right;color:#999;font-size:11px;">${fN(r.seg25)}</td>
+        <td style="padding:10px 6px;text-align:right;font-weight:700;color:${corVS};font-size:11px;">${varSeg>=0?'▲':'▼'} ${Math.abs(varSeg).toFixed(0)}%</td>
+        <td style="padding:10px 6px;text-align:right;font-weight:700;color:${b.cor};font-size:13px;">${fE(r.fat26)}</td>
+        <td style="padding:10px 6px;text-align:right;color:#999;font-size:11px;">${fE(r.fat25)}</td>
+        <td style="padding:10px 6px;text-align:right;font-weight:700;color:${corVF};font-size:11px;">${varFat>=0?'▲':'▼'} ${Math.abs(varFat).toFixed(0)}%</td>
+      </tr>`;
+      txt+=`${medals[i]} ${b.nome}${isLeader?' [LÍDER]':''}: ${fN(r.seg26)} seg (2025:${fN(r.seg25)} ${varSeg>=0?'▲':'▼'}${Math.abs(varSeg).toFixed(0)}%) · ${fE(r.fat26)} (2025:${fE(r.fat25)} ${varFat>=0?'▲':'▼'}${Math.abs(varFat).toFixed(0)}%)\n`;
+    });
+    return {html, txt, liderNome:liderNomeLocal};
+  }
+
+  const tabMes  = gerarTabela(dMes,  ultimoMesLabel);
+  const tabAcum = gerarTabela(dAcum, acumLabel);
+
+  const varGrupoMes  = tf25m>0?(((tf26m-tf25m)/tf25m)*100):0;
+  const varGrupoAcum = tf25>0?(((tf26-tf25)/tf25)*100):0;
+  const varGrupoSegMes  = ts25m>0?(((ts26m-ts25m)/ts25m)*100):0;
+  const varGrupoSegAcum = ts25>0?(((ts26-ts25)/ts25)*100):0;
+
+  const liderNome = tabAcum.liderNome;
+
+  // Badge e subject
+  const badgeTxt=tipoResultado==='prov'?'PROVISÓRIO · APENAS GRUPO SANTOGAL':'FECHO DO MÊS · OFICIAL';
+  const badgeCor=tipoResultado==='prov'?'#ff6b35':'#06d6a0';
+  const subject=tipoResultado==='prov'
+    ?`🏆 Challenge Seguros Opcionais — Resultados (Provisórios, apenas Grupo Santogal) ${ultimoMesLabel} | Líder: ${liderNome}`
+    :`🏆 Challenge Seguros Opcionais — Resultados Fecho do Mês ${ultimoMesLabel} | Líder: ${liderNome} (Grupo Santogal)`;
+
+  document.getElementById('emailSubject').innerHTML='<strong>Assunto:</strong> '+subject;
+
+  // Countdown
+  const diasRestantes=Math.max(0,Math.ceil((new Date('2026-09-30T23:59:59')-new Date())/86400000));
+
+  // Melhor crescimento acumulado
+  let nomeCresc=KEYS[0];let melhorPct=-999;
+  KEYS.forEach(k=>{const r=dAcum[k];if(r.fat25>0){const p=((r.fat26-r.fat25)/r.fat25*100);if(p>melhorPct){melhorPct=p;nomeCresc=k;}}});
+  const idxCresc=KEYS.indexOf(nomeCresc);
+  const nomeCresCNome=BL[idxCresc].nome;
+  const corCresc=BL[idxCresc].cor;
+
+  // Cabeçalho da tabela
+  const thHtml=`<tr style="background:linear-gradient(135deg,#001a4d,#003580);">
+    <th rowspan="2" style="padding:8px 6px;color:#fff;font-size:10px;text-transform:uppercase;vertical-align:middle;">Pos</th>
+    <th rowspan="2" style="padding:8px 6px;color:#fff;font-size:10px;text-transform:uppercase;text-align:left;vertical-align:middle;">Balcão</th>
+    <th colspan="3" style="padding:5px 6px 2px;color:#90e0ef;font-size:9px;text-transform:uppercase;text-align:center;border-bottom:1px solid rgba(255,255,255,0.15);">🛡️ Seguros</th>
+    <th colspan="3" style="padding:5px 6px 2px;color:#ffb088;font-size:9px;text-transform:uppercase;text-align:center;border-bottom:1px solid rgba(255,255,255,0.15);">💶 Faturação</th>
+  </tr>
+  <tr style="background:linear-gradient(135deg,#001a4d,#003580);">
+    <th style="padding:3px 6px 7px;color:#fff;font-size:9px;text-align:right;">2026</th>
+    <th style="padding:3px 6px 7px;color:#cce4f7;font-size:8px;text-align:right;">2025</th>
+    <th style="padding:3px 6px 7px;color:#fff;font-size:9px;text-align:right;">Var</th>
+    <th style="padding:3px 6px 7px;color:#fff;font-size:9px;text-align:right;">2026</th>
+    <th style="padding:3px 6px 7px;color:#cce4f7;font-size:8px;text-align:right;">2025</th>
+    <th style="padding:3px 6px 7px;color:#fff;font-size:9px;text-align:right;">Var</th>
+  </tr>`;
+
+  const tfootMes=`<tr style="background:#0a1628;">
+    <td colspan="2" style="padding:10px 6px;color:#fff;font-weight:bold;font-size:12px;">TOTAL</td>
+    <td style="padding:10px 6px;color:#fff;font-weight:bold;text-align:right;font-size:12px;">${fN(ts26m)}</td>
+    <td style="padding:10px 6px;color:#8ba3c7;text-align:right;font-size:10px;">${fN(ts25m)}</td>
+    <td style="padding:10px 6px;color:${varGrupoSegMes>=0?'#06d6a0':'#ff8080'};font-weight:bold;text-align:right;font-size:11px;">${varGrupoSegMes>=0?'▲ +':'▼ '}${Math.abs(varGrupoSegMes).toFixed(0)}%</td>
+    <td style="padding:10px 6px;color:#90e0ef;font-weight:bold;text-align:right;font-size:12px;">${fE(tf26m)}</td>
+    <td style="padding:10px 6px;color:#8ba3c7;text-align:right;font-size:10px;">${fE(tf25m)}</td>
+    <td style="padding:10px 6px;color:${varGrupoMes>=0?'#06d6a0':'#ff8080'};font-weight:bold;text-align:right;font-size:11px;">${varGrupoMes>=0?'▲ +':'▼ '}${Math.abs(varGrupoMes).toFixed(0)}%</td>
+  </tr>`;
+
+  const tfootAcum=`<tr style="background:#0a1628;">
+    <td colspan="2" style="padding:10px 6px;color:#fff;font-weight:bold;font-size:12px;">TOTAL ACUMULADO</td>
+    <td style="padding:10px 6px;color:#fff;font-weight:bold;text-align:right;font-size:12px;">${fN(ts26)}</td>
+    <td style="padding:10px 6px;color:#8ba3c7;text-align:right;font-size:10px;">${fN(ts25)}</td>
+    <td style="padding:10px 6px;color:${varGrupoSegAcum>=0?'#06d6a0':'#ff8080'};font-weight:bold;text-align:right;font-size:11px;">${varGrupoSegAcum>=0?'▲ +':'▼ '}${Math.abs(varGrupoSegAcum).toFixed(0)}%</td>
+    <td style="padding:10px 6px;color:#90e0ef;font-weight:bold;text-align:right;font-size:12px;">${fE(tf26)}</td>
+    <td style="padding:10px 6px;color:#8ba3c7;text-align:right;font-size:10px;">${fE(tf25)}</td>
+    <td style="padding:10px 6px;color:${varGrupoAcum>=0?'#06d6a0':'#ff8080'};font-weight:bold;text-align:right;font-size:11px;">${varGrupoAcum>=0?'▲ +':'▼ '}${Math.abs(varGrupoAcum).toFixed(0)}%</td>
+  </tr>`;
+
+  // Countdown até 30 Set 2026
+  // (diasRestantes já declarado acima)
+
+  const html=`
+<div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.15);">
+
+  <div style="background:${badgeCor};padding:8px;text-align:center;">
+    <span style="color:#fff;font-size:11px;font-weight:bold;letter-spacing:1.5px;">${tipoResultado==='prov'?'⏳':'✅'} ${badgeTxt}</span>
+  </div>
+
+  <!-- HERO -->
+  <div style="background:linear-gradient(135deg,#001a4d,#003580,#00b4d8);padding:28px 24px;text-align:center;">
+    <div style="color:#90e0ef;font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;font-weight:bold;">☀️ VERÃO 2026 ☀️</div>
+    <div style="color:#fff;font-size:26px;font-weight:bold;line-height:1.2;margin-bottom:4px;">Challenge Seguros Opcionais</div>
+    <div style="color:#ff6b35;font-size:15px;font-weight:bold;margin-top:6px;text-transform:uppercase;letter-spacing:1px;">🏁 Resultados ${ultimoMesLabel}</div>
+    <div style="margin-top:14px;display:inline-block;background:rgba(255,255,255,0.15);border-radius:100px;padding:7px 18px;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">⏰ ${diasRestantes} dias até ao fim do Challenge</span>
+    </div>
+  </div>
+
+  <div style="background:#f5f9fc;padding:24px;">
+    <p style="font-size:14px;color:#333;margin-top:0;">Bom dia equipa! 👋</p>
+    <p style="font-size:14px;color:#333;line-height:1.6;">Aqui está o ponto de situação do Challenge. Cada seguro vendido conta — foco até <strong>30 de Setembro</strong>!</p>
+
+    <!-- DESTAQUE LÍDER ACUMULADO -->
+    <div style="background:linear-gradient(135deg,#fff8ec,#ffe8d6);border:2px solid #ff6b35;border-radius:14px;padding:16px;margin:18px 0;text-align:center;">
+      <div style="font-size:28px;margin-bottom:4px;">🏆</div>
+      <div style="font-size:17px;font-weight:bold;color:#e85d04;">${liderNome} LIDERA O CHALLENGE ACUMULADO!</div>
+      <div style="font-size:12px;color:#666;margin-top:3px;">${fN(dAcum[tabAcum.liderNome===BL[0].nome?KEYS[0]:tabAcum.liderNome===BL[1].nome?KEYS[1]:tabAcum.liderNome===BL[2].nome?KEYS[2]:KEYS[3]]?.seg26||0)} seguros · ${fE(dAcum[tabAcum.liderNome===BL[0].nome?KEYS[0]:tabAcum.liderNome===BL[1].nome?KEYS[1]:tabAcum.liderNome===BL[2].nome?KEYS[2]:KEYS[3]]?.fat26||0)} acumulados (${acumLabel})</div>
+    </div>
+
+    <!-- TABELA MÊS ACTUAL -->
+    <div style="margin-bottom:6px;"><strong style="font-size:13px;color:#003580;">📅 ${ultimoMesLabel} — Resultados do Mês</strong></div>
+    <table style="width:100%;background:#fff;border-radius:12px;overflow:hidden;border-collapse:collapse;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+      <thead>${thHtml}</thead>
+      <tbody>${tabMes.html}</tbody>
+      <tfoot>${tfootMes}</tfoot>
+    </table>
+
+    <!-- TABELA ACUMULADA -->
+    <div style="margin-bottom:6px;"><strong style="font-size:13px;color:#003580;">📊 Acumulado Challenge (${acumLabel})</strong></div>
+    <table style="width:100%;background:#fff;border-radius:12px;overflow:hidden;border-collapse:collapse;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+      <thead>${thHtml}</thead>
+      <tbody>${tabAcum.html}</tbody>
+      <tfoot>${tfootAcum}</tfoot>
+    </table>
+
+    <!-- DESTAQUE CRESCIMENTO -->
+    <div style="background:#e8f9f3;border-left:4px solid #06d6a0;padding:12px 14px;border-radius:8px;margin:14px 0;">
+      <strong style="color:${corCresc};">📈 ${nomeCresCNome}</strong> <span style="font-size:13px;color:#666;">tem a melhor variação acumulada face a 2025!</span>
+    </div>
+
+    <!-- HALL OF FAME 2026 — A DECORRER, IGUAL AO DASHBOARD -->
+    <div style="background:linear-gradient(160deg,#0a1628,#0e2147,#001a4d);border-radius:14px;padding:20px;margin:18px 0;border:1px solid rgba(255,107,53,0.3);">
+      <div style="text-align:center;margin-bottom:14px;">
+        <div style="font-size:24px;">🏆</div>
+        <div style="color:#ff6b35;font-size:14px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;">Hall of Fame · Challenge 2026 · Junho</div>
+        <div style="color:#90e0ef;font-size:11px;margin-top:2px;">Rankings nacionais · 1º mês · Ninguém reúne ainda condições de prémio (acumulado Jun–Set)</div>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;">
+        <tr>
+          <td style="width:50%;padding:5px;vertical-align:top;">
+            <div style="background:rgba(255,255,255,0.05);border-left:3px solid #00b4d8;border-radius:8px;padding:10px;">
+              <div style="color:#00b4d8;font-size:9px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;">🏟️ Cat 1 · Frota ≥13</div>
+              <div style="font-size:11px;color:#8ba3c7;line-height:2;">
+                🥇 S&YOU – Carnaxide (P) · <span style="color:#FFD700;font-weight:bold;">5.696€</span><br>
+                🥈 <span style="color:#ff6b35;font-weight:bold;">⭐ SANTOGAL – Cacém (P) · 4.471€</span><br>
+                🥉 S&YOU – Carnaxide (D) · <span style="color:#CD7F32;font-weight:bold;">4.154€</span><br>
+                <span style="color:#ff9f43;">4º SANTOGAL – Lisboa (P) · 3.613€</span><br>
+                <span style="color:#ff9f43;">7º SANTOGAL – Loures (P) · 1.707€</span>
+              </div>
+            </div>
+          </td>
+          <td style="width:50%;padding:5px;vertical-align:top;">
+            <div style="background:rgba(255,255,255,0.05);border-left:3px solid #00b4d8;border-radius:8px;padding:10px;">
+              <div style="color:#00b4d8;font-size:9px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;">🏪 Cat 2 · Frota 8-12</div>
+              <div style="font-size:11px;color:#8ba3c7;line-height:2;">
+                🥇 CARBY – V.N. de Gaia (P) · <span style="color:#FFD700;font-weight:bold;">3.364€</span><br>
+                🥈 <span style="color:#ff6b35;font-weight:bold;">⭐ SANTOGAL – Cacém (O) · 3.003€</span><br>
+                🥉 <span style="color:#ff6b35;font-weight:bold;">⭐ SANTOGAL – Cacém (C) · 1.695€</span><br>
+                <span style="color:#ff9f43;">4º SANTOGAL – Cascais (P) · 924€</span><br>
+                <span style="color:#ff9f43;">6º SANTOGAL – Loures (O) · 706€</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:50%;padding:5px;vertical-align:top;">
+            <div style="background:rgba(255,255,255,0.05);border-left:3px solid #00b4d8;border-radius:8px;padding:10px;">
+              <div style="color:#00b4d8;font-size:9px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;">🏬 Cat 3 · Frota 4-7</div>
+              <div style="font-size:11px;color:#8ba3c7;line-height:2;">
+                🥇 CARBY – V.F. de Xira (P) · <span style="color:#FFD700;font-weight:bold;">2.779€</span><br>
+                🥈 CARBY – V.N. de Gaia (C) · <span style="color:#C0C0C0;font-weight:bold;">2.146€</span><br>
+                🥉 CAETANO GAMOBAR – S.Tirso · <span style="color:#CD7F32;font-weight:bold;">1.560€</span><br>
+                <span style="color:#ff9f43;">6º SANTOGAL – Lisboa (C) · 740€</span><br>
+                <span style="color:#ff9f43;">11º SANTOGAL – Lisboa (O) · 620€</span>
+              </div>
+            </div>
+          </td>
+          <td style="width:50%;padding:5px;vertical-align:top;">
+            <div style="background:rgba(255,255,255,0.05);border-left:3px solid #00b4d8;border-radius:8px;padding:10px;">
+              <div style="color:#00b4d8;font-size:9px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;">🏷️ Cat 4 · Frota ≤3</div>
+              <div style="font-size:11px;color:#8ba3c7;line-height:2;">
+                🥇 CARBY – V.F. de Xira (O) · <span style="color:#FFD700;font-weight:bold;">1.943€</span><br>
+                🥈 CARBY – V.F. de Xira (F) · <span style="color:#C0C0C0;font-weight:bold;">1.769€</span><br>
+                🥉 <span style="color:#ff6b35;font-weight:bold;">⭐ SANTOGAL – Cascais (J) · 915€</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div style="text-align:center;margin-top:12px;background:rgba(255,107,53,0.1);border-radius:8px;padding:8px;">
+        <span style="color:#ff9f43;font-size:11px;font-weight:bold;">⭐ Santogal presente em 14 posições nos rankings nacionais · 4 pódios! Vamos subir em Julho!</span>
+      </div>
+    </div>
+
+    <!-- HALL OF FAME 2025 — 4 CATEGORIAS, COMO NO DASHBOARD -->
+    <div style="background:linear-gradient(160deg,#0a1628,#0e2147,#001a4d);border-radius:14px;padding:20px;margin:20px 0;">
+      <div style="text-align:center;margin-bottom:16px;">
+        <div style="font-size:26px;">🏅</div>
+        <div style="color:#00b4d8;font-size:14px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;">Hall of Fame · Challenge 2025</div>
+        <div style="color:#90e0ef;font-size:11px;margin-top:2px;">Onde estivemos vs a concorrência nacional — para não esquecer!</div>
+      </div>
+
+      <p style="color:#cce4f7;font-size:12px;line-height:1.7;text-align:center;margin:0 0 16px;padding:0 6px;">🎯 Fomos <strong style="color:#fff;">1º e 2º nacional na Cat 1</strong>, <strong style="color:#fff;">2º</strong> na Cat 2, <strong style="color:#fff;">2º</strong> na Cat 3. Cascais ficou a <strong style="color:#ff9f43;">apenas 6€</strong> do 3º lugar Cat 2! Em 2026 vamos a todos os pódios! 💪</p>
+
+      <!-- CATEGORIA 1 -->
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid #00b4d8;">
+        <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🏟️ Categoria 1 · Frota ≥13 · Líderes nacionais</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:4px 0;font-size:16px;width:28px;">🥇</td><td style="padding:4px 0;"><strong style="color:#ff6b35;font-size:12px;">⭐ SANTOGAL – Cacém (P)</strong><br><span style="color:#FFD700;font-size:10px;font-weight:bold;">💰 Prémio 350€</span></td><td style="padding:4px 0;text-align:right;color:#FFD700;font-size:13px;font-weight:bold;vertical-align:top;">17.391€</td></tr>
+          <tr><td style="padding:4px 0;font-size:16px;">🥈</td><td style="padding:4px 0;"><strong style="color:#ff6b35;font-size:12px;">⭐ SANTOGAL – Lisboa (P)</strong><br><span style="color:#C0C0C0;font-size:10px;font-weight:bold;">💰 Prémio 250€</span></td><td style="padding:4px 0;text-align:right;color:#fff;font-size:13px;font-weight:bold;vertical-align:top;">14.031€</td></tr>
+          <tr><td style="padding:4px 0;font-size:16px;">🥉</td><td style="padding:4px 0;color:#cce4f7;font-size:12px;">S&YOU – Carnaxide (P)</td><td style="padding:4px 0;text-align:right;color:#cce4f7;font-size:12px;">13.812€</td></tr>
+          <tr><td style="padding:4px 0;font-size:11px;color:#6b8caa;">5º</td><td style="padding:4px 0;color:#ff9f80;font-size:11px;">SANTOGAL – Loures (P)</td><td style="padding:4px 0;text-align:right;color:#6b8caa;font-size:11px;">9.239€</td></tr>
+        </table>
+      </div>
+
+      <!-- CATEGORIA 2 -->
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid #00b4d8;">
+        <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🏪 Categoria 2 · Frota 8–12 viaturas</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:4px 0;font-size:16px;width:28px;">🥇</td><td style="padding:4px 0;color:#cce4f7;font-size:12px;">CARBY – Vila Nova de Gaia</td><td style="padding:4px 0;text-align:right;color:#FFD700;font-size:13px;font-weight:bold;">11.831€</td></tr>
+          <tr><td style="padding:4px 0;font-size:16px;">🥈</td><td style="padding:4px 0;"><strong style="color:#ff6b35;font-size:12px;">⭐ SANTOGAL – Cacém (C)</strong><br><span style="color:#C0C0C0;font-size:10px;font-weight:bold;">💰 Prémio 250€</span></td><td style="padding:4px 0;text-align:right;color:#fff;font-size:13px;font-weight:bold;vertical-align:top;">5.714€</td></tr>
+          <tr><td style="padding:4px 0;font-size:16px;">🥉</td><td style="padding:4px 0;color:#cce4f7;font-size:12px;">S&YOU – Amadora (J)</td><td style="padding:4px 0;text-align:right;color:#cce4f7;font-size:12px;">5.554€</td></tr>
+          <tr><td colspan="3" style="padding:6px 0 0;">
+            <div style="background:rgba(255,107,53,0.18);border:1px dashed #ff6b35;border-radius:8px;padding:8px 10px;">
+              <span style="color:#ff9f43;font-size:11px;font-weight:bold;">4º SANTOGAL – Cascais (P) · 5.548€</span><br>
+              <span style="color:#ffb088;font-size:11px;">⚡ A apenas 6€ do 3º lugar!</span>
+            </div>
+          </td></tr>
+        </table>
+      </div>
+
+      <!-- CATEGORIA 3 -->
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid #00b4d8;">
+        <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🏬 Categoria 3 · Frota 4–7 viaturas</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:4px 0;font-size:16px;width:28px;">🥇</td><td style="padding:4px 0;color:#cce4f7;font-size:12px;">CARBY – V.N. de Gaia (C)</td><td style="padding:4px 0;text-align:right;color:#FFD700;font-size:13px;font-weight:bold;">8.931€</td></tr>
+          <tr><td style="padding:4px 0;font-size:16px;">🥈</td><td style="padding:4px 0;"><strong style="color:#ff6b35;font-size:12px;">⭐ SANTOGAL – Lisboa (C)</strong><br><span style="color:#C0C0C0;font-size:10px;font-weight:bold;">💰 Prémio 250€</span></td><td style="padding:4px 0;text-align:right;color:#fff;font-size:13px;font-weight:bold;vertical-align:top;">8.111€</td></tr>
+          <tr><td style="padding:4px 0;font-size:16px;">🥉</td><td style="padding:4px 0;color:#cce4f7;font-size:12px;">CARBY – Almada (O)</td><td style="padding:4px 0;text-align:right;color:#cce4f7;font-size:12px;">7.731€</td></tr>
+          <tr><td style="padding:4px 0;font-size:11px;color:#6b8caa;">5/6/8º</td><td colspan="2" style="padding:4px 0;color:#ff9f80;font-size:11px;">Cacém(O) 4.046€ · Lisboa(O) 3.814€ · Cascais(O) 3.073€</td></tr>
+        </table>
+      </div>
+
+      <!-- CATEGORIA 4 -->
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:14px;border-left:3px solid #00b4d8;">
+        <div style="color:#00b4d8;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🏷️ Categoria 4 · Frota ≤3 viaturas</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:4px 0;font-size:16px;width:28px;">🥇</td><td style="padding:4px 0;color:#cce4f7;font-size:12px;">CARBY – V.F. de Xira (C)</td><td style="padding:4px 0;text-align:right;color:#FFD700;font-size:13px;font-weight:bold;">6.843€</td></tr>
+          <tr><td style="padding:4px 0;font-size:11px;color:#6b8caa;">5º</td><td style="padding:4px 0;color:#ff9f80;font-size:11px;">SANTOGAL – Cascais (AR)</td><td style="padding:4px 0;text-align:right;color:#6b8caa;font-size:11px;">1.655€</td></tr>
+          <tr><td style="padding:4px 0;font-size:11px;color:#6b8caa;">6º</td><td style="padding:4px 0;color:#ff9f80;font-size:11px;">SANTOGAL – Cascais (F)</td><td style="padding:4px 0;text-align:right;color:#6b8caa;font-size:11px;">1.517€</td></tr>
+          <tr><td style="padding:4px 0;font-size:11px;color:#6b8caa;">9/11º</td><td colspan="2" style="padding:4px 0;color:#ff9f80;font-size:11px;">Cacém(F) 1.300€ · Cascais(J) 1.037€</td></tr>
+        </table>
+      </div>
+
+      <div style="text-align:center;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1);">
+        <span style="color:#fff;font-size:13px;font-weight:bold;">🔥 4 pódios nacionais em 2025. Em 2026, queremos TODOS! 🔥</span><br>
+        <span style="color:#FFD700;font-size:12px;font-weight:bold;margin-top:4px;">💰 1.100€ em prémios conquistados em 2025 — quanto vamos ganhar este ano?</span>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:#666;line-height:1.6;">🎯 <strong>Lembrete rápido:</strong> cada seguro opcional vendido aproxima o teu balcão do prémio (350€/250€/150€) e da rentabilidade extra do mês. Propõe sempre o seguro a todos os clientes!</p>
+
+    <!-- DDV -->
+    <div style="background:#0a1628;border-radius:12px;padding:16px;margin-top:18px;text-align:center;">
+      <div style="color:#FFD700;font-size:22px;font-weight:bold;letter-spacing:4px;">D D V</div>
+      <div style="color:#90e0ef;font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Dinâmica de Vitória</div>
+    </div>
+
+    <p style="font-size:14px;color:#333;margin-top:18px;text-align:center;font-weight:bold;">Vamos com tudo! Bons negócios a todos! 🚀</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0a1628;padding:16px;text-align:center;">
+    <span style="color:#6b8caa;font-size:11px;">SANTOGAL · FREE2MOVE RENT · Challenge Jun→Set 2026 · ${dataHoje}</span>
+  </div>
+</div>`;
+
+  const varGrupoSegAcumTxt=ts25>0?(((ts26-ts25)/ts25)*100):0;
+  const text=`${tipoResultado==='prov'?'⏳ RESULTADOS PROVISÓRIOS (apenas Grupo Santogal)':'✅ RESULTADOS FECHO DO MÊS (Oficial)'}\n\nCHALLENGE SEGUROS OPCIONAIS — ${ultimoMesLabel} | Líder: ${liderNome}\n⏰ ${diasRestantes} dias até ao fim do Challenge\n\nBom dia equipa!\n\n📅 ${ultimoMesLabel} — Resultados do mês:\n${tabMes.txt}\nTotal mês: ${fN(ts26m)} seguros (2025: ${fN(ts25m)} · ${varGrupoSegMes>=0?'+':'▼ '}${Math.abs(varGrupoSegMes).toFixed(0)}%) · ${fE(tf26m)} (2025: ${fE(tf25m)} · ${varGrupoMes>=0?'+':'▼ '}${Math.abs(varGrupoMes).toFixed(0)}%)\n\n📊 Acumulado ${acumLabel}:\n${tabAcum.txt}\nTotal acumulado: ${fN(ts26)} seguros (2025: ${fN(ts25)} · ${varGrupoSegAcumTxt>=0?'+':'▼ '}${Math.abs(varGrupoSegAcumTxt).toFixed(0)}%) · ${fE(tf26)} (2025: ${fE(tf25)} · ${varGrupoAcum>=0?'+':'▼ '}${Math.abs(varGrupoAcum).toFixed(0)}%)\n\n🏆 ${liderNome} LIDERA O CHALLENGE!\n📈 ${nomeCresCNome} tem a melhor variação acumulada vs 2025!\n\n🎯 HALL OF FAME 2026 · Rankings Nacionais Junho:\nCat 1: 🥇 S&YOU Carnaxide (P) 5.696€ · 🥈⭐ SANTOGAL Cacém (P) 4.471€ · 🥉 S&YOU Carnaxide (D) 4.154€ · 4º⭐ Lisboa (P) 3.613€ · 7º⭐ Loures (P) 1.707€\nCat 2: 🥇 CARBY V.N.Gaia (P) 3.364€ · 🥈⭐ SANTOGAL Cacém (O) 3.003€ · 🥉⭐ Cacém (C) 1.695€ · 4º⭐ Cascais (P) 924€ · 6º⭐ Loures (O) 706€\nCat 3: 🥇 CARBY V.F.Xira (P) 2.779€ · 🥈 CARBY V.N.Gaia (C) 2.146€ · 🥉 CAETANO S.Tirso 1.560€ · 6º⭐ Lisboa (C) 740€\nCat 4: 🥇 CARBY V.F.Xira (O) 1.943€ · 🥈 CARBY V.F.Xira (F) 1.769€ · 🥉⭐ SANTOGAL Cascais (J) 915€\n⭐ 4 pódios em Junho! Vamos subir em Julho!\n\n🏅 HALL OF FAME 2025:\n🥇 Cacém — 1º Nacional Cat1 (17.391€ · 350€)\n🥈 Lisboa — 2º Nacional Cat1 (14.031€ · 250€)\n🥈 Cacém — 2º Nacional Cat2 (5.714€ · 250€)\n🥈 Lisboa — 2º Nacional Cat3 (8.111€ · 250€)\n⚡ Cascais a apenas 6€ do pódio Cat2!\n\n4 pódios em 2025. Em 2026, queremos TODOS! 💪\n💰 1.100€ em prémios em 2025 — quanto vamos ganhar este ano?\n\nD D V — Dinâmica de Vitória\n\nVamos com tudo! Bons negócios a todos! 🚀`;
+
+  emailHtmlCache=html;
+  emailTextCache=text;
+  emailSubjectCache=subject;
+  document.getElementById('emailPreview').innerHTML=html;
+  document.getElementById('mEmail').classList.add('open');
+}
+
+function copiarEmail(){
+  const blob=new Blob([emailHtmlCache],{type:'text/html'});
+  const item=new ClipboardItem({'text/html':blob, 'text/plain':new Blob([emailTextCache],{type:'text/plain'})});
+  navigator.clipboard.write([item]).then(()=>{
+    document.getElementById('copyStatus').style.display='block';
+    setTimeout(()=>document.getElementById('copyStatus').style.display='none',3000);
+  }).catch(()=>{
+    navigator.clipboard.writeText(emailTextCache);
+    document.getElementById('copyStatus').textContent='✅ Copiado como texto simples (HTML não suportado neste navegador)';
+    document.getElementById('copyStatus').style.display='block';
+  });
+}
+
+function copiarTextoSimples(){
+  navigator.clipboard.writeText(emailTextCache).then(()=>{
+    document.getElementById('copyStatus').textContent='✅ Texto simples copiado!';
+    document.getElementById('copyStatus').style.display='block';
+    setTimeout(()=>document.getElementById('copyStatus').style.display='none',3000);
+  });
+}
+
+function abrirGmail(){
+  const to=getRecipientsString();
+  if(!to){alert('Seleciona pelo menos um destinatário.');return;}
+  // Copia o HTML formatado ANTES de abrir, para já estar na área de transferência
+  copiarEmail();
+  // Abre o Gmail SEM body — só destinatário + assunto — para depois colares o HTML bonito
+  const url='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(to)+'&su='+encodeURIComponent(emailSubjectCache);
+  window.open(url,'_blank');
+  document.getElementById('copyStatus').textContent='✅ Gmail aberto + HTML copiado! Clica no corpo do email e cola (Ctrl+V).';
+  document.getElementById('copyStatus').style.display='block';
+}
+
+function abrirMailto(){
+  const to=getRecipientsString();
+  if(!to){alert('Seleciona pelo menos um destinatário.');return;}
+  copiarEmail();
+  const url='mailto:'+encodeURIComponent(to).replace(/%2C/g,',')+'?subject='+encodeURIComponent(emailSubjectCache);
+  window.location.href=url;
+  document.getElementById('copyStatus').textContent='✅ Cliente de email aberto + HTML copiado! Cola no corpo (Ctrl+V).';
+  document.getElementById('copyStatus').style.display='block';
+}
+
+document.getElementById('lastUp').textContent='Última actualização: '+new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const _hof26el = document.getElementById('hof26Date');
+if(_hof26el) _hof26el.textContent=new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'});
+build();
+tick();
+setInterval(tick,1000);
+</script>
+</body>
+</html>

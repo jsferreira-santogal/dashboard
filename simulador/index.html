@@ -327,19 +327,6 @@ footer{ text-align:center; color:var(--muted); font-size:11.5px; margin-top:30px
         </div>
         <div class="row" style="margin-top:16px;">
           <div class="field">
-            <label>Preparado por *</label>
-            <select id="preparedBySelect">
-              <option value="">Seleciona quem prepara a proposta</option>
-              <option value="Marco Ferreira">Marco Ferreira</option>
-              <option value="Gonçalo Tavares">Gonçalo Tavares</option>
-              <option value="Miguel Ângelo Taborda">Miguel Ângelo Taborda</option>
-              <option value="Fernanda Costa">Fernanda Costa</option>
-              <option value="Carla Dias">Carla Dias</option>
-              <option value="Diogo Martins">Diogo Martins</option>
-              <option value="Pedro Alves">Pedro Alves</option>
-            </select>
-          </div>
-          <div class="field">
             <label>Nome do cliente *</label>
             <input type="text" id="clientName" placeholder="Ex: João Silva">
           </div>
@@ -378,12 +365,6 @@ footer{ text-align:center; color:var(--muted); font-size:11.5px; margin-top:30px
             <label id="discountLabel">Desconto por dia (€)</label>
             <input type="number" id="discountValue" min="0" value="0" step="1">
           </div>
-        </div>
-        <div class="hint" id="discountLimitHint" style="margin-top:6px;">Até 5€/dia (ou equivalente acumulado) não precisa de autorização. Acima disso, o desconto fica limitado a esse valor.</div>
-        <div class="field" style="margin-bottom:0; margin-top:10px;">
-          <label>PIN de autorização (Rent Manager)</label>
-          <input type="password" id="discountPin" placeholder="Só necessário acima do limite" inputmode="numeric" maxlength="6">
-          <div class="hint" id="discountPinHint"></div>
         </div>
         <label class="checkbox-row" style="margin-top:10px;">
           <input type="checkbox" id="discountVisible" checked>
@@ -464,9 +445,6 @@ function carImgUrl(cat){
   return CARS_IMG_BASE + cat.toLowerCase() + ".jpg";
 }
 const RELAX_PRICE = 29;
-const DISCOUNT_FREE_LIMIT_PER_DAY = 5;
-const DISCOUNT_AUTH_PIN = "456321";
-const FULL_PERMISSION_NAMES = ["Marco Ferreira", "Gonçalo Tavares"];
 
 const BRANCH_CONTACTS = {
   "Santogal Cacém": [
@@ -499,8 +477,6 @@ let state = {
   discount: 0,
   discountMode: 'dia', // 'dia' = desconto à tarifa/dia | 'total' = desconto no total do contrato
   discountVisible: true, // false = o desconto não aparece na proposta enviada ao cliente (valor final já vem líquido)
-  discountPin: "",
-  preparedBy: "",
   clientName: "",
   clientEmail: "",
   branch: "Geral",
@@ -601,10 +577,6 @@ document.getElementById('discountValue').addEventListener('input', e=>{
   state.discount = parseFloat(e.target.value || 0);
   update();
 });
-document.getElementById('discountPin').addEventListener('input', e=>{
-  state.discountPin = e.target.value.trim();
-  update();
-});
 document.getElementById('discountVisible').addEventListener('change', e=>{
   state.discountVisible = e.target.checked;
   update();
@@ -633,10 +605,6 @@ document.querySelectorAll('.ctoggle').forEach(btn=>{
 });
 document.getElementById('clientName').addEventListener('input', e=>{
   state.clientName = e.target.value;
-  update();
-});
-document.getElementById('preparedBySelect').addEventListener('change', e=>{
-  state.preparedBy = e.target.value;
   update();
 });
 document.getElementById('clientEmail').addEventListener('input', e=>{
@@ -678,17 +646,13 @@ function calc(){
 
   const dailyTotal = v.valorDia + insuranceAddon;
   const discountInput = state.discount || 0;
-  const discountAuthorized = FULL_PERMISSION_NAMES.includes(state.preparedBy) || state.discountPin === DISCOUNT_AUTH_PIN;
 
   let discountPerDay = 0;
   let discountTotal = 0;
   let effectiveDaily = dailyTotal;
-  let discountCapped = false;
 
   if(state.discountMode === 'dia'){
-    const maxAllowed = discountAuthorized ? dailyTotal : Math.min(DISCOUNT_FREE_LIMIT_PER_DAY, dailyTotal);
-    discountCapped = discountInput > maxAllowed;
-    discountPerDay = Math.min(discountInput, maxAllowed); // não deixa ficar negativo nem exceder o limite
+    discountPerDay = Math.min(discountInput, dailyTotal); // não deixa ficar negativo
     effectiveDaily = dailyTotal - discountPerDay;
     discountTotal = discountPerDay * days;
   }
@@ -698,9 +662,7 @@ function calc(){
   const subtotal = rentalSubtotal + viaVerdeTotal;
 
   if(state.discountMode === 'total'){
-    const maxAllowed = discountAuthorized ? subtotal : Math.min(DISCOUNT_FREE_LIMIT_PER_DAY * days, subtotal);
-    discountCapped = discountInput > maxAllowed;
-    discountTotal = Math.min(discountInput, maxAllowed);
+    discountTotal = Math.min(discountInput, subtotal);
   }
 
   const total = subtotal - (state.discountMode === 'total' ? discountTotal : 0);
@@ -720,7 +682,6 @@ function calc(){
   return {
     v, days, insuranceAddon, dailyTotal, effectiveDaily, rentalSubtotal, viaVerdeTotal,
     subtotal, discount: discountTotal, discountPerDay, discountMode: state.discountMode,
-    discountAuthorized, discountCapped, discountInput,
     discountVisible: state.discountVisible,
     total, franquiaLabel, depositoLabel, packLabel, kmIncluded, startDateLabel, endDateLabel
   };
@@ -738,23 +699,6 @@ const openGmailBtn = document.getElementById('openGmailBtn');
 function update(){
   const c = calc();
   const hasClientName = !!(state.clientName && state.clientName.trim());
-  const hasPreparedBy = !!state.preparedBy;
-  const canProceed = hasClientName && hasPreparedBy;
-
-  const pinHintEl = document.getElementById('discountPinHint');
-  if(FULL_PERMISSION_NAMES.includes(state.preparedBy)){
-    pinHintEl.textContent = "✅ Permissão total — sem limite de desconto.";
-    pinHintEl.style.color = "var(--green)";
-  } else if(state.discountPin === ""){
-    pinHintEl.textContent = "";
-    pinHintEl.style.color = "";
-  } else if(state.discountPin === DISCOUNT_AUTH_PIN){
-    pinHintEl.textContent = "✅ Autorizado — desconto liberto até ao valor pretendido.";
-    pinHintEl.style.color = "var(--green)";
-  } else {
-    pinHintEl.textContent = "❌ PIN incorreto — desconto limitado a 5€/dia.";
-    pinHintEl.style.color = "var(--pink)";
-  }
 
   if(!c){
     summaryBody.innerHTML = `<div class="badge-empty">Seleciona uma viatura para veres o valor do aluguer aqui.</div>`;
@@ -765,9 +709,9 @@ function update(){
     return;
   }
   summaryCat.textContent = `${c.v.cat} · ${c.days}d`;
-  copyBtn.disabled = !canProceed;
-  copyTextBtn.disabled = !canProceed;
-  openGmailBtn.disabled = !canProceed;
+  copyBtn.disabled = !hasClientName;
+  copyTextBtn.disabled = !hasClientName;
+  openGmailBtn.disabled = !hasClientName;
 
   summaryBody.innerHTML = `
     <div class="sum-line"><span class="l">Viatura</span><span class="v">${c.v.modelo}</span></div>
@@ -777,7 +721,6 @@ function update(){
     ${c.discountMode === 'dia' && c.discountPerDay > 0 ? `
     <div class="sum-line"><span class="l">Desconto por dia</span><span class="v" style="color:var(--pink)">-${c.discountPerDay.toFixed(2)}€/dia</span></div>
     <div class="sum-line"><span class="l">Valor dia final</span><span class="v">${c.effectiveDaily.toFixed(2)}€</span></div>` : ''}
-    ${c.discountCapped ? `<div class="hint" style="color:var(--pink);margin:4px 0;">⚠️ Pediste ${c.discountInput.toFixed(2)}€, mas sem autorização o desconto fica limitado a 5€/dia. Insere o PIN para libertar o valor total.</div>` : ''}
     <div class="sum-line"><span class="l">Dias</span><span class="v">${c.days}</span></div>
     <div class="sum-line"><span class="l">Subtotal aluguer</span><span class="v">${c.rentalSubtotal.toFixed(2)}€</span></div>
     ${c.viaVerdeTotal > 0 ? `<div class="sum-line"><span class="l">Via Verde</span><span class="v">${c.viaVerdeTotal.toFixed(2)}€</span></div>` : ''}

@@ -308,7 +308,7 @@ footer{ text-align:center; color:var(--muted); font-size:11.5px; margin-top:30px
           </div>
           <div class="pack pack-relax" data-pack="relax">
             <h3>Pack Relax</h3>
-            <div class="p">+29€/dia</div>
+            <div class="p" id="relaxPrice">+29€/dia</div>
             <ul>
               <li>Franquia 0€ — tudo incluído</li>
               <li>Quebra de vidro, pneus, pertences pessoais</li>
@@ -445,6 +445,8 @@ function carImgUrl(cat){
   return CARS_IMG_BASE + cat.toLowerCase() + ".jpg";
 }
 const RELAX_PRICE = 29;
+const COMMERCIAL_SMART_PRICE = 21;
+const COMMERCIAL_RELAX_PRICE = 35;
 
 const BRANCH_CONTACTS = {
   "Santogal Cacém": [
@@ -629,14 +631,14 @@ function calc(){
   let packLabel = "Pacote Básico — já incluído: danos próprios com franquia de série";
 
   if(state.pack === 'smart'){
-    insuranceAddon = v.smart;
+    insuranceAddon = v.seg === 'Comerciais' ? COMMERCIAL_SMART_PRICE : v.smart;
     franquiaLabel = "0€ (exclui quebra de vidro e pneus)";
-    packLabel = `Pack Smart (+${v.smart}€/dia)`;
+    packLabel = `Pack Smart (+${insuranceAddon}€/dia)`;
   } else if(state.pack === 'relax'){
-    insuranceAddon = RELAX_PRICE;
+    insuranceAddon = v.seg === 'Comerciais' ? COMMERCIAL_RELAX_PRICE : RELAX_PRICE;
     franquiaLabel = "0€ — tudo incluído";
     depositoLabel = `${(v.deposito/2).toLocaleString('pt-PT')}€ (caução reduzida a metade)`;
-    packLabel = `Pack Relax (+${RELAX_PRICE}€/dia)`;
+    packLabel = `Pack Relax (+${insuranceAddon}€/dia)`;
   }
 
   const caucaoIsCortesia = state.caucao === 'cortesia';
@@ -708,6 +710,10 @@ function update(){
     openGmailBtn.disabled = true;
     return;
   }
+  const smartBadgePrice = c.v.seg === 'Comerciais' ? COMMERCIAL_SMART_PRICE : c.v.smart;
+  const relaxBadgePrice = c.v.seg === 'Comerciais' ? COMMERCIAL_RELAX_PRICE : RELAX_PRICE;
+  document.getElementById('smartPrice').textContent = `+${smartBadgePrice}€/dia`;
+  document.getElementById('relaxPrice').textContent = `+${relaxBadgePrice}€/dia`;
   summaryCat.textContent = `${c.v.cat} · ${c.days}d`;
   copyBtn.disabled = !hasClientName;
   copyTextBtn.disabled = !hasClientName;
@@ -745,19 +751,21 @@ function generateProposalHTML(){
   const subtotalRowValue = (c.discountMode === 'total' && c.discount > 0 && !c.discountVisible) ? Math.max(0, c.rentalSubtotal - c.discount) : c.rentalSubtotal;
   const packCard = (kind, selected) => {
     if(kind === 'smart'){
+      const smartPrice = c.v.seg === 'Comerciais' ? COMMERCIAL_SMART_PRICE : c.v.smart;
       return `
         <td style="padding:14px;background:${selected ? '#5b4bdb' : 'rgba(91,75,219,0.14)'};border:${selected ? 'none' : '1px solid rgba(91,75,219,0.4)'};border-radius:10px;vertical-align:top;width:50%;">
           <div style="color:${selected ? '#fff' : '#c9c3ff'};font-weight:800;font-size:14px;margin-bottom:6px;">Pack Smart${selected ? ' — Selecionado ✔' : ''}</div>
           <div style="color:${selected ? '#e6e2ff' : '#a89ee0'};font-size:11.5px;line-height:1.6;">Danos materiais · Incêndio · Roubo · Vandalismo<br>Franquia reduzida a 0€ (exclui vidros/pneus)</div>
-          <div style="color:${selected ? '#fff' : '#c9c3ff'};font-weight:800;font-size:18px;margin-top:8px;">${c.v.smart}€ <span style="font-size:10px;font-weight:500;">/dia</span></div>
+          <div style="color:${selected ? '#fff' : '#c9c3ff'};font-weight:800;font-size:18px;margin-top:8px;">${smartPrice}€ <span style="font-size:10px;font-weight:500;">/dia</span></div>
           ${!selected ? `<div style="color:#a89ee0;font-size:10.5px;margin-top:6px;">Disponível — pode ser adicionado caso veja vantagem</div>` : ''}
         </td>`;
     }
+    const relaxPrice = c.v.seg === 'Comerciais' ? COMMERCIAL_RELAX_PRICE : RELAX_PRICE;
     return `
         <td style="padding:14px;background:${selected ? '#d6266f' : 'rgba(214,38,111,0.14)'};border:${selected ? 'none' : '1px solid rgba(214,38,111,0.4)'};border-radius:10px;vertical-align:top;width:50%;">
           <div style="color:${selected ? '#fff' : '#ffb3d6'};font-weight:800;font-size:14px;margin-bottom:6px;">Pack Relax${selected ? ' — Selecionado ✔' : ''}</div>
           <div style="color:${selected ? '#ffd9ea' : '#e08cb3'};font-size:11.5px;line-height:1.6;">Franquia 0€ — tudo incluído<br>Quebra de vidro · Pneus · Pertences pessoais · Caução reduzida a metade</div>
-          <div style="color:${selected ? '#fff' : '#ffb3d6'};font-weight:800;font-size:18px;margin-top:8px;">${RELAX_PRICE}€ <span style="font-size:10px;font-weight:500;">/dia</span></div>
+          <div style="color:${selected ? '#fff' : '#ffb3d6'};font-weight:800;font-size:18px;margin-top:8px;">${relaxPrice}€ <span style="font-size:10px;font-weight:500;">/dia</span></div>
           ${!selected ? `<div style="color:#e08cb3;font-size:10.5px;margin-top:6px;">Disponível — pode ser adicionado caso veja vantagem</div>` : ''}
         </td>`;
   };
@@ -882,8 +890,8 @@ function generateProposalText(){
   txt += `TOTAL POR CONTRATO (c/IVA): ${c.total.toFixed(2)}€\n\n`;
   txt += `Proteção: ${c.packLabel}\nFranquia: ${c.franquiaLabel}\nDepósito de garantia com cartão crédito (Caução): ${c.depositoLabel}\n\n`;
   txt += `PACKS DE PROTEÇÃO EM VIAGEM DISPONÍVEIS:\n`;
-  txt += `- Pack Smart (${c.v.smart}€/dia)${state.pack === 'smart' ? ' — Selecionado' : ' — disponível para adicionar'}: franquia 0€ (exclui vidros/pneus), danos materiais, incêndio, roubo, vandalismo.\n`;
-  txt += `- Pack Relax (${RELAX_PRICE}€/dia)${state.pack === 'relax' ? ' — Selecionado' : ' — disponível para adicionar'}: franquia 0€ tudo incluído, quebra de vidro, pneus, pertences pessoais, caução reduzida a metade.\n\n`;
+  txt += `- Pack Smart (${c.v.seg === 'Comerciais' ? COMMERCIAL_SMART_PRICE : c.v.smart}€/dia)${state.pack === 'smart' ? ' — Selecionado' : ' — disponível para adicionar'}: franquia 0€ (exclui vidros/pneus), danos materiais, incêndio, roubo, vandalismo.\n`;
+  txt += `- Pack Relax (${c.v.seg === 'Comerciais' ? COMMERCIAL_RELAX_PRICE : RELAX_PRICE}€/dia)${state.pack === 'relax' ? ' — Selecionado' : ' — disponível para adicionar'}: franquia 0€ tudo incluído, quebra de vidro, pneus, pertences pessoais, caução reduzida a metade.\n\n`;
   txt += `Distância incluída/dia: 350 km\nDistância total incluída (${c.days} dia(s), máx. 7.000 km): ${c.kmIncluded.toLocaleString('pt-PT')} km\nTarifa adicional além da distância incluída: 0,16 €/km\n\n`;
   txt += `CONDIÇÕES:\n1º Contratos de 1 a 28 dias máx. com faturação (renováveis por períodos iguais).\n2º Pagamento do aluguer antes do levantamento; restantes pagamentos antes de novo contrato.\n3º Em caso de sinistro, preenchimento obrigatório de DAAA + participação às entidades policiais.\n4º Valores incluem: seguro de danos próprios c/ franquia, manutenção, peças de desgaste, impostos, gestão de multas.\n5º Valores excluem: reparações por uso danoso, franquia de seguro, circulação no estrangeiro.\n6º Documentos: Cartão de Crédito + Carta + CC + morada + telefone + email.\n7º Distância incluída de 350 km/dia (máx. 7.000 km/contrato); km adicionais a 0,16 €/km.\n\n`;
   if(state.viaVerde) txt += `Extra: Via Verde + gestão de portagens — 1,50€/dia (máx. 18€/mês).\n\n`;

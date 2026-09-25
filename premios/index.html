@@ -949,6 +949,7 @@
 
   <div class="subhead">Seguros Acumulados — Nº de Seguros &amp; Faturação (Jan–Ago 2026 vs 2025)</div>
   <div class="hero-stats">
+    <div class="hero-stat"><div class="num glow-num" id="at-segnum">—</div><div class="lbl">Nº de Seguros Vendidos Acumulado</div><div class="cmp">2025: <b id="at-segnum25">—</b> &nbsp;<span class="delta" id="at-segnumdelta">—</span></div></div>
     <div class="hero-stat"><div class="num glow-num" id="at-segfat">—</div><div class="lbl">Faturação de Seguros Acumulada</div><div class="cmp">2025: <b id="at-segfat25">—</b> &nbsp;<span class="delta" id="at-segfatdelta">—</span></div></div>
   </div>
   <div class="seg-cmp-grid" id="seg-cmp-grid-acum"></div>
@@ -1560,6 +1561,10 @@ function renderTotalAcumulado(){
   });
 
   // Seguros acumulados — Nº e Faturação, rede + por balcão
+  document.getElementById('at-segnum').textContent=seguros;
+  document.getElementById('at-segnum25').textContent=seguros25;
+  document.getElementById('at-segnumdelta').outerHTML=`<span class="delta ${(seguros>=seguros25)?'up':'down'}" id="at-segnumdelta">${pct((seguros-seguros25)/seguros25*100)}</span>`;
+
   const segFatTotal26=DATA.branches.reduce((s,b)=>s+sumSegFat(2026,months,b),0);
   const segFatTotal25=DATA.branches.reduce((s,b)=>s+sumSegFat(2025,months,b),0);
   document.getElementById('at-segfat').textContent=fmtEUR0(segFatTotal26);
@@ -2107,4 +2112,3 @@ renderMedidas();
 </script>
 </body>
 </html>
-

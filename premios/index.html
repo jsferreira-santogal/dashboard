@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -468,6 +469,7 @@
   <button class="tab-btn" data-view="vencedorq4">🏆 Vencedor &amp; Prémio Q4</button>
   <button class="tab-btn" data-view="q4detalhe">🔎 Q4 em Detalhe</button>
   <button class="tab-btn" data-view="semestre">📈 1º Semestre</button>
+  <button class="tab-btn" data-view="acumtotal">🏁 Total Acumulado</button>
   <button class="tab-btn" data-view="pnl">📊 Demonstração de Resultados</button>
   <button class="tab-btn" data-view="hipay">🌐 Aluguer Externos</button>
   <button class="tab-btn" data-view="reparacoes">🔧 Reparações F2M-Insurance</button>
@@ -758,14 +760,14 @@
     <button class="pulse-cta" id="cta-vencedor-q3">🏆 Ver o Líder Provisório</button>
     <div class="ddv-badge" style="margin-top:18px;">DDV <span class="sub">· DINÂMICA DE VITÓRIA</span></div>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num glow-num" id="hs-q3total">—</div><div class="lbl">Faturação Jul–Ago 2026 (provisório)</div></div>
-      <div class="hero-stat"><div class="num glow-num" id="hs-q3contratos">—</div><div class="lbl">Contratos Jul–Ago 2026</div></div>
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3total">—</div><div class="lbl">Faturação Jul–Ago 2026 (provisório)</div><div class="cmp">2025: <b id="hs-q3total25">—</b> &nbsp;<span class="delta" id="hs-q3delta">—</span></div></div>
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3contratos">—</div><div class="lbl">Contratos Jul–Ago 2026</div><div class="cmp">2025: <b id="hs-q3contratos25">—</b> &nbsp;<span class="delta" id="hs-q3contratosdelta">—</span></div></div>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num glow-num" id="hs-q3seguros">—</div><div class="lbl">Seguros vendidos Jul–Ago</div></div>
-      <div class="hero-stat"><div class="num glow-num" id="hs-q3ocup">—</div><div class="lbl">Ocupação média Jul–Ago</div></div>
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3seguros">—</div><div class="lbl">Seguros vendidos Jul–Ago</div><div class="cmp">2025: <b id="hs-q3seguros25">—</b> &nbsp;<span class="delta" id="hs-q3segurosdelta">—</span></div></div>
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3ocup">—</div><div class="lbl">Ocupação média Jul–Ago</div><div class="cmp">2025: <b id="hs-q3ocup25">—</b> &nbsp;<span class="delta" id="hs-q3ocupdelta">—</span></div></div>
     </div>
-    <p class="subtitle" style="margin-top:14px; opacity:.65; font-size:12px;">⏳ Setembro por fechar. Comparação com o período homólogo de 2025 (Jul–Ago) ainda não disponível — a atualizar assim que os dados forem enviados.</p>
+    <p class="subtitle" style="margin-top:14px; opacity:.65; font-size:12px;">⏳ Setembro por fechar — os valores acima são só Julho e Agosto, e o trimestre ainda pode mudar até ao fecho final.</p>
   </div>
 </section>
 
@@ -774,7 +776,7 @@
   <div class="sec-head" style="text-align:center; margin-bottom:18px;">
     <div class="eyebrow">Reconhecimento do trimestre · provisório</div>
     <h2 style="font-size:15px; font-weight:600; color:var(--text-muted); max-width:600px; margin:0 auto 6px; line-height:1.4;">3º Trimestre 2026 — líder provisório (Julho–Agosto)</h2>
-    <p class="subtitle" style="margin:0 auto; font-size:12.5px; max-width:560px; opacity:.75;">Setembro ainda não fechou. Este ranking reflete apenas Julho e Agosto e pode mudar até ao fecho definitivo do trimestre.</p>
+    <p class="subtitle" style="margin:0 auto; font-size:12.5px; max-width:560px; opacity:.75;">Faturação Jul–Ago: 256.873,59 € vs 218.067,24 € em 2025 (+17.8%). Setembro ainda não fechou — este ranking pode mudar até ao fecho definitivo do trimestre.</p>
   </div>
 
   <div class="winner-grid">
@@ -921,6 +923,30 @@
   <div class="subhead">Visão geral da rede — 1º Semestre 2026 vs 2025</div>
   <div class="net-grid" id="net-grid-1"></div>
   <div class="net-grid" id="net-grid-2" style="margin-top:12px;"></div>
+</section>
+
+<!-- TOTAL ACUMULADO -->
+<section class="view" id="view-acumtotal">
+  <div class="sec-head">
+    <div class="eyebrow">Acumulado do ano</div>
+    <h2 class="title-md">Total Acumulado 2026 — Janeiro a Agosto</h2>
+    <p class="subtitle">Soma de todos os meses já fechados em 2026 (Q1 completo + Q2 completo + Julho e Agosto de Q3). Setembro entra aqui assim que fechar.</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num glow-num" id="at-total">—</div><div class="lbl">Faturação Acumulada Jan–Ago 2026</div><div class="cmp">2025: <b id="at-total25">—</b> &nbsp;<span class="delta" id="at-delta">—</span></div></div>
+    <div class="hero-stat"><div class="num glow-num" id="at-contratos">—</div><div class="lbl">Contratos Acumulados</div><div class="cmp">2025: <b id="at-contratos25">—</b> &nbsp;<span class="delta" id="at-contratosdelta">—</span></div></div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num glow-num" id="at-seguros">—</div><div class="lbl">Seguros Vendidos Acumulados</div><div class="cmp">2025: <b id="at-seguros25">—</b> &nbsp;<span class="delta" id="at-segurosdelta">—</span></div></div>
+    <div class="hero-stat"><div class="num glow-num" id="at-ocup">—</div><div class="lbl">Ocupação Média Jan–Ago</div><div class="cmp">2025: <b id="at-ocup25">—</b> &nbsp;<span class="delta" id="at-ocupdelta">—</span></div></div>
+  </div>
+
+  <div class="subhead">Ranking acumulado por balcão — Jan–Ago 2026 (crescimento vs 2025)</div>
+  <div class="ranking" id="ranking-acumtotal"></div>
+
+  <div class="subhead">Detalhe por balcão — Jan–Ago 2026 vs 2025</div>
+  <div class="grid4" id="grid-acumtotal"></div>
 </section>
 
 <!-- DEMONSTRAÇÃO DE RESULTADOS -->
@@ -1107,7 +1133,13 @@ const DATA = {
       MARCO:{CACEM:2858,CASCAIS:3127,LOURES:2472,LISBOA:2239},
       ABRIL:{CACEM:4048,CASCAIS:1314,LOURES:2560,LISBOA:2800},
       MAIO:{CACEM:4617,CASCAIS:2413,LOURES:1707,LISBOA:3066},
-      JUNHO:{CACEM:6253,CASCAIS:2502,LOURES:1885,LISBOA:6547}
+      JUNHO:{CACEM:6253,CASCAIS:2502,LOURES:1885,LISBOA:6547},
+      JULHO:{CACEM:9386,CASCAIS:5992,LOURES:4721,LISBOA:4939},
+      AGOSTO:{CACEM:6046,CASCAIS:3516,LOURES:2595,LISBOA:6325},
+      SETEMBRO:{CACEM:6346,CASCAIS:3427,LOURES:3458,LISBOA:8038},
+      OUTUBRO:{CACEM:5257,CASCAIS:7085,LOURES:5456,LISBOA:5274},
+      NOVEMBRO:{CACEM:5906,CASCAIS:5687,LOURES:3502,LISBOA:7167},
+      DEZEMBRO:{CACEM:5898,CASCAIS:5361,LOURES:4231,LISBOA:9434}
     },
     2026:{
       JANEIRO:{CACEM:8426,CASCAIS:4581,LOURES:2992,LISBOA:7400},
@@ -1115,8 +1147,10 @@ const DATA = {
       MARCO:{CACEM:7282,CASCAIS:4534,LOURES:3451,LISBOA:5759},
       ABRIL:{CACEM:7905,CASCAIS:3892,LOURES:3902,LISBOA:5282},
       MAIO:{CACEM:7113,CASCAIS:5024,LOURES:4125,LISBOA:5333},
-      JUNHO:{CACEM:8529,CASCAIS:2708,LOURES:2785,LISBOA:4596},
-      JULHO:{CACEM:3491,CASCAIS:1127,LOURES:1880,LISBOA:1978}
+      JUNHO:{CACEM:8732,CASCAIS:2708,LOURES:2785,LISBOA:4596},
+      JULHO:{CACEM:12324,CASCAIS:3857,LOURES:5903,LISBOA:6505},
+      AGOSTO:{CACEM:8547,CASCAIS:4588,LOURES:6144,LISBOA:7382},
+      SETEMBRO:{CACEM:5358,CASCAIS:2107,LOURES:2675,LISBOA:5489}
     }
   },
   m: {
@@ -1126,7 +1160,13 @@ const DATA = {
       MARCO:{CACEM:{fat:22178.79,custo:15624.64,extPct:.4245,apvPct:.5755,result:6554.15,ocup:.6047,contratos:80,seguros:28,hipay:0,dias:619},CASCAIS:{fat:21677.02,custo:18248.34,extPct:.5260,apvPct:.4740,result:3428.68,ocup:.6128,contratos:84,seguros:32,hipay:41.99,dias:745},LOURES:{fat:18022.49,custo:14922.03,extPct:.6403,apvPct:.3597,result:3100.46,ocup:.4419,contratos:85,seguros:32,hipay:0,dias:503},LISBOA:{fat:21517.33,custo:14831.03,extPct:.4952,apvPct:.5048,result:6686.30,ocup:.4805,contratos:78,seguros:32,hipay:148.1,dias:539}},
       ABRIL:{CACEM:{fat:23297.98,custo:15784.49,extPct:.5295,apvPct:.4705,result:7513.49,ocup:.6089,contratos:91,seguros:42,hipay:0,dias:622},CASCAIS:{fat:20961.38,custo:15585.79,extPct:.4755,apvPct:.5245,result:5375.59,ocup:.5873,contratos:72,seguros:26,hipay:0,dias:639},LOURES:{fat:18149.16,custo:14088.06,extPct:.5723,apvPct:.4277,result:4061.10,ocup:.5578,contratos:87,seguros:34,hipay:0,dias:571},LISBOA:{fat:19739.03,custo:13780.67,extPct:.5215,apvPct:.4785,result:5958.36,ocup:.6243,contratos:71,seguros:23,hipay:0,dias:572}},
       MAIO:{CACEM:{fat:19182.20,custo:14695.29,extPct:.4781,apvPct:.5219,result:4486.91,ocup:.5605,contratos:80,seguros:36,hipay:229.84,dias:579},CASCAIS:{fat:18140.13,custo:14470.08,extPct:.5654,apvPct:.4346,result:3670.05,ocup:.5702,contratos:84,seguros:38,hipay:0,dias:617},LOURES:{fat:16096.79,custo:14885.60,extPct:.7055,apvPct:.2945,result:1211.19,ocup:.5703,contratos:117,seguros:42,hipay:0,dias:566},LISBOA:{fat:18254.63,custo:14314.95,extPct:.4010,apvPct:.5990,result:3939.68,ocup:.5499,contratos:75,seguros:28,hipay:630.66,dias:624}},
-      JUNHO:{CACEM:{fat:29842.21,custo:15567.48,extPct:.2844,apvPct:.7156,result:14274.73,ocup:.7141,contratos:88,seguros:45,hipay:135.9,dias:728},CASCAIS:{fat:18672.57,custo:13776.55,extPct:.5505,apvPct:.4495,result:4896.02,ocup:.5543,contratos:81,seguros:41,hipay:85.72,dias:578},LOURES:{fat:20105.77,custo:15061.35,extPct:.6716,apvPct:.3284,result:5044.42,ocup:.6827,contratos:99,seguros:34,hipay:1329.21,dias:653},LISBOA:{fat:26932.05,custo:15293.53,extPct:.4430,apvPct:.5570,result:11638.52,ocup:.6295,contratos:78,seguros:35,hipay:3050.7,dias:633}}
+      JUNHO:{CACEM:{fat:29842.21,custo:15567.48,extPct:.2844,apvPct:.7156,result:14274.73,ocup:.7141,contratos:88,seguros:45,hipay:135.9,dias:728},CASCAIS:{fat:18672.57,custo:13776.55,extPct:.5505,apvPct:.4495,result:4896.02,ocup:.5543,contratos:81,seguros:41,hipay:85.72,dias:578},LOURES:{fat:20105.77,custo:15061.35,extPct:.6716,apvPct:.3284,result:5044.42,ocup:.6827,contratos:99,seguros:34,hipay:1329.21,dias:653},LISBOA:{fat:26932.05,custo:15293.53,extPct:.4430,apvPct:.5570,result:11638.52,ocup:.6295,contratos:78,seguros:35,hipay:3050.7,dias:633}},
+      JULHO:{CACEM:{fat:31523.77,custo:14715.77,extPct:.42,apvPct:.58,result:16808.00,ocup:.70,contratos:105,seguros:54,hipay:3942.70,dias:778},CASCAIS:{fat:30271.62,custo:13369.00,extPct:.67,apvPct:.33,result:16902.62,ocup:.67,contratos:88,seguros:54,hipay:224.89,dias:718},LOURES:{fat:28818.91,custo:15061.35,extPct:.82,apvPct:.18,result:13757.56,ocup:.67,contratos:119,seguros:57,hipay:1227.56,dias:691},LISBOA:{fat:24180.85,custo:15688.78,extPct:.56,apvPct:.44,result:8492.07,ocup:.68,contratos:98,seguros:42,hipay:5091.53,dias:739}},
+      AGOSTO:{CACEM:{fat:28435.73,custo:18368.75,extPct:.32,apvPct:.68,result:10066.98,ocup:.63,contratos:81,seguros:45,hipay:1003.23,dias:855},CASCAIS:{fat:25741.06,custo:17416.43,extPct:.66,apvPct:.34,result:8324.63,ocup:.45,contratos:56,seguros:31,hipay:1098.11,dias:613},LOURES:{fat:19847.10,custo:19148.03,extPct:.75,apvPct:.25,result:699.07,ocup:.42,contratos:67,seguros:28,hipay:2944.19,dias:580},LISBOA:{fat:29248.20,custo:19797.02,extPct:.69,apvPct:.31,result:9451.18,ocup:.62,contratos:83,seguros:41,hipay:2464.18,dias:845}},
+      SETEMBRO:{CACEM:{fat:30629.08,custo:16858.98,extPct:.24,apvPct:.76,result:13770.10,ocup:.76,contratos:95,seguros:40,hipay:0,dias:873},CASCAIS:{fat:21177.14,custo:16818.92,extPct:.64,apvPct:.36,result:4358.22,ocup:.59,contratos:116,seguros:53,hipay:592.67,dias:586},LOURES:{fat:20102.79,custo:16815.54,extPct:.64,apvPct:.36,result:3287.25,ocup:.61,contratos:140,seguros:55,hipay:1024.65,dias:655},LISBOA:{fat:31838.39,custo:14876.07,extPct:.52,apvPct:.48,result:16962.32,ocup:.74,contratos:112,seguros:65,hipay:397.77,dias:731}},
+      OUTUBRO:{CACEM:{fat:35941.15,custo:16120.49,extPct:.4211,apvPct:.5789,result:19820.66,ocup:.82,contratos:102,seguros:39,hipay:278.00,dias:888},CASCAIS:{fat:29112.01,custo:16380.04,extPct:.7180,apvPct:.2820,result:12731.97,ocup:.62,contratos:103,seguros:70,hipay:170.83,dias:715},LOURES:{fat:30235.25,custo:16930.21,extPct:.7377,apvPct:.2623,result:13305.04,ocup:.61,contratos:148,seguros:78,hipay:1477.24,dias:711},LISBOA:{fat:26370.65,custo:14607.03,extPct:.5734,apvPct:.4266,result:11763.62,ocup:.74,contratos:102,seguros:42,hipay:334.66,dias:729}},
+      NOVEMBRO:{CACEM:{fat:27797.65,custo:14741.65,extPct:.3367,apvPct:.6633,result:13056.00,ocup:.74,contratos:57,seguros:45,hipay:0,dias:748},CASCAIS:{fat:26047.47,custo:15937.04,extPct:.6473,apvPct:.3527,result:10110.43,ocup:.68,contratos:73,seguros:48,hipay:0,dias:735},LOURES:{fat:22480.25,custo:17126.93,extPct:.5467,apvPct:.4533,result:5353.32,ocup:.62,contratos:102,seguros:61,hipay:0,dias:706},LISBOA:{fat:28203.29,custo:14263.35,extPct:.3291,apvPct:.6709,result:13939.94,ocup:.68,contratos:66,seguros:50,hipay:20.14,dias:644}},
+      DEZEMBRO:{CACEM:{fat:28960.84,custo:14774.25,extPct:.4071,apvPct:.5929,result:14186.59,ocup:.76,contratos:77,seguros:40,hipay:0,dias:794},CASCAIS:{fat:27422.83,custo:15982.49,extPct:.4760,apvPct:.5240,result:11440.34,ocup:.61,contratos:71,seguros:45,hipay:147.91,dias:684},LOURES:{fat:27164.30,custo:16856.33,extPct:.5922,apvPct:.4078,result:10307.97,ocup:.57,contratos:105,seguros:77,hipay:494.32,dias:657},LISBOA:{fat:28157.40,custo:14375.37,extPct:.3469,apvPct:.6531,result:13782.03,ocup:.68,contratos:76,seguros:47,hipay:204.04,dias:655}}
     },
     2026:{
       JANEIRO:{CACEM:{fat:32333.84,custo:14330.00,extPct:.3357,apvPct:.6643,result:18003.84,ocup:.7849,contratos:84,seguros:43,hipay:677.92,dias:803},CASCAIS:{fat:25432.40,custo:15885.40,extPct:.5005,apvPct:.4995,result:9547.00,ocup:.6639,contratos:93,seguros:56,hipay:0,dias:747},LOURES:{fat:20478.18,custo:16786.00,extPct:.6404,apvPct:.3596,result:3692.18,ocup:.5323,contratos:123,seguros:60,hipay:0,dias:594},LISBOA:{fat:24413.67,custo:14047.00,extPct:.2626,apvPct:.7374,result:10366.67,ocup:.6653,contratos:79,seguros:52,hipay:1099.28,dias:660}},
@@ -1143,6 +1183,7 @@ const DATA = {
   q1Months:['JANEIRO','FEVEREIRO','MARCO'],
   q2Months:['ABRIL','MAIO','JUNHO'],
   q3Months:['JULHO','AGOSTO'],
+  acumMonths:['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO'],
   janJunMonths:['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO'],
   monthLabels:{JANEIRO:'Jan',FEVEREIRO:'Fev',MARCO:'Mar',ABRIL:'Abr',MAIO:'Mai',JUNHO:'Jun'}
 };
@@ -1381,18 +1422,29 @@ function renderVencedor(){
 }
 
 function renderResumoQ3(){
-  const q3_26=sumTotal(2026,DATA.q3Months,'fat');
-  const contratos_26=sumTotal(2026,DATA.q3Months,'contratos');
-  const seguros_26=sumTotal(2026,DATA.q3Months,'seguros');
-  let ocupSum=0;
-  DATA.branches.forEach(b=>{ DATA.q3Months.forEach(mo=>{ ocupSum+=DATA.m[2026][mo][b].ocup; }); });
+  const q3_26=sumTotal(2026,DATA.q3Months,'fat'), q3_25=sumTotal(2025,DATA.q3Months,'fat');
+  const contratos_26=sumTotal(2026,DATA.q3Months,'contratos'), contratos_25=sumTotal(2025,DATA.q3Months,'contratos');
+  const seguros_26=sumTotal(2026,DATA.q3Months,'seguros'), seguros_25=sumTotal(2025,DATA.q3Months,'seguros');
+  let ocupSum=0, ocupSum25=0;
+  DATA.branches.forEach(b=>{ DATA.q3Months.forEach(mo=>{ ocupSum+=DATA.m[2026][mo][b].ocup; ocupSum25+=DATA.m[2025][mo][b].ocup; }); });
   const n=DATA.branches.length*DATA.q3Months.length;
-  const ocupAvg=ocupSum/n;
+  const ocupAvg=ocupSum/n, ocupAvg25=ocupSum25/n;
 
   document.getElementById('hs-q3total').textContent=fmtEUR(q3_26);
+  document.getElementById('hs-q3total25').textContent=fmtEUR(q3_25);
+  document.getElementById('hs-q3delta').outerHTML=`<span class="delta ${(q3_26>=q3_25)?'up':'down'}" id="hs-q3delta">${pct((q3_26-q3_25)/q3_25*100)}</span>`;
+
   document.getElementById('hs-q3contratos').textContent=contratos_26;
+  document.getElementById('hs-q3contratos25').textContent=contratos_25;
+  document.getElementById('hs-q3contratosdelta').outerHTML=`<span class="delta ${(contratos_26>=contratos_25)?'up':'down'}" id="hs-q3contratosdelta">${pct((contratos_26-contratos_25)/contratos_25*100)}</span>`;
+
   document.getElementById('hs-q3seguros').textContent=seguros_26;
+  document.getElementById('hs-q3seguros25').textContent=seguros_25;
+  document.getElementById('hs-q3segurosdelta').outerHTML=`<span class="delta ${(seguros_26>=seguros_25)?'up':'down'}" id="hs-q3segurosdelta">${pct((seguros_26-seguros_25)/seguros_25*100)}</span>`;
+
   document.getElementById('hs-q3ocup').textContent=(ocupAvg*100).toFixed(0)+'%';
+  document.getElementById('hs-q3ocup25').textContent=(ocupAvg25*100).toFixed(0)+'%';
+  document.getElementById('hs-q3ocupdelta').outerHTML=`<span class="delta ${(ocupAvg>=ocupAvg25)?'up':'down'}" id="hs-q3ocupdelta">${pct((ocupAvg-ocupAvg25)/ocupAvg25*100)}</span>`;
 }
 
 function renderVencedorQ3(){
@@ -1432,6 +1484,74 @@ function renderVencedorQ3(){
     const amtEl=document.getElementById('wt-q3-amt-'+sfx);
     if(nameEl) nameEl.textContent=DATA.names[winner.b];
     if(amtEl) amtEl.textContent='Jul–Ago: '+fmtEUR(winner.val)+' (aguarda Set.)';
+  });
+}
+
+function renderTotalAcumulado(){
+  const months=DATA.acumMonths;
+  const total=sumTotal(2026,months,'fat'), total25=sumTotal(2025,months,'fat');
+  const contratos=sumTotal(2026,months,'contratos'), contratos25=sumTotal(2025,months,'contratos');
+  const seguros=sumTotal(2026,months,'seguros'), seguros25=sumTotal(2025,months,'seguros');
+  let ocupSum=0, ocupSum25=0;
+  DATA.branches.forEach(b=>{ months.forEach(mo=>{ ocupSum+=DATA.m[2026][mo][b].ocup; ocupSum25+=DATA.m[2025][mo][b].ocup; }); });
+  const n=DATA.branches.length*months.length;
+  const ocupAvg=ocupSum/n, ocupAvg25=ocupSum25/n;
+
+  document.getElementById('at-total').textContent=fmtEUR(total);
+  document.getElementById('at-total25').textContent=fmtEUR(total25);
+  document.getElementById('at-delta').outerHTML=`<span class="delta ${(total>=total25)?'up':'down'}" id="at-delta">${pct((total-total25)/total25*100)}</span>`;
+
+  document.getElementById('at-contratos').textContent=contratos;
+  document.getElementById('at-contratos25').textContent=contratos25;
+  document.getElementById('at-contratosdelta').outerHTML=`<span class="delta ${(contratos>=contratos25)?'up':'down'}" id="at-contratosdelta">${pct((contratos-contratos25)/contratos25*100)}</span>`;
+
+  document.getElementById('at-seguros').textContent=seguros;
+  document.getElementById('at-seguros25').textContent=seguros25;
+  document.getElementById('at-segurosdelta').outerHTML=`<span class="delta ${(seguros>=seguros25)?'up':'down'}" id="at-segurosdelta">${pct((seguros-seguros25)/seguros25*100)}</span>`;
+
+  document.getElementById('at-ocup').textContent=(ocupAvg*100).toFixed(0)+'%';
+  document.getElementById('at-ocup25').textContent=(ocupAvg25*100).toFixed(0)+'%';
+  const ocupPP=(ocupAvg-ocupAvg25)*100;
+  document.getElementById('at-ocupdelta').outerHTML=`<span class="delta ${(ocupPP>=0)?'up':'down'}" id="at-ocupdelta">${(ocupPP>=0?'+':'')+ocupPP.toFixed(1)+'pp'}</span>`;
+
+  const totals=DATA.branches.map(b=>({b, val:sumBranch(2026,months,b,'fat'), val25:sumBranch(2025,months,b,'fat')}));
+  totals.sort((a,b)=>b.val-a.val);
+  const max=totals[0].val;
+  const rankEl=document.getElementById('ranking-acumtotal'); rankEl.innerHTML='';
+  totals.forEach((t,i)=>{
+    const growth=(t.val-t.val25)/t.val25*100;
+    const row=document.createElement('div'); row.className='rank-row';
+    row.innerHTML=`<div class="rank-pos">${i+1}º</div><div class="rank-name">${DATA.names[t.b]}</div>
+      <div class="rank-bar-track"><div class="rank-bar-fill" style="background:${DATA.colors[t.b]};"></div></div>
+      <div class="rank-val mono">${fmtEUR(t.val)} <span class="delta ${growth>=0?'up':'down'}" style="font-size:11px;">${pct(growth)}</span></div>`;
+    rankEl.appendChild(row);
+    requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector('.rank-bar-fill').style.width=(t.val/max*100)+'%'; },80+i*120));
+  });
+
+  const grid=document.getElementById('grid-acumtotal'); grid.innerHTML='';
+  DATA.branches.forEach(b=>{
+    const fat=sumBranch(2026,months,b,'fat'), fat25=sumBranch(2025,months,b,'fat');
+    const custo=sumBranch(2026,months,b,'custo');
+    const result=sumBranch(2026,months,b,'result'), result25=sumBranch(2025,months,b,'result');
+    const c=sumBranch(2026,months,b,'contratos'), c25=sumBranch(2025,months,b,'contratos');
+    const s=sumBranch(2026,months,b,'seguros');
+    let ocupB=0; months.forEach(mo=>{ ocupB+=DATA.m[2026][mo][b].ocup; }); ocupB/=months.length;
+    const delta=(fat-fat25)/fat25*100;
+    const card=document.createElement('div'); card.className='b-card';
+    card.style.setProperty('--branch-color', DATA.colors[b]);
+    card.innerHTML=`
+      <div class="b-name"><span class="b-dot"></span>${DATA.names[b]}</div>
+      <div class="big-num glow-num">${fmtEUR(fat)}</div>
+      <div class="vs">vs ${fmtEUR(fat25)} em 2025 &nbsp;<span class="delta ${delta>=0?'up':'down'}">${pct(delta)}</span></div>
+      <div class="b-stats">
+        <div class="b-stat"><div class="v">${c}</div><div class="l">Contratos</div></div>
+        <div class="b-stat"><div class="v">${(ocupB*100).toFixed(0)}%</div><div class="l">Ocupação</div></div>
+        <div class="b-stat"><div class="v">${s}</div><div class="l">Seguros</div></div>
+        <div class="b-stat"><div class="v">${fmtEUR0(custo)}</div><div class="l">Custo Rendas</div></div>
+        <div class="b-stat"><div class="v">${fmtEUR0(result)}</div><div class="l">Resultado</div></div>
+        <div class="b-stat"><div class="v">${fmtEUR0(result25)}</div><div class="l">Resultado 2025</div></div>
+      </div>`;
+    grid.appendChild(card);
   });
 }
 
@@ -1947,6 +2067,7 @@ renderVencedorQ3();
 renderMensalQ1('JANEIRO');
 renderMensal('ABRIL');
 renderMensalQ3('JULHO');
+renderTotalAcumulado();
 renderLineChart();
 renderAcumulado();
 renderSegCmp();

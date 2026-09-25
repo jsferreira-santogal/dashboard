@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -947,6 +946,12 @@
 
   <div class="subhead">Detalhe por balcão — Jan–Ago 2026 vs 2025</div>
   <div class="grid4" id="grid-acumtotal"></div>
+
+  <div class="subhead">Seguros Acumulados — Nº de Seguros &amp; Faturação (Jan–Ago 2026 vs 2025)</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num glow-num" id="at-segfat">—</div><div class="lbl">Faturação de Seguros Acumulada</div><div class="cmp">2025: <b id="at-segfat25">—</b> &nbsp;<span class="delta" id="at-segfatdelta">—</span></div></div>
+  </div>
+  <div class="seg-cmp-grid" id="seg-cmp-grid-acum"></div>
 </section>
 
 <!-- DEMONSTRAÇÃO DE RESULTADOS -->
@@ -1553,6 +1558,29 @@ function renderTotalAcumulado(){
       </div>`;
     grid.appendChild(card);
   });
+
+  // Seguros acumulados — Nº e Faturação, rede + por balcão
+  const segFatTotal26=DATA.branches.reduce((s,b)=>s+sumSegFat(2026,months,b),0);
+  const segFatTotal25=DATA.branches.reduce((s,b)=>s+sumSegFat(2025,months,b),0);
+  document.getElementById('at-segfat').textContent=fmtEUR0(segFatTotal26);
+  document.getElementById('at-segfat25').textContent=fmtEUR0(segFatTotal25);
+  document.getElementById('at-segfatdelta').outerHTML=`<span class="delta ${(segFatTotal26>=segFatTotal25)?'up':'down'}" id="at-segfatdelta">${pct((segFatTotal26-segFatTotal25)/segFatTotal25*100)}</span>`;
+
+  const segGrid=document.getElementById('seg-cmp-grid-acum'); segGrid.innerHTML='';
+  DATA.branches.forEach(b=>{
+    const seg26=sumBranch(2026,months,b,'seguros'), seg25=sumBranch(2025,months,b,'seguros');
+    const fat26=sumSegFat(2026,months,b), fat25=sumSegFat(2025,months,b);
+    const dSeg=(seg26-seg25)/seg25*100, dFat=(fat26-fat25)/fat25*100;
+    const card=document.createElement('div'); card.className='seg-cmp-card';
+    card.style.setProperty('--branch-color', DATA.colors[b]);
+    card.innerHTML=`
+      <div class="nm"><span class="b-dot" style="background:${DATA.colors[b]};"></span>${DATA.names[b]}</div>
+      <div class="seg-cmp-row"><span class="lbl">Nº Seguros 2026</span><span class="val">${seg26}</span></div>
+      <div class="seg-cmp-row"><span class="lbl">Nº Seguros 2025</span><span class="val" style="color:var(--text-muted); font-size:12px;">${seg25} &nbsp;<span class="delta ${dSeg>=0?'up':'down'}" style="font-size:10.5px;">${pct(dSeg)}</span></span></div>
+      <div class="seg-cmp-row" style="margin-top:8px;"><span class="lbl">Fat. Seguros 2026</span><span class="val">${fmtEUR0(fat26)}</span></div>
+      <div class="seg-cmp-row"><span class="lbl">Fat. Seguros 2025</span><span class="val" style="color:var(--text-muted); font-size:12px;">${fmtEUR0(fat25)} &nbsp;<span class="delta ${dFat>=0?'up':'down'}" style="font-size:10.5px;">${pct(dFat)}</span></span></div>`;
+    segGrid.appendChild(card);
+  });
 }
 
 function getMonthOrAgg(year, branch, monthKey){
@@ -2079,3 +2107,4 @@ renderMedidas();
 </script>
 </body>
 </html>
+

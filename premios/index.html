@@ -470,9 +470,7 @@
   <button class="tab-btn" data-view="semestre">📈 1º Semestre</button>
   <button class="tab-btn" data-view="acumtotal">🏁 Total Acumulado</button>
   <button class="tab-btn" data-view="pnl">📊 Demonstração de Resultados</button>
-  <button class="tab-btn" data-view="hipay">🌐 Aluguer Externos</button>
   <button class="tab-btn" data-view="reparacoes">🔧 Reparações F2M-Insurance</button>
-  <button class="tab-btn" data-view="medidas">Pontos a Discutir</button>
 </nav>
 
 <!-- RESUMO Q1 -->
@@ -993,64 +991,6 @@
   </div>
 </section>
 
-<!-- ALUGUER EXTERNOS (STRIPE/HIPAY) -->
-<section class="view" id="view-hipay">
-  <div class="sec-head">
-    <div class="eyebrow">Plataforma Free2Move · Pagamentos online</div>
-    <h2 class="title-md">Aluguer Externos — Stripe / Hipay</h2>
-    <p class="subtitle">Hipay/Stripe é a fatia da faturação de "Clientes Externos" paga online através da plataforma Free2Move — uma reserva feita e paga diretamente na app/site, sem passar pelo balcão. Comparação Jan–Jun (meses já fechados nos dois anos, dados definitivos).</p>
-  </div>
-
-  <div class="growth-hero">
-    <div class="gh-label">Crescimento total da rede · Hipay/Stripe · Jan–Jun 2026 vs 2025</div>
-    <div class="gh-row">
-      <div class="gh-from" id="gh-from">—</div>
-      <div class="gh-arrow">→</div>
-      <div class="gh-to glow-num" id="gh-to">—</div>
-    </div>
-    <div class="gh-pct" id="gh-pct">—</div>
-    <div class="gh-sub">Os 4 balcões juntos, meses fechados em ambos os anos</div>
-  </div>
-
-  <div class="grid4" style="margin-bottom:40px;">
-    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="hp-q2total">—</div><div class="lbl">Hipay/Stripe Jan–Jun 2026</div><div class="cmp">2025: <b id="hp-q2total25">—</b> &nbsp;<span class="delta" id="hp-q2delta">—</span></div></div>
-    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="hp-h1total">—</div><div class="lbl">Fat. Clientes Ext Jan–Jun</div><div class="cmp">2025: <b id="hp-h1total25">—</b> &nbsp;<span class="delta" id="hp-h1delta">—</span></div></div>
-    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="hp-penet">—</div><div class="lbl">Penetração em Clientes Ext</div><div class="cmp">2025: <b id="hp-penet25">—</b></div></div>
-  </div>
-
-  <div class="subhead" style="margin-top:0;">O que representa Hipay/Stripe dentro da faturação total (Jan–Jun 2026)</div>
-  <div class="comp-legend">
-    <div class="comp-legend-item"><div class="sw" style="background:#00E5FF;"></div>Hipay/Stripe (online)</div>
-    <div class="comp-legend-item"><div class="sw" style="background:#5B8DEF;"></div>Outros Clientes Externos</div>
-    <div class="comp-legend-item"><div class="sw" style="background:#3A2E7A;"></div>APV Interno</div>
-  </div>
-  <div class="comp-bar" id="comp-bar"></div>
-  <p class="subtitle" style="font-size:12.5px; margin-top:6px;" id="comp-caption">—</p>
-
-  <div class="subhead">Por balcão — Jan–Jun 2026 vs Jan–Jun 2025</div>
-  <div class="grid4" id="hipay-grid"></div>
-
-  <div class="subhead">Tendência mensal Hipay/Stripe — Jan–Jun, 2026 vs 2025 (valores fechados)</div>
-  <div class="linechart-wrap">
-    <div class="lc-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted);"></div>2025</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--glow-cyan);"></div>2026</div>
-    </div>
-    <svg viewBox="0 0 760 240" id="hipaychart" style="width:100%; height:auto; display:block;"></svg>
-  </div>
-
-  <div class="subhead">Descritivo por balcão, mês a mês — Jan–Jun</div>
-  <p class="subtitle" style="font-size:12.5px; margin-bottom:14px;">Jan–Jun fechado em ambos os anos — dados definitivos.</p>
-  <div class="pnl-table-wrap" style="margin-bottom:18px;">
-    <div style="padding:10px 16px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--glow-cyan); background:rgba(0,229,255,0.06);">2026</div>
-    <table class="pnl-table" id="hipay-table-2026"></table>
-  </div>
-  <div class="pnl-table-wrap">
-    <div style="padding:10px 16px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--text-muted); background:rgba(255,255,255,0.04);">2025</div>
-    <table class="pnl-table" id="hipay-table-2025"></table>
-  </div>
-</section>
-
 <!-- REPARAÇÕES F2M-INSURANCE -->
 <section class="view" id="view-reparacoes">
   <div class="sec-head">
@@ -1091,29 +1031,6 @@
   <div class="dis-card" style="border-left-color:#FF4D5E;">
     <h3>🔧 Nota sobre sinistralidade e aproveitamento F2M-Insurance</h3>
     <ul id="rep-nota-list"></ul>
-  </div>
-</section>
-
-<!-- MEDIDAS -->
-<section class="view" id="view-medidas">
-  <div class="sec-head">
-    <div class="eyebrow">Para a reunião</div>
-    <h2 class="title-md">Pontos a discutir por balcão</h2>
-    <p class="subtitle">Leituras diretas dos dados do trimestre — pontos de partida para discussão com cada gerente, não conclusões finais.</p>
-  </div>
-  <div id="medidas-list"></div>
-  <div class="dis-card" style="border-left-color:#FFC107;">
-    <h3>💶 Nota sobre faturação de seguros</h3>
-    <ul><li>Valores reais (não estimados), fonte: mapa "Challenge Seguros" fechado mês a mês por balcão. Total rede H1 2026: 126.055€ (1.146 seguros) vs 74.072€ em 2025 (824 seguros) — crescimento de +70,2%.</li></ul>
-  </div>
-  <div class="dis-card" style="border-left-color:#00E5FF;">
-    <h3>🌐 Nota sobre Aluguer Externos (Stripe/Hipay)</h3>
-    <ul>
-      <li>Em Jan–Jun (agora fechado nos dois anos, incluindo Junho definitivo), o canal cresceu em toda a rede: total +97,2% vs período homólogo, de 6.685,97€ para 13.186,80€.</li>
-      <li>Loures é o caso mais notável — tinha apenas 1.329,21€ em Jan–Jun 2025 (todo concentrado em Junho) e já vai em 5.784,22€ em 2026 (+335%), com presença em quase todos os meses.</li>
-      <li>Lisboa é o único balcão a recuar (-9,2%, de 4.346,59€ para 3.944,95€) — teve uma quebra a zero em Maio, mas recuperou em Junho (446,69€). Vale a pena perguntar ao balcão o que mudou a meio do período.</li>
-      <li>Cascais é o maior salto proporcional — de 127,71€ para 1.771,95€ (+1.287%), com Abril como mês mais forte (1.334,01€). Cacém cresceu +91%, mas mantém padrão irregular (meses a zero seguidos de picos).</li>
-    </ul>
   </div>
 </section>
 
@@ -1224,10 +1141,10 @@ const REP = {
     LISBOA:{n:24, apurado:14605.85, recebido:14605.85}
   },
   totals2026:{
-    CACEM:{n:17, apurado:12623.81, recebido:9524.95},
+    CACEM:{n:25, apurado:19184.44, recebido:9524.95},
     CASCAIS:{n:4, apurado:2226.49, recebido:1157.30},
-    LOURES:{n:27, apurado:18666.47, recebido:14568.92},
-    LISBOA:{n:13, apurado:6916.20, recebido:4659.45}
+    LOURES:{n:37, apurado:27298.88, recebido:14568.92},
+    LISBOA:{n:17, apurado:10113.43, recebido:4659.45}
   },
   ratio2025:{
     CACEM:{n:22, rec:11628.00, contratos:495},
@@ -1732,16 +1649,6 @@ const TALKING_POINTS = {
   LOURES:['Maior crescimento da rede no Q2 (+44,3%) e no semestre (+43,2%) — claro destaque do trimestre.','Junho foi o melhor mês do Q2 para Loures: 30.712,63€ e resultado de 16.820,68€ — segundo melhor da rede no mês.','2º lugar na corrida do trimestre, a reduzir a distância ao Cacém.'],
   LISBOA:['Crescimento semestral sólido (+27,0%), mas o mais baixo do Q2 entre os 4 balcões (+12,8%).','Ocupação de Junho (57%) é a mais baixa da rede este mês — vale a pena perceber a causa.','Maior dependência histórica de clientes APV interno — analisar mix comercial.']
 };
-function renderMedidas(){
-  const list=document.getElementById('medidas-list'); list.innerHTML='';
-  DATA.branches.forEach(b=>{
-    const card=document.createElement('div'); card.className='dis-card';
-    card.style.setProperty('--branch-color', DATA.colors[b]);
-    card.innerHTML=`<h3><span class="b-dot" style="background:${DATA.colors[b]};"></span>${DATA.names[b]}</h3><ul>${TALKING_POINTS[b].map(p=>`<li>${p}</li>`).join('')}</ul>`;
-    list.appendChild(card);
-  });
-}
-
 function renderSegCmp(){
   const grid=document.getElementById('seg-cmp-grid'); grid.innerHTML='';
   DATA.branches.forEach(b=>{
@@ -1926,96 +1833,6 @@ function growthClass(v26, v25){
   return v26>0 ? 'up' : 'down';
 }
 
-function renderHipay(){
-  const JM=DATA.janJunMonths;
-  const hpJM_26=sumTotal(2026,JM,'hipay'), hpJM_25=sumTotal(2025,JM,'hipay');
-  const extJM_26=DATA.branches.reduce((s,b)=>s+extValueBranch(2026,JM,b),0);
-  const extJM_25=DATA.branches.reduce((s,b)=>s+extValueBranch(2025,JM,b),0);
-  const fatJM_26=sumTotal(2026,JM,'fat');
-
-  document.getElementById('hp-q2total').textContent=fmtEUR(hpJM_26);
-  document.getElementById('hp-q2total25').textContent=fmtEUR(hpJM_25);
-  document.getElementById('hp-q2delta').outerHTML=`<span class="delta ${growthClass(hpJM_26,hpJM_25)}" id="hp-q2delta">${growthLabel(hpJM_26,hpJM_25)}</span>`;
-
-  document.getElementById('gh-from').textContent=fmtEUR(hpJM_25);
-  document.getElementById('gh-to').textContent=fmtEUR(hpJM_26);
-  document.getElementById('gh-pct').textContent=growthLabel(hpJM_26,hpJM_25);
-
-  document.getElementById('hp-h1total').textContent=fmtEUR(extJM_26);
-  document.getElementById('hp-h1total25').textContent=fmtEUR(extJM_25);
-  document.getElementById('hp-h1delta').outerHTML=`<span class="delta ${(extJM_26>=extJM_25)?'up':'down'}" id="hp-h1delta">${pct((extJM_26-extJM_25)/extJM_25*100)}</span>`;
-
-  const penet26=hpJM_26/extJM_26*100, penet25=hpJM_25/extJM_25*100;
-  document.getElementById('hp-penet').textContent=penet26.toFixed(1)+'%';
-  document.getElementById('hp-penet25').textContent=penet25.toFixed(1)+'%';
-  const noteEl=document.getElementById('hipay-pct-note'); if(noteEl) noteEl.textContent=penet26.toFixed(1);
-
-  // composition bar: Hipay / Outros Ext / APV interno, sobre faturação total Jan-Mai
-  const outrosExt=extJM_26-hpJM_26, apv=fatJM_26-extJM_26;
-  const pHipay=hpJM_26/fatJM_26*100, pOutros=outrosExt/fatJM_26*100, pApv=apv/fatJM_26*100;
-  const compBar=document.getElementById('comp-bar');
-  compBar.innerHTML=`
-    <div class="comp-seg" style="background:#00E5FF;">${pHipay>=6?pHipay.toFixed(1)+'%':''}</div>
-    <div class="comp-seg" style="background:#5B8DEF;">${pOutros>=6?pOutros.toFixed(1)+'%':''}</div>
-    <div class="comp-seg" style="background:#3A2E7A; color:#F5F3FF;">${pApv>=6?pApv.toFixed(1)+'%':''}</div>`;
-  requestAnimationFrame(()=>setTimeout(()=>{
-    const segs=compBar.querySelectorAll('.comp-seg');
-    segs[0].style.width=pHipay+'%'; segs[1].style.width=pOutros+'%'; segs[2].style.width=pApv+'%';
-  },100));
-  document.getElementById('comp-caption').innerHTML=`Hipay/Stripe representa <b>${fmtEUR(hpJM_26)}</b> do total faturado em Jan–Jun (${fmtEUR(fatJM_26)}) — ${pHipay.toFixed(1)}% da rede, e ${penet26.toFixed(1)}% de toda a faturação de Clientes Externos.`;
-
-  const grid=document.getElementById('hipay-grid'); grid.innerHTML='';
-  DATA.branches.forEach(b=>{
-    const v26=sumBranch(2026,JM,b,'hipay'), v25=sumBranch(2025,JM,b,'hipay');
-    const ext26=extValueBranch(2026,JM,b);
-    const pen=v26/ext26*100;
-    const card=document.createElement('div'); card.className='hipay-card';
-    card.style.setProperty('--branch-color', DATA.colors[b]);
-    card.innerHTML=`
-      <div class="h-name"><span class="b-dot"></span>${DATA.names[b]}</div>
-      <div class="h-big">${fmtEUR0(v26)}</div>
-      <div class="h-vs">vs ${fmtEUR0(v25)} em Jan–Jun 2025 &nbsp;<span class="delta ${growthClass(v26,v25)}">${growthLabel(v26,v25)}</span></div>
-      <div class="h-pen">Penetração em Clientes Ext <b>${pen.toFixed(1)}%</b></div>`;
-    grid.appendChild(card);
-  });
-
-  // trend chart: hipay mensal da rede (total), Jan-Mai, 2026 vs 2025
-  const W=760,H=240,padL=58,padR=16,padT=20,padB=30;
-  const v25=JM.map(mo=>sumTotal(2025,[mo],'hipay'));
-  const v26=JM.map(mo=>sumTotal(2026,[mo],'hipay'));
-  const x=i=> padL + i*((W-padL-padR)/(JM.length-1));
-  const maxV=Math.max(...v25,...v26)*1.15 || 1;
-  const y=v=> H-padB - (v/maxV)*(H-padT-padB);
-  function pathFor(vals){ return vals.map((v,i)=>(i===0?'M':'L')+x(i).toFixed(1)+','+y(v).toFixed(1)).join(' '); }
-  let gridLines=''; for(let g=0; g<=4; g++){ const gy=padT+g*((H-padT-padB)/4); gridLines+=`<line x1="${padL}" y1="${gy}" x2="${W-padR}" y2="${gy}" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>`; }
-  let labels=JM.map((mo,i)=>`<text x="${x(i)}" y="${H-8}" font-size="11" fill="#B7B2DC" text-anchor="middle" font-family="Space Mono, monospace">${DATA.monthLabels[mo]}</text>`).join('');
-  let pts25=v25.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#B7B2DC"/>`).join('');
-  let pts26=v26.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="#00E5FF"/>`).join('');
-  document.getElementById('hipaychart').innerHTML = `${gridLines}
-    <path class="lc-line" d="${pathFor(v25)}" stroke="#B7B2DC" opacity="0.55"/>
-    <path class="lc-line" d="${pathFor(v26)}" stroke="#00E5FF" style="filter:drop-shadow(0 0 6px rgba(0,229,255,.7));"/>
-    ${pts25}${pts26}${labels}`;
-
-  // descriptive monthly tables per branch, Jan-Mai, 2026 and 2025
-  function buildTable(year){
-    let thead='<thead><tr><th>Balcão</th>'+JM.map(mo=>`<th>${DATA.monthLabels[mo]}</th>`).join('')+'<th>Total</th></tr></thead>';
-    let tbody='<tbody>';
-    let totals=JM.map(()=>0);
-    DATA.branches.forEach(b=>{
-      const vals=JM.map(mo=>DATA.m[year][mo][b].hipay);
-      vals.forEach((v,i)=>totals[i]+=v);
-      const tot=vals.reduce((s,v)=>s+v,0);
-      tbody+=`<tr><td>${DATA.names[b]}</td>`+vals.map(v=>`<td>${fmtEUR0(v)}</td>`).join('')+`<td>${fmtEUR0(tot)}</td></tr>`;
-    });
-    const grandTotal=totals.reduce((s,v)=>s+v,0);
-    tbody+=`<tr class="total-row"><td>TOTAL</td>`+totals.map(v=>`<td>${fmtEUR0(v)}</td>`).join('')+`<td>${fmtEUR0(grandTotal)}</td></tr>`;
-    tbody+='</tbody>';
-    return thead+tbody;
-  }
-  document.getElementById('hipay-table-2026').innerHTML = buildTable(2026);
-  document.getElementById('hipay-table-2025').innerHTML = buildTable(2025);
-}
-
 function renderReparacoes(){
   const branches = DATA.branches;
   const sumT=(year,key)=>branches.reduce((s,b)=>s+REP[year][b][key],0);
@@ -2106,9 +1923,7 @@ renderAcumulado();
 renderSegCmp();
 renderNetGrid();
 renderPNL();
-renderHipay();
 renderReparacoes();
-renderMedidas();
 </script>
 </body>
 </html>

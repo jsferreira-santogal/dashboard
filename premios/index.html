@@ -224,6 +224,8 @@
   .month-btn.active{background:var(--glow-cyan); color:#0A0726; border-color:transparent;}
   .month-btn-q1{font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; background:var(--card-bg); border:1px solid var(--card-border); color:var(--text-muted); padding:9px 20px; border-radius:20px; cursor:pointer; transition:all .2s ease;}
   .month-btn-q1.active{background:var(--glow-cyan); color:#0A0726; border-color:transparent;}
+  .month-btn-q3{font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; background:var(--card-bg); border:1px solid var(--card-border); color:var(--text-muted); padding:9px 20px; border-radius:20px; cursor:pointer; transition:all .2s ease;}
+  .month-btn-q3.active{background:var(--glow-cyan); color:#0A0726; border-color:transparent;}
 
   .grid4{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;}
   .b-card{background:var(--card-bg); border:1px solid var(--card-border); border-radius:20px; padding:22px 22px 20px; border-top:4px solid var(--branch-color, var(--glow-cyan)); transition:transform .25s ease;}
@@ -557,10 +559,10 @@
       </div>
       <div class="wt-arrow">→</div>
       <div class="wt-card future">
-        <div class="wt-q">3º Trimestre 2026</div>
-        <div class="wt-trophy">❓</div>
-        <div class="wt-name">?</div>
-        <div class="wt-amount">Quem será o próximo?</div>
+        <div class="wt-q">3º Trimestre 2026 · Provisório</div>
+        <div class="wt-trophy">⏳</div>
+        <div class="wt-name" id="wt-q3-name-q1tab" style="font-size:21px; animation:none; color:var(--text-light);">—</div>
+        <div class="wt-amount" id="wt-q3-amt-q1tab">Jul–Ago, aguarda Setembro</div>
       </div>
     </div>
   </div>
@@ -697,10 +699,10 @@
       </div>
       <div class="wt-arrow">→</div>
       <div class="wt-card future">
-        <div class="wt-q">3º Trimestre 2026</div>
-        <div class="wt-trophy">❓</div>
-        <div class="wt-name">?</div>
-        <div class="wt-amount">Quem será o próximo?</div>
+        <div class="wt-q">3º Trimestre 2026 · Provisório</div>
+        <div class="wt-trophy">⏳</div>
+        <div class="wt-name" id="wt-q3-name-q2tab" style="font-size:21px; animation:none; color:var(--text-light);">—</div>
+        <div class="wt-amount" id="wt-q3-amt-q2tab">Jul–Ago, aguarda Setembro</div>
       </div>
     </div>
   <div class="pg-wrap">
@@ -747,45 +749,104 @@
   <div class="grid4" id="month-grid"></div>
 </section>
 
-<!-- RESUMO Q3 (pendente) -->
+<!-- RESUMO Q3 (provisório: Jul-Ago fechados, Setembro em aberto) -->
 <section class="view" id="view-resumoq3">
   <div class="hero">
     <div class="eyebrow">Free2Move Rent Santogal · 4 Balcões</div>
     <h1 class="title-xl">Resultados<br>3º Trimestre 2026</h1>
-    <p class="subtitle">Cacém, Cascais, Loures e Lisboa — comparação Julho–Setembro 2026 vs período homólogo de 2025.</p>
-    <div class="pending-card">
-      <div class="pending-ico">⏳</div>
-      <div class="pending-title">Dados de Q3 ainda não disponíveis</div>
-      <div class="pending-sub">Este separador é preenchido automaticamente assim que Marco enviar os fecho mensais de Julho, Agosto e Setembro. A estrutura já está pronta — só falta o conteúdo.</div>
+    <p class="subtitle">Cacém, Cascais, Loures e Lisboa — Julho e Agosto 2026 já fechados. <b>Setembro ainda em aberto</b> — os valores do trimestre apresentados são provisórios até ao fecho final.</p>
+    <button class="pulse-cta" id="cta-vencedor-q3">🏆 Ver o Líder Provisório</button>
+    <div class="ddv-badge" style="margin-top:18px;">DDV <span class="sub">· DINÂMICA DE VITÓRIA</span></div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3total">—</div><div class="lbl">Faturação Jul–Ago 2026 (provisório)</div></div>
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3contratos">—</div><div class="lbl">Contratos Jul–Ago 2026</div></div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3seguros">—</div><div class="lbl">Seguros vendidos Jul–Ago</div></div>
+      <div class="hero-stat"><div class="num glow-num" id="hs-q3ocup">—</div><div class="lbl">Ocupação média Jul–Ago</div></div>
+    </div>
+    <p class="subtitle" style="margin-top:14px; opacity:.65; font-size:12px;">⏳ Setembro por fechar. Comparação com o período homólogo de 2025 (Jul–Ago) ainda não disponível — a atualizar assim que os dados forem enviados.</p>
+  </div>
+</section>
+
+<!-- VENCEDOR Q3 (provisório) -->
+<section class="view" id="view-vencedorq3">
+  <div class="sec-head" style="text-align:center; margin-bottom:18px;">
+    <div class="eyebrow">Reconhecimento do trimestre · provisório</div>
+    <h2 style="font-size:15px; font-weight:600; color:var(--text-muted); max-width:600px; margin:0 auto 6px; line-height:1.4;">3º Trimestre 2026 — líder provisório (Julho–Agosto)</h2>
+    <p class="subtitle" style="margin:0 auto; font-size:12.5px; max-width:560px; opacity:.75;">Setembro ainda não fechou. Este ranking reflete apenas Julho e Agosto e pode mudar até ao fecho definitivo do trimestre.</p>
+  </div>
+
+  <div class="winner-grid">
+    <div class="winner-wrap">
+      <div class="crown-pill" style="font-size:15px; padding:11px 24px;">🏆 LÍDER PROVISÓRIO · JUL–AGO 2026</div>
+      <div class="tadah-wrap">
+        <div class="tadah-flash" id="tadah-flash-q3"></div>
+        <div class="tadah-burst">
+          <svg viewBox="0 0 200 200"><polygon points="100,0 112,75 188,55 130,105 178,170 100,130 22,170 70,105 12,55 88,75" fill="rgba(255,193,7,0.18)"/></svg>
+        </div>
+        <div class="winner-name" id="w-name-q3">—</div>
+        <div class="winner-amount glow-num" id="w-amount-q3">—</div>
+      </div>
+      <div class="winner-tag">Maior faturação provisória do trimestre (Jul–Ago) entre os 4 balcões. Setembro ainda por fechar — a posição pode alterar. Reconhecimento simbólico, sem valor monetário associado.</div>
+      <div class="ranking" id="ranking-q3"></div>
+    </div>
+
+    <div class="prize-card">
+      <h3>💰 Corrida ao Prémio Anual 2026</h3>
+      <p class="note">Prémio Maior Faturação 2026 — atribuído em Dezembro, ao balcão com maior faturação acumulada no ano completo. Posição atual com base no acumulado Jan–Ago 2026:</p>
+      <div class="prize-amount" id="annual-prize-amount-q3">500,00€</div>
+      <div class="annual-rank" id="annual-rank-q3"></div>
     </div>
   </div>
+
+  <div class="winners-timeline">
+    <div class="wt-head"><div class="eyebrow">Hall da Fama · Free2Move Rent Santogal</div></div>
+    <p class="wt-tagline">O Cacém venceu o 1º e o 2º Trimestre. Com Setembro ainda em aberto, o 3º Trimestre está <b>por decidir</b> — o líder provisório pode não ser o vencedor final.</p>
+    <div class="wt-row">
+      <div class="wt-card">
+        <div class="wt-q">1º Trimestre 2026</div>
+        <div class="wt-trophy">🏆</div>
+        <div class="wt-name">CACÉM</div>
+        <div class="wt-amount">92 442,76 €</div>
+      </div>
+      <div class="wt-arrow">→</div>
+      <div class="wt-card">
+        <div class="wt-q">2º Trimestre 2026</div>
+        <div class="wt-trophy">🏆</div>
+        <div class="wt-name">CACÉM</div>
+        <div class="wt-amount">104 653,09 €</div>
+      </div>
+      <div class="wt-arrow">→</div>
+      <div class="wt-card current">
+        <div class="wt-q">3º Trimestre 2026 · Provisório</div>
+        <div class="wt-trophy">⏳</div>
+        <div class="wt-name" id="wt-q3-name-q3tab">—</div>
+        <div class="wt-amount" id="wt-q3-amt-q3tab">Jul–Ago, aguarda Setembro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pending-card" style="margin-top:24px;">
+    <div class="pending-ico">📸</div>
+    <div class="pending-title">Fotos da entrega de prémios — por adicionar</div>
+    <div class="pending-sub">As fotos da cerimónia do 3º Trimestre serão adicionadas aqui assim que Marco as enviar, tal como aconteceu no 1º e 2º Trimestre.</div>
+  </div>
 </section>
 
-<!-- VENCEDOR Q3 (pendente) -->
-<section class="view" id="view-vencedorq3">
-  <div class="sec-head">
-    <div class="eyebrow">Reconhecimento do trimestre</div>
-    <h2 class="title-md">Vencedor &amp; Prémio · 3º Trimestre 2026</h2>
-  </div>
-  <div class="pending-card">
-    <div class="pending-ico">🏆</div>
-    <div class="pending-title">Ainda por atribuir</div>
-    <div class="pending-sub">O vencedor do trimestre e a atribuição do prémio DDV aparecem aqui assim que Q3 estiver fechado.</div>
-  </div>
-</section>
-
-<!-- Q3 DETALHE (pendente) -->
+<!-- Q3 DETALHE (provisório) -->
 <section class="view" id="view-q3detalhe">
   <div class="sec-head">
     <div class="eyebrow">Lupa sobre o trimestre</div>
-    <h2 class="title-md">2026 vs 2025, mês a mês — todos os KPIs</h2>
-    <p class="subtitle">Julho, Agosto e Setembro 2026 — comparação mês a mês por balcão.</p>
+    <h2 class="title-md">2026, mês a mês — todos os KPIs</h2>
+    <p class="subtitle">Julho e Agosto 2026 já fechados. Setembro ainda em aberto — assim que fechar, este separador é atualizado. Comparação com 2025 (Jul–Ago) a aguardar envio dos dados.</p>
   </div>
-  <div class="pending-card">
-    <div class="pending-ico">📊</div>
-    <div class="pending-title">Detalhe mensal ainda por preencher</div>
-    <div class="pending-sub">Assim que os fechos mensais de Q3 chegarem, esta vista passa a mostrar Faturação, Ocupação, Contratos, Seguros e Resultado por balcão, mês a mês.</div>
+  <div class="month-toggle" id="month-toggle-q3">
+    <button class="month-btn-q3 active" data-month="JULHO">Julho</button>
+    <button class="month-btn-q3" data-month="AGOSTO">Agosto</button>
+    <button class="month-btn-q3" data-month="Q3TOTAL">Acumulado Q3 (Jul–Ago)</button>
   </div>
+  <div class="grid4" id="month-grid-q3"></div>
 </section>
 
 <!-- RESUMO Q4 (pendente) -->
@@ -886,6 +947,18 @@
 
   <div class="subhead">Comparação acumulada por balcão — 2025 vs 2026</div>
   <div class="pnl-branch-grid" id="pnl-branch-grid"></div>
+
+  <div class="subhead">Repartição de Margem de Viaturas — por balcão, mês a mês (2026)</div>
+  <p class="subtitle" style="margin-top:-8px; margin-bottom:14px;">Margem da venda de viaturas de frota, repartida por balcão. Valores de Setembro ainda não disponíveis.</p>
+  <div class="pnl-table-wrap">
+    <table class="pnl-table" id="margem-table"></table>
+  </div>
+
+  <div class="subhead">Resultado sem Repartição de Margem — o peso da margem de viaturas no resultado</div>
+  <p class="subtitle" style="margin-top:-8px; margin-bottom:14px;">Resultado da Demonstração de Resultados 2026, balcão a balcão, retirando o valor da Repartição de Margem de cada mês — para perceber quanto do resultado financeiro vem da venda de viaturas de frota.</p>
+  <div class="pnl-table-wrap">
+    <table class="pnl-table" id="margem-diff-table"></table>
+  </div>
 </section>
 
 <!-- ALUGUER EXTERNOS (STRIPE/HIPAY) -->
@@ -1042,7 +1115,8 @@ const DATA = {
       MARCO:{CACEM:7282,CASCAIS:4534,LOURES:3451,LISBOA:5759},
       ABRIL:{CACEM:7905,CASCAIS:3892,LOURES:3902,LISBOA:5282},
       MAIO:{CACEM:7113,CASCAIS:5024,LOURES:4125,LISBOA:5333},
-      JUNHO:{CACEM:8529,CASCAIS:2708,LOURES:2785,LISBOA:4596}
+      JUNHO:{CACEM:8529,CASCAIS:2708,LOURES:2785,LISBOA:4596},
+      JULHO:{CACEM:3491,CASCAIS:1127,LOURES:1880,LISBOA:1978}
     }
   },
   m: {
@@ -1060,12 +1134,15 @@ const DATA = {
       MARCO:{CACEM:{fat:35011.02,custo:15525.01,extPct:.5089,apvPct:.4911,result:19486.01,ocup:.8282,contratos:92,seguros:47,hipay:188.49,dias:908},CASCAIS:{fat:27021.84,custo:15646.24,extPct:.4742,apvPct:.5258,result:11375.60,ocup:.6194,contratos:94,seguros:52,hipay:216.55,dias:691},LOURES:{fat:26777.28,custo:15729.03,extPct:.5571,apvPct:.4429,result:11048.25,ocup:.5440,contratos:96,seguros:51,hipay:24.74,dias:587},LISBOA:{fat:30006.38,custo:15076.34,extPct:.4239,apvPct:.5615,result:14930.04,ocup:.6979,contratos:92,seguros:58,hipay:918.13,dias:705}},
       ABRIL:{CACEM:{fat:35220.20,custo:14508.52,extPct:.4278,apvPct:.5722,result:20711.68,ocup:.8443,contratos:72,seguros:40,hipay:30.11,dias:841},CASCAIS:{fat:23447.33,custo:15912.37,extPct:.6015,apvPct:.3985,result:7534.96,ocup:.6440,contratos:87,seguros:41,hipay:1334.01,dias:667},LOURES:{fat:24769.08,custo:15127.85,extPct:.5280,apvPct:.4720,result:9641.23,ocup:.6475,contratos:104,seguros:53,hipay:2214.62,dias:665},LISBOA:{fat:24339.09,custo:14117.75,extPct:.4068,apvPct:.5932,result:10221.34,ocup:.6910,contratos:70,seguros:48,hipay:621.11,dias:640}},
       MAIO:{CACEM:{fat:31414.07,custo:14852.41,extPct:.3511,apvPct:.6489,result:16561.66,ocup:.8107,contratos:76,seguros:47,hipay:789.16,dias:896},CASCAIS:{fat:26864.53,custo:15098.78,extPct:.6885,apvPct:.3115,result:11765.75,ocup:.6039,contratos:82,seguros:42,hipay:0,dias:654},LOURES:{fat:27322.32,custo:14123.83,extPct:.5470,apvPct:.4530,result:13198.49,ocup:.7505,contratos:104,seguros:42,hipay:1797.05,dias:781},LISBOA:{fat:26678.14,custo:14243.95,extPct:.3474,apvPct:.6526,result:12434.19,ocup:.7412,contratos:80,seguros:46,hipay:0,dias:709}},
-      JUNHO:{CACEM:{fat:38018.82,custo:15060.92,extPct:.347,apvPct:.653,result:22957.90,ocup:.76,contratos:85,seguros:55,hipay:0,dias:820},CASCAIS:{fat:21663.46,custo:14435.08,extPct:.542,apvPct:.458,result:7228.38,ocup:.60,contratos:66,seguros:30,hipay:221.39,dias:598},LOURES:{fat:30712.63,custo:13891.95,extPct:.606,apvPct:.394,result:16820.68,ocup:.85,contratos:94,seguros:36,hipay:1343.37,dias:855},LISBOA:{fat:28909.86,custo:13983.01,extPct:.440,apvPct:.560,result:14926.85,ocup:.72,contratos:82,seguros:42,hipay:446.69,dias:720}}
+      JUNHO:{CACEM:{fat:38018.82,custo:15060.92,extPct:.347,apvPct:.653,result:22957.90,ocup:.76,contratos:85,seguros:55,hipay:0,dias:820},CASCAIS:{fat:21663.46,custo:14435.08,extPct:.542,apvPct:.458,result:7228.38,ocup:.60,contratos:66,seguros:30,hipay:221.39,dias:598},LOURES:{fat:30712.63,custo:13891.95,extPct:.606,apvPct:.394,result:16820.68,ocup:.85,contratos:94,seguros:36,hipay:1343.37,dias:855},LISBOA:{fat:28909.86,custo:13983.01,extPct:.440,apvPct:.560,result:14926.85,ocup:.72,contratos:82,seguros:42,hipay:446.69,dias:720}},
+      JULHO:{CACEM:{fat:41906.96,custo:15896.97,extPct:.33,apvPct:.67,result:26009.99,ocup:.77,contratos:86,seguros:55,hipay:0,dias:891},CASCAIS:{fat:27152.79,custo:15074.00,extPct:.56,apvPct:.44,result:12078.79,ocup:.64,contratos:76,seguros:34,hipay:1772.57,dias:674},LOURES:{fat:40214.86,custo:14150.00,extPct:.67,apvPct:.33,result:26064.86,ocup:.75,contratos:97,seguros:46,hipay:6.04,dias:767},LISBOA:{fat:31931.38,custo:14305.00,extPct:.42,apvPct:.58,result:17626.38,ocup:.83,contratos:80,seguros:48,hipay:0,dias:835}},
+      AGOSTO:{CACEM:{fat:33590.18,custo:18117.72,extPct:.35,apvPct:.65,result:15472.46,ocup:.65,contratos:62,seguros:35,hipay:24.35,dias:801},CASCAIS:{fat:26529.52,custo:15531.94,extPct:.68,apvPct:.32,result:10997.58,ocup:.67,contratos:66,seguros:30,hipay:654.96,dias:600},LOURES:{fat:21799.24,custo:15652.99,extPct:.74,apvPct:.26,result:6146.25,ocup:.53,contratos:62,seguros:29,hipay:0,dias:487},LISBOA:{fat:33748.66,custo:16141.25,extPct:.60,apvPct:.40,result:17607.41,ocup:.67,contratos:57,seguros:48,hipay:1030.49,dias:668}}
     }
   },
   ytdMonths:['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO'],
   q1Months:['JANEIRO','FEVEREIRO','MARCO'],
   q2Months:['ABRIL','MAIO','JUNHO'],
+  q3Months:['JULHO','AGOSTO'],
   janJunMonths:['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO'],
   monthLabels:{JANEIRO:'Jan',FEVEREIRO:'Fev',MARCO:'Mar',ABRIL:'Abr',MAIO:'Mai',JUNHO:'Jun'}
 };
@@ -1119,17 +1196,26 @@ const REP = {
   }
 };
 
+const MARGEM = {
+  branches:['CACEM','CASCAIS','LOURES','LISBOA'],
+  m2026: { // Repartição de Margem de Viaturas (Frota) — Jan a Ago, Setembro ainda não disponível
+    CACEM:   {vals:[-1707.04, 13872.48, -351.20, 432.05, 2628.24, 948.14, 648.16, 0]},
+    CASCAIS: {vals:[-621.91, 14666.62, 6775.65, 2594.00, -3285.65, -1053.38, 2322.05, 0]},
+    LOURES:  {vals:[-3476.24, 17664.13, -1030.80, 80.24, 328.88, 3011.79, 477.57, 0]},
+    LISBOA:  {vals:[589.52, 16646.36, 1013.24, 1356.16, 646.88, -993.12, -438.42, 0]}
+  }
+};
 function fmtEUR(v){ return v.toLocaleString('pt-PT',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
 function fmtEUR0(v){ return v.toLocaleString('pt-PT',{minimumFractionDigits:0,maximumFractionDigits:0})+' €'; }
 function pct(v){ return (v>=0?'+':'')+v.toFixed(1)+'%'; }
 function sumBranch(year, months, branch, field){ return months.reduce((s,mo)=> s + (DATA.m[year][mo][branch][field]||0), 0); }
 function sumTotal(year, months, field){ return DATA.branches.reduce((s,b)=> s + sumBranch(year,months,b,field), 0); }
 function avgBranch(year, months, branch, field){ return sumBranch(year,months,branch,field)/months.length; }
-function sumSegFat(year, months, branch){ return months.reduce((s,mo)=> s + (DATA.segFat[year][mo][branch]||0), 0); }
+function sumSegFat(year, months, branch){ return months.reduce((s,mo)=> s + ((DATA.segFat[year][mo]&&DATA.segFat[year][mo][branch])||0), 0); }
 function sumSegFatTotal(year, months){ return DATA.branches.reduce((s,b)=> s + sumSegFat(year,months,b), 0); }
 function getSegFat(year, monthKey, branch){
-  const aggMap={Q1TOTAL:DATA.q1Months, Q2TOTAL:DATA.q2Months};
-  return aggMap[monthKey] ? sumSegFat(year,aggMap[monthKey],branch) : (DATA.segFat[year][monthKey][branch]||0);
+  const aggMap={Q1TOTAL:DATA.q1Months, Q2TOTAL:DATA.q2Months, Q3TOTAL:DATA.q3Months};
+  return aggMap[monthKey] ? sumSegFat(year,aggMap[monthKey],branch) : ((DATA.segFat[year][monthKey]&&DATA.segFat[year][monthKey][branch])||0);
 }
 
 document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -1140,6 +1226,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.getElementById('view-'+btn.dataset.view).classList.add('active');
     if(btn.dataset.view==='vencedor'){ launchConfetti(); replayTadah('tadah-flash'); }
     if(btn.dataset.view==='vencedorq1'){ launchConfetti(); replayTadah('tadah-flash-q1'); }
+    if(btn.dataset.view==='vencedorq3'){ launchConfetti(); replayTadah('tadah-flash-q3'); }
   });
 });
 document.getElementById('cta-vencedor').addEventListener('click', ()=>{
@@ -1147,6 +1234,9 @@ document.getElementById('cta-vencedor').addEventListener('click', ()=>{
 });
 document.getElementById('cta-vencedor-q1').addEventListener('click', ()=>{
   document.querySelector('.tab-btn[data-view="vencedorq1"]').click();
+});
+document.getElementById('cta-vencedor-q3').addEventListener('click', ()=>{
+  document.querySelector('.tab-btn[data-view="vencedorq3"]').click();
 });
 
 function launchConfetti(){
@@ -1290,10 +1380,66 @@ function renderVencedor(){
   });
 }
 
+function renderResumoQ3(){
+  const q3_26=sumTotal(2026,DATA.q3Months,'fat');
+  const contratos_26=sumTotal(2026,DATA.q3Months,'contratos');
+  const seguros_26=sumTotal(2026,DATA.q3Months,'seguros');
+  let ocupSum=0;
+  DATA.branches.forEach(b=>{ DATA.q3Months.forEach(mo=>{ ocupSum+=DATA.m[2026][mo][b].ocup; }); });
+  const n=DATA.branches.length*DATA.q3Months.length;
+  const ocupAvg=ocupSum/n;
+
+  document.getElementById('hs-q3total').textContent=fmtEUR(q3_26);
+  document.getElementById('hs-q3contratos').textContent=contratos_26;
+  document.getElementById('hs-q3seguros').textContent=seguros_26;
+  document.getElementById('hs-q3ocup').textContent=(ocupAvg*100).toFixed(0)+'%';
+}
+
+function renderVencedorQ3(){
+  const totals=DATA.branches.map(b=>({b, val:sumBranch(2026,DATA.q3Months,b,'fat')}));
+  totals.sort((a,b)=>b.val-a.val);
+  const winner=totals[0];
+  document.getElementById('w-name-q3').textContent=DATA.names[winner.b];
+  document.getElementById('w-amount-q3').textContent=fmtEUR(winner.val);
+  const max=totals[0].val;
+  const rankEl=document.getElementById('ranking-q3'); rankEl.innerHTML='';
+  totals.forEach((t,i)=>{
+    const row=document.createElement('div'); row.className='rank-row';
+    row.innerHTML=`<div class="rank-pos">${i+1}º</div><div class="rank-name">${DATA.names[t.b]}</div>
+      <div class="rank-bar-track"><div class="rank-bar-fill" style="background:${DATA.colors[t.b]};"></div></div>
+      <div class="rank-val mono">${fmtEUR(t.val)}</div>`;
+    rankEl.appendChild(row);
+    requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector('.rank-bar-fill').style.width=(t.val/max*100)+'%'; },80+i*120));
+  });
+
+  const annualMonths=DATA.ytdMonths.concat(DATA.q3Months); // Jan-Ago
+  const annualTotals=DATA.branches.map(b=>({b, val:sumBranch(2026,annualMonths,b,'fat')}));
+  annualTotals.sort((a,b)=>b.val-a.val);
+  const ymax=annualTotals[0].val;
+  const arEl=document.getElementById('annual-rank-q3'); arEl.innerHTML='';
+  annualTotals.forEach((t,i)=>{
+    const row=document.createElement('div'); row.className='ar-row';
+    row.innerHTML=`<div class="ar-pos">${i+1}º</div><div style="width:70px;">${DATA.names[t.b]}</div>
+      <div class="ar-track"><div class="ar-fill" style="background:${DATA.colors[t.b]};"></div></div>
+      <div class="ar-val">${fmtEUR0(t.val)}</div>`;
+    arEl.appendChild(row);
+    requestAnimationFrame(()=>setTimeout(()=>{ row.querySelector('.ar-fill').style.width=(t.val/ymax*100)+'%'; },80+i*120));
+  });
+
+  // sincroniza o cartão "provisório" do Hall da Fama nos separadores Q1, Q2 e Q3
+  ['q1tab','q2tab','q3tab'].forEach(sfx=>{
+    const nameEl=document.getElementById('wt-q3-name-'+sfx);
+    const amtEl=document.getElementById('wt-q3-amt-'+sfx);
+    if(nameEl) nameEl.textContent=DATA.names[winner.b];
+    if(amtEl) amtEl.textContent='Jul–Ago: '+fmtEUR(winner.val)+' (aguarda Set.)';
+  });
+}
+
 function getMonthOrAgg(year, branch, monthKey){
-  const aggMap={Q1TOTAL:DATA.q1Months, Q2TOTAL:DATA.q2Months};
+  const aggMap={Q1TOTAL:DATA.q1Months, Q2TOTAL:DATA.q2Months, Q3TOTAL:DATA.q3Months};
   if(aggMap[monthKey]){
-    const months=aggMap[monthKey];
+    const months=aggMap[monthKey].filter(mo=>DATA.m[year] && DATA.m[year][mo]);
+    if(months.length===0) return null;
     const fat=months.reduce((s,mo)=>s+DATA.m[year][mo][branch].fat,0);
     const custo=months.reduce((s,mo)=>s+DATA.m[year][mo][branch].custo,0);
     const result=months.reduce((s,mo)=>s+DATA.m[year][mo][branch].result,0);
@@ -1304,6 +1450,7 @@ function getMonthOrAgg(year, branch, monthKey){
     const apvPct=months.reduce((s,mo)=>s+DATA.m[year][mo][branch].apvPct,0)/months.length;
     return {fat,custo,result,contratos,seguros,ocup,extPct,apvPct};
   }
+  if(!DATA.m[year] || !DATA.m[year][monthKey]) return null;
   return DATA.m[year][monthKey][branch];
 }
 
@@ -1311,7 +1458,11 @@ function renderMensalGeneric(monthKey, gridId, allMonths, sparkLbls){
   const grid=document.getElementById(gridId); grid.innerHTML='';
   DATA.branches.forEach(b=>{
     const d26=getMonthOrAgg(2026,b,monthKey), d25=getMonthOrAgg(2025,b,monthKey);
-    const delta=(d26.fat-d25.fat)/d25.fat*100;
+    const hasCmp=!!d25;
+    const delta=hasCmp?(d26.fat-d25.fat)/d25.fat*100:0;
+    const vsLine = hasCmp
+      ? `vs ${fmtEUR(d25.fat)} em 2025 &nbsp;<span class="delta ${delta>=0?'up':'down'}">${pct(delta)}</span>`
+      : `<span style="opacity:.6;">sem comparativo 2025 disponível</span>`;
     const segVal=getSegFat(2026, monthKey, b);
     const sparkVals=allMonths.map(mo=>DATA.m[2026][mo][b].fat);
     const sparkMax=Math.max(...sparkVals);
@@ -1320,7 +1471,7 @@ function renderMensalGeneric(monthKey, gridId, allMonths, sparkLbls){
     card.innerHTML=`
       <div class="b-name"><span class="b-dot"></span>${DATA.names[b]}</div>
       <div class="big-num glow-num">${fmtEUR(d26.fat)}</div>
-      <div class="vs">vs ${fmtEUR(d25.fat)} em 2025 &nbsp;<span class="delta ${delta>=0?'up':'down'}">${pct(delta)}</span></div>
+      <div class="vs">${vsLine}</div>
       <div class="b-stats">
         <div class="b-stat"><div class="v">${d26.contratos}</div><div class="l">Contratos</div></div>
         <div class="b-stat"><div class="v">${(d26.ocup*100).toFixed(0)}%</div><div class="l">Ocupação</div></div>
@@ -1338,6 +1489,7 @@ function renderMensalGeneric(monthKey, gridId, allMonths, sparkLbls){
 }
 function renderMensal(monthKey){ renderMensalGeneric(monthKey, 'month-grid', DATA.q2Months, ['Abr','Mai','Jun']); }
 function renderMensalQ1(monthKey){ renderMensalGeneric(monthKey, 'month-grid-q1', DATA.q1Months, ['Jan','Fev','Mar']); }
+function renderMensalQ3(monthKey){ renderMensalGeneric(monthKey, 'month-grid-q3', DATA.q3Months, ['Jul','Ago']); }
 document.querySelectorAll('.month-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.month-btn').forEach(b=>b.classList.remove('active'));
@@ -1350,6 +1502,13 @@ document.querySelectorAll('.month-btn-q1').forEach(btn=>{
     document.querySelectorAll('.month-btn-q1').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     renderMensalQ1(btn.dataset.month);
+  });
+});
+document.querySelectorAll('.month-btn-q3').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.month-btn-q3').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMensalQ3(btn.dataset.month);
   });
 });
 
@@ -1555,6 +1714,51 @@ function renderPNL(){
       <div class="delta ${varClass}" style="display:block; text-align:center; margin-top:12px; padding:8px; font-size:13px;">Variação Acum. 2026 vs 2025 ${variacao>=0?'▲':'▼'} ${Math.abs(variacao).toFixed(1)}%</div>`;
     bgrid.appendChild(card);
   });
+
+  renderMargem();
+}
+
+function renderMargem(){
+  const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago'];
+
+  // Tabela: Repartição de Margem de Viaturas
+  const mTable=document.getElementById('margem-table');
+  let mThead='<thead><tr><th>Balcão</th>'+months.map(m=>`<th>${m}</th>`).join('')+'<th>Acum.</th></tr></thead>';
+  let mTbody='<tbody>';
+  let mTotals=new Array(months.length).fill(0);
+  MARGEM.branches.forEach(b=>{
+    const d=MARGEM.m2026[b];
+    const acum=d.vals.reduce((s,v)=>s+v,0);
+    mTbody+=`<tr><td>${DATA.names[b]}</td>`;
+    d.vals.forEach((v,i)=>{ mTbody+=`<td class="${v<0?'neg':'pos'}">${fmtEUR0(v)}</td>`; mTotals[i]+=v; });
+    mTbody+=`<td>${fmtEUR0(acum)}</td></tr>`;
+  });
+  const mGrandTotal=mTotals.reduce((s,v)=>s+v,0);
+  mTbody+=`<tr class="total-row"><td>TOTAL</td>`;
+  mTotals.forEach(v=>{ mTbody+=`<td class="${v<0?'neg':'pos'}">${fmtEUR0(v)}</td>`; });
+  mTbody+=`<td>${fmtEUR0(mGrandTotal)}</td></tr>`;
+  mTbody+='</tbody>';
+  mTable.innerHTML=mThead+mTbody;
+
+  // Tabela: Resultado sem Repartição de Margem (Demonstração de Resultados - Margem, mês a mês)
+  const dTable=document.getElementById('margem-diff-table');
+  let dThead='<thead><tr><th>Balcão</th>'+months.map(m=>`<th>${m}</th>`).join('')+'<th>Acum.</th></tr></thead>';
+  let dTbody='<tbody>';
+  let dTotals=new Array(months.length).fill(0);
+  PNL.branches.forEach(b=>{
+    const pVals=PNL.m2026[b].vals, mVals=MARGEM.m2026[b].vals;
+    const diffVals=pVals.map((v,i)=>v-(mVals[i]||0));
+    const acum=diffVals.reduce((s,v)=>s+v,0);
+    dTbody+=`<tr><td>${DATA.names[b]}</td>`;
+    diffVals.forEach((v,i)=>{ dTbody+=`<td class="${v<0?'neg':'pos'}">${fmtEUR0(v)}</td>`; dTotals[i]+=v; });
+    dTbody+=`<td>${fmtEUR0(acum)}</td></tr>`;
+  });
+  const dGrandTotal=dTotals.reduce((s,v)=>s+v,0);
+  dTbody+=`<tr class="total-row"><td>TOTAL</td>`;
+  dTotals.forEach(v=>{ dTbody+=`<td class="${v<0?'neg':'pos'}">${fmtEUR0(v)}</td>`; });
+  dTbody+=`<td>${fmtEUR0(dGrandTotal)}</td></tr>`;
+  dTbody+='</tbody>';
+  dTable.innerHTML=dThead+dTbody;
 }
 
 function extValueBranch(year, months, branch){
@@ -1736,10 +1940,13 @@ function renderReparacoes(){
 
 renderResumoQ1();
 renderResumo();
+renderResumoQ3();
 renderVencedorQ1();
 renderVencedor();
+renderVencedorQ3();
 renderMensalQ1('JANEIRO');
 renderMensal('ABRIL');
+renderMensalQ3('JULHO');
 renderLineChart();
 renderAcumulado();
 renderSegCmp();

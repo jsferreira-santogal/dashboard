@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -866,12 +867,12 @@
   <div class="sec-head">
     <div class="eyebrow">Contabilidade · Resultado líquido</div>
     <h2 class="title-md">Demonstração de Resultados</h2>
-    <p class="subtitle">Resultado contabilístico real por balcão (diferente do "Resultado Renda/Fact" operacional mostrado nas outras secções). Comparação Jan–Junho 2026 vs Jan–Junho 2025, ambos os períodos agora fechados contabilisticamente.</p>
+    <p class="subtitle">Resultado contabilístico real por balcão (diferente do "Resultado Renda/Fact" operacional mostrado nas outras secções). Comparação Jan–Agosto 2026 vs Jan–Agosto 2025, ambos os períodos agora fechados contabilisticamente.</p>
   </div>
 
   <div class="pnl-kpis">
-    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum26">—</div><div class="l">Resultado Acumulado 2026</div><div class="l2">Jan–Jun</div></div>
-    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-ano">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Jan–Jul (mesmo período)</div></div>
+    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum26">—</div><div class="l">Resultado Acumulado 2026</div><div class="l2">Jan–Ago</div></div>
+    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-ano">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Jan–Ago (mesmo período)</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-periodo">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Ano completo (contexto)</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-diff">—</div><div class="l">Diferença 2026 vs 2025</div><div class="l2">Variação absoluta no mesmo período</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-orc">—</div><div class="l">ORC Acumulado 2026</div><div class="l2" id="pnl-orc-desvio">—</div></div>
@@ -1072,20 +1073,20 @@ const DATA = {
 // Demonstração de Resultados — contabilidade real (Resultado líquido), fonte: RESULTADOS CONTABILIDADE 2025/2026
 const PNL = {
   branches:['CACEM','CASCAIS','LOURES','LISBOA'],
-  m2026: { // jan a jul — valores contabilísticos fechados
-    CACEM:   {vals:[2315,-1074,18762,2841,-2615,3227,14980], acum:38436, orc:10471, desvio:27965},
-    CASCAIS: {vals:[-732,12877,17679,7342,1136,3071,-9388], acum:31985, orc:5875, desvio:26110},
-    LOURES:  {vals:[169,-360,15718,668,2589,9451,17308], acum:45543, orc:18329, desvio:27214},
-    LISBOA:  {vals:[3318,5453,18939,-79,2791,4962,2457], acum:37841, orc:31650, desvio:6191}
+  m2026: { // jan a ago — valores contabilísticos fechados
+    CACEM:   {vals:[2315,-1074,18762,2841,-2615,3228,14980,1642], acum:40079, orc:13587, desvio:26492},
+    CASCAIS: {vals:[-732,12877,17679,7342,1136,3071,-9388,4602], acum:36587, orc:6008, desvio:30579},
+    LOURES:  {vals:[169,-360,15718,668,2589,9451,17308,2849], acum:48392, orc:20186, desvio:28206},
+    LISBOA:  {vals:[3318,5453,18939,-79,2791,4962,2457,9785], acum:47626, orc:35124, desvio:12502}
   },
-  totals2026:{vals:[5070,16896,71098,10772,3901,20711,25357], acum:153805, orc:66325, desvio:87480},
-  y2025: { // Jan–Jul 2025 (mesmo período) — fonte: DRE consolidada
-    CACEM:   {acumAno:9328, acumPeriodo:-7459, orc:3115, desvio:11865},
-    CASCAIS: {acumAno:3586, acumPeriodo:-815, orc:633, desvio:-10021},
-    LOURES:  {acumAno:21703, acumPeriodo:27480, orc:1858, desvio:15450},
-    LISBOA:  {acumAno:31825, acumPeriodo:23673, orc:3474, desvio:-1017}
+  totals2026:{vals:[5070,16896,71098,10772,3901,20712,25357,18878], acum:172684, orc:74905, desvio:97779},
+  y2025: { // Jan–Ago 2025 (mesmo período) — fonte: DRE consolidada
+    CACEM:   {acumAno:9328, acumPeriodo:-5426, orc:3115, desvio:-1473},
+    CASCAIS: {acumAno:3586, acumPeriodo:-7305, orc:133, desvio:4469},
+    LOURES:  {acumAno:21703, acumPeriodo:22088, orc:1858, desvio:991},
+    LISBOA:  {acumAno:31825, acumPeriodo:30621, orc:3474, desvio:6311}
   },
-  totals2025:{acumAno:66442, acumPeriodo:42879, orc:9080, desvio:16277}
+  totals2025:{acumAno:66442, acumPeriodo:39978, orc:8580, desvio:10298}
 };
 
 // Reparações F2M-Insurance (sinistros) — calculado linha a linha a partir do mapa de processos/sinistros
@@ -1503,7 +1504,7 @@ function renderNetGrid(){
 }
 
 function renderPNL(){
-  const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul'];
+  const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago'];
   const t26=PNL.totals2026, t25=PNL.totals2025;
   document.getElementById('pnl-acum26').textContent = fmtEUR0(t26.acum);
   document.getElementById('pnl-acum25-ano').textContent = fmtEUR0(t25.acumPeriodo);
@@ -1543,11 +1544,11 @@ function renderPNL(){
     card.style.setProperty('--branch-color', DATA.colors[b]);
     card.innerHTML=`
       <h4><span class="b-dot" style="background:${DATA.colors[b]};"></span>${DATA.names[b]}</h4>
-      <div class="pnl-yr">2025 (Jan–Jun)</div>
+      <div class="pnl-yr">2025 (Jan–Ago)</div>
       <div class="pnl-row"><span>Acumulado</span><span class="v">${fmtEUR0(d25.acumPeriodo)}</span></div>
       <div class="pnl-row"><span>ORC/Acum.</span><span class="v">${fmtEUR0(d25.orc)}</span></div>
       <div class="pnl-row"><span>Desvio</span><span class="v">${fmtEUR0(d25.desvio)}</span></div>
-      <div class="pnl-yr" style="margin-top:14px;">2026 (Jan–Jun)</div>
+      <div class="pnl-yr" style="margin-top:14px;">2026 (Jan–Ago)</div>
       <div class="pnl-row"><span>Acumulado</span><span class="v">${fmtEUR0(d26.acum)}</span></div>
       <div class="pnl-row"><span>ORC/Acum.</span><span class="v">${fmtEUR0(d26.orc)}</span></div>
       <div class="pnl-row"><span>Desvio</span><span class="v">${fmtEUR0(d26.desvio)}</span></div>

@@ -939,6 +939,9 @@
     <div class="hero-stat"><div class="num glow-num" id="at-seguros">—</div><div class="lbl">Seguros Vendidos Acumulados</div><div class="cmp">2025: <b id="at-seguros25">—</b> &nbsp;<span class="delta" id="at-segurosdelta">—</span></div></div>
     <div class="hero-stat"><div class="num glow-num" id="at-ocup">—</div><div class="lbl">Ocupação Média Jan–Ago</div><div class="cmp">2025: <b id="at-ocup25">—</b> &nbsp;<span class="delta" id="at-ocupdelta">—</span></div></div>
   </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num glow-num" id="at-dias">—</div><div class="lbl">Nº Dias de Aluguer Vendidos Acumulado</div><div class="cmp">2025: <b id="at-dias25">—</b> &nbsp;<span class="delta" id="at-diasdelta">—</span></div></div>
+  </div>
 
   <div class="subhead">Ranking acumulado por balcão — Jan–Ago 2026 (crescimento vs 2025)</div>
   <div class="ranking" id="ranking-acumtotal"></div>
@@ -1438,6 +1441,11 @@ function renderTotalAcumulado(){
   const ocupPP=(ocupAvg-ocupAvg25)*100;
   document.getElementById('at-ocupdelta').outerHTML=`<span class="delta ${(ocupPP>=0)?'up':'down'}" id="at-ocupdelta">${(ocupPP>=0?'+':'')+ocupPP.toFixed(1)+'pp'}</span>`;
 
+  const dias=sumTotal(2026,months,'dias'), dias25=sumTotal(2025,months,'dias');
+  document.getElementById('at-dias').textContent=dias.toLocaleString('pt-PT');
+  document.getElementById('at-dias25').textContent=dias25.toLocaleString('pt-PT');
+  document.getElementById('at-diasdelta').outerHTML=`<span class="delta ${(dias>=dias25)?'up':'down'}" id="at-diasdelta">${pct((dias-dias25)/dias25*100)}</span>`;
+
   const totals=DATA.branches.map(b=>({b, val:sumBranch(2026,months,b,'fat'), val25:sumBranch(2025,months,b,'fat')}));
   totals.sort((a,b)=>b.val-a.val);
   const max=totals[0].val;
@@ -1459,8 +1467,10 @@ function renderTotalAcumulado(){
     const result=sumBranch(2026,months,b,'result'), result25=sumBranch(2025,months,b,'result');
     const c=sumBranch(2026,months,b,'contratos'), c25=sumBranch(2025,months,b,'contratos');
     const s=sumBranch(2026,months,b,'seguros');
+    const diasB=sumBranch(2026,months,b,'dias'), diasB25=sumBranch(2025,months,b,'dias');
     let ocupB=0; months.forEach(mo=>{ ocupB+=DATA.m[2026][mo][b].ocup; }); ocupB/=months.length;
     const delta=(fat-fat25)/fat25*100;
+    const diasDelta=(diasB-diasB25)/diasB25*100;
     const card=document.createElement('div'); card.className='b-card';
     card.style.setProperty('--branch-color', DATA.colors[b]);
     card.innerHTML=`
@@ -1471,9 +1481,11 @@ function renderTotalAcumulado(){
         <div class="b-stat"><div class="v">${c}</div><div class="l">Contratos</div></div>
         <div class="b-stat"><div class="v">${(ocupB*100).toFixed(0)}%</div><div class="l">Ocupação</div></div>
         <div class="b-stat"><div class="v">${s}</div><div class="l">Seguros</div></div>
+        <div class="b-stat"><div class="v">${diasB}</div><div class="l">Dias Vendidos</div></div>
         <div class="b-stat"><div class="v">${fmtEUR0(custo)}</div><div class="l">Custo Rendas</div></div>
         <div class="b-stat"><div class="v">${fmtEUR0(result)}</div><div class="l">Resultado</div></div>
         <div class="b-stat"><div class="v">${fmtEUR0(result25)}</div><div class="l">Resultado 2025</div></div>
+        <div class="b-stat"><div class="v">${(diasDelta>=0?'+':'')+diasDelta.toFixed(1)}%</div><div class="l">Dias vs 2025</div></div>
       </div>`;
     grid.appendChild(card);
   });

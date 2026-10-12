@@ -977,14 +977,14 @@
   <div class="sec-head">
     <div class="eyebrow">Contabilidade · Resultado líquido</div>
     <h2 class="title-md">Demonstração de Resultados</h2>
-    <p class="subtitle">Resultado contabilístico real por balcão (diferente do "Resultado Renda/Fact" operacional mostrado nas outras secções). Comparação Jan–Agosto 2026 vs Jan–Agosto 2025, ambos os períodos agora fechados contabilisticamente.</p>
+    <p class="subtitle">Resultado contabilístico real por balcão (diferente do "Resultado Renda/Fact" operacional mostrado nas outras secções). 2026 já está fechado até Setembro. A comparação com 2025 ainda é feita com Jan–Agosto (período homólogo), pois o fecho contabilístico de Setembro de 2025 ainda não foi enviado.</p>
   </div>
 
   <div class="pnl-kpis">
-    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum26">—</div><div class="l">Resultado Acumulado 2026</div><div class="l2">Jan–Ago</div></div>
+    <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum26">—</div><div class="l">Resultado Acumulado 2026</div><div class="l2">Jan–Set</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-ano">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Jan–Ago (mesmo período)</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-acum25-periodo">—</div><div class="l">Resultado Acumulado 2025</div><div class="l2">Ano completo (contexto)</div></div>
-    <div class="pnl-kpi"><div class="v glow-num" id="pnl-diff">—</div><div class="l">Diferença 2026 vs 2025</div><div class="l2">Variação absoluta no mesmo período</div></div>
+    <div class="pnl-kpi"><div class="v glow-num" id="pnl-diff">—</div><div class="l">Diferença 2026 vs 2025</div><div class="l2">Jan–Set 2026 vs Jan–Ago 2025 (períodos ainda não comparáveis)</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-orc">—</div><div class="l">ORC Acumulado 2026</div><div class="l2" id="pnl-orc-desvio">—</div></div>
     <div class="pnl-kpi"><div class="v glow-num" id="pnl-melhor">—</div><div class="l">Desvio vs ORC 2026</div><div class="l2" id="pnl-melhor-val" style="margin-top:6px; color:var(--good); font-weight:700;">—</div></div>
   </div>
@@ -1004,7 +1004,7 @@
   </div>
 
   <div class="subhead">Resultado sem Repartição de Margem — o peso da margem de viaturas no resultado</div>
-  <p class="subtitle" style="margin-top:-8px; margin-bottom:14px;">Resultado da Demonstração de Resultados 2026, balcão a balcão, retirando o valor da Repartição de Margem de cada mês — para perceber quanto do resultado financeiro vem da venda de viaturas de frota.</p>
+  <p class="subtitle" style="margin-top:-8px; margin-bottom:14px;">Resultado da Demonstração de Resultados 2026, balcão a balcão, retirando o valor da Repartição de Margem de cada mês — para perceber quanto do resultado financeiro vem da venda de viaturas de frota. A coluna de Setembro ainda não desconta a margem (valor por enviar), por isso mostra o resultado completo desse mês.</p>
   <div class="pnl-table-wrap">
     <table class="pnl-table" id="margem-diff-table"></table>
   </div>
@@ -1114,12 +1114,12 @@ const DATA = {
       JANEIRO:{CACEM:{fat:32333.84,custo:14330.00,extPct:.3357,apvPct:.6643,result:18003.84,ocup:.7849,contratos:84,seguros:43,hipay:677.92,dias:803},CASCAIS:{fat:25432.94,custo:15885.40,extPct:.5005,apvPct:.4995,result:9547.00,ocup:.6639,contratos:93,seguros:56,hipay:0,dias:747},LOURES:{fat:20478.18,custo:16786.00,extPct:.6404,apvPct:.3596,result:3692.18,ocup:.5323,contratos:123,seguros:60,hipay:0,dias:594},LISBOA:{fat:24413.67,custo:14047.00,extPct:.2626,apvPct:.7374,result:10366.67,ocup:.6653,contratos:79,seguros:52,hipay:1099.28,dias:660}},
       FEVEREIRO:{CACEM:{fat:24486.90,custo:15654.08,extPct:.5179,apvPct:.4821,result:8832.82,ocup:.6555,contratos:73,seguros:36,hipay:0,dias:611},CASCAIS:{fat:22208.27,custo:17041.47,extPct:.4604,apvPct:.5396,result:5166.80,ocup:.6675,contratos:68,seguros:44,hipay:0,dias:651},LOURES:{fat:28672.16,custo:17959.76,extPct:.5620,apvPct:.4380,result:10712.40,ocup:.7130,contratos:111,seguros:80,hipay:404.44,dias:774},LISBOA:{fat:30034.66,custo:15667.96,extPct:.2144,apvPct:.7856,result:14366.70,ocup:.7336,contratos:78,seguros:45,hipay:859.74,dias:716}},
       MARCO:{CACEM:{fat:35011.02,custo:15525.01,extPct:.5089,apvPct:.4911,result:19486.01,ocup:.8282,contratos:92,seguros:47,hipay:188.49,dias:908},CASCAIS:{fat:27021.84,custo:15646.24,extPct:.4742,apvPct:.5258,result:11375.60,ocup:.6194,contratos:94,seguros:52,hipay:397.85,dias:691},LOURES:{fat:26777.28,custo:15729.03,extPct:.5571,apvPct:.4429,result:11048.25,ocup:.5440,contratos:96,seguros:51,hipay:24.74,dias:587},LISBOA:{fat:30006.38,custo:15076.34,extPct:.4239,apvPct:.5615,result:14930.04,ocup:.6979,contratos:92,seguros:58,hipay:918.13,dias:705}},
-      ABRIL:{CACEM:{fat:35220.20,custo:14508.52,extPct:.4278,apvPct:.5722,result:20711.68,ocup:.8443,contratos:72,seguros:40,hipay:420.75,dias:841},CASCAIS:{fat:23447.33,custo:15912.37,extPct:.6015,apvPct:.3985,result:7534.96,ocup:.6440,contratos:87,seguros:41,hipay:1152.71,dias:667},LOURES:{fat:24769.08,custo:15127.85,extPct:.5280,apvPct:.4720,result:9641.23,ocup:.6475,contratos:104,seguros:53,hipay:2214.62,dias:665},LISBOA:{fat:24339.09,custo:14117.75,extPct:.4068,apvPct:.5932,result:10221.34,ocup:.6910,contratos:70,seguros:48,hipay:621.11,dias:640}},
+      ABRIL:{CACEM:{fat:35220.20,custo:14508.52,extPct:.4278,apvPct:.5722,result:20711.68,ocup:.8443,contratos:72,seguros:40,hipay:30.11,dias:841},CASCAIS:{fat:23447.33,custo:15912.37,extPct:.6015,apvPct:.3985,result:7534.96,ocup:.6440,contratos:87,seguros:41,hipay:1152.71,dias:667},LOURES:{fat:24769.08,custo:15127.85,extPct:.5280,apvPct:.4720,result:9641.23,ocup:.6475,contratos:104,seguros:53,hipay:2214.62,dias:665},LISBOA:{fat:24339.09,custo:14117.75,extPct:.4068,apvPct:.5932,result:10221.34,ocup:.6910,contratos:70,seguros:48,hipay:621.11,dias:640}},
       MAIO:{CACEM:{fat:31414.07,custo:14852.41,extPct:.3511,apvPct:.6489,result:16561.66,ocup:.8107,contratos:76,seguros:47,hipay:786.16,dias:896},CASCAIS:{fat:26864.53,custo:15098.78,extPct:.6885,apvPct:.3115,result:11765.75,ocup:.6039,contratos:82,seguros:42,hipay:0,dias:654},LOURES:{fat:27322.32,custo:14123.83,extPct:.5470,apvPct:.4530,result:13198.49,ocup:.7505,contratos:104,seguros:42,hipay:1797.05,dias:781},LISBOA:{fat:26678.14,custo:14243.95,extPct:.3474,apvPct:.6526,result:12434.19,ocup:.7412,contratos:80,seguros:46,hipay:446.69,dias:709}},
       JUNHO:{CACEM:{fat:38018.82,custo:15060.92,extPct:.347,apvPct:.653,result:22957.90,ocup:.76,contratos:85,seguros:56,hipay:0,dias:820},CASCAIS:{fat:21663.46,custo:14435.08,extPct:.542,apvPct:.458,result:7228.38,ocup:.60,contratos:66,seguros:30,hipay:221.39,dias:598},LOURES:{fat:30712.63,custo:13891.95,extPct:.606,apvPct:.394,result:16820.68,ocup:.85,contratos:94,seguros:36,hipay:1343.37,dias:855},LISBOA:{fat:28909.86,custo:13983.01,extPct:.440,apvPct:.560,result:14926.85,ocup:.72,contratos:82,seguros:42,hipay:446.69,dias:720}},
       JULHO:{CACEM:{fat:41906.96,custo:15896.97,extPct:.33,apvPct:.67,result:26009.99,ocup:.77,contratos:86,seguros:55,hipay:0,dias:891},CASCAIS:{fat:27152.79,custo:15074.00,extPct:.56,apvPct:.44,result:12078.79,ocup:.64,contratos:76,seguros:34,hipay:1772.57,dias:674},LOURES:{fat:40214.86,custo:14150.00,extPct:.67,apvPct:.33,result:26064.86,ocup:.75,contratos:97,seguros:46,hipay:6.04,dias:767},LISBOA:{fat:31931.38,custo:14305.00,extPct:.42,apvPct:.58,result:17626.38,ocup:.83,contratos:80,seguros:48,hipay:0,dias:835}},
       AGOSTO:{CACEM:{fat:33590.18,custo:18117.72,extPct:.35,apvPct:.65,result:15472.46,ocup:.65,contratos:62,seguros:35,hipay:24.35,dias:801},CASCAIS:{fat:26529.52,custo:15531.94,extPct:.68,apvPct:.32,result:10997.58,ocup:.67,contratos:66,seguros:30,hipay:654.96,dias:600},LOURES:{fat:21799.24,custo:15652.99,extPct:.74,apvPct:.26,result:6146.25,ocup:.53,contratos:76,seguros:29,hipay:0,dias:487},LISBOA:{fat:33748.66,custo:16141.25,extPct:.60,apvPct:.40,result:17607.41,ocup:.67,contratos:57,seguros:30,hipay:1030.49,dias:668}},
-      SETEMBRO:{CACEM:{fat:39934.06,custo:17548.03,extPct:.39,apvPct:.61,result:22386.03,ocup:.77,contratos:81,seguros:47,hipay:0,dias:850},CASCAIS:{fat:23320.85,custo:16604.90,extPct:.52,apvPct:.48,result:6715.95,ocup:.72,contratos:83,seguros:36,hipay:0,dias:677},LOURES:{fat:22053.66,custo:15750.63,extPct:.72,apvPct:.28,result:6303.03,ocup:.50,contratos:70,seguros:54,hipay:0,dias:433},LISBOA:{fat:24131.20,custo:15904.11,extPct:.29,apvPct:.71,result:8227.09,ocup:.64,contratos:78,seguros:50,hipay:0,dias:645}}
+      SETEMBRO:{CACEM:{fat:39934.06,custo:17548.03,extPct:.39,apvPct:.61,result:22386.03,ocup:.77,contratos:81,seguros:47,hipay:44.84,dias:850},CASCAIS:{fat:23320.85,custo:16604.90,extPct:.52,apvPct:.48,result:6715.95,ocup:.72,contratos:83,seguros:36,hipay:221.89,dias:677},LOURES:{fat:22081.41,custo:15750.63,extPct:.72,apvPct:.28,result:6303.03,ocup:.50,contratos:70,seguros:54,hipay:0,dias:435},LISBOA:{fat:24131.20,custo:15904.11,extPct:.29,apvPct:.71,result:8227.09,ocup:.64,contratos:78,seguros:50,hipay:48.51,dias:645}}
     }
   },
   ytdMonths:['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO'],
@@ -1135,12 +1135,12 @@ const DATA = {
 const PNL = {
   branches:['CACEM','CASCAIS','LOURES','LISBOA'],
   m2026: { // jan a ago — valores contabilísticos fechados
-    CACEM:   {vals:[2315,-1074,18762,2841,-2615,3228,14980,1642], acum:40079, orc:13587, desvio:26492},
-    CASCAIS: {vals:[-732,12877,17679,7342,1136,3071,-9388,4602], acum:36587, orc:6008, desvio:30579},
-    LOURES:  {vals:[169,-360,15718,668,2589,9451,17308,2849], acum:48392, orc:20186, desvio:28206},
-    LISBOA:  {vals:[3318,5453,18939,-79,2791,4962,2457,9785], acum:47626, orc:35124, desvio:12502}
+    CACEM:   {vals:[2315,-1074,18762,2841,-2615,3228,14980,1642,2861], acum:42940, orc:13702, desvio:29238},
+    CASCAIS: {vals:[-732,12877,17679,7342,1136,3071,-9388,4602,-3265], acum:33322, orc:5640, desvio:27681},
+    LOURES:  {vals:[169,-360,15718,668,2589,9451,17308,2849,-985], acum:47407, orc:22044, desvio:25362},
+    LISBOA:  {vals:[3318,5453,18939,-79,2791,4962,2457,9785,-6179], acum:41447, orc:38598, desvio:2849}
   },
-  totals2026:{vals:[5070,16896,71098,10772,3901,20712,25357,18878], acum:172684, orc:74905, desvio:97779},
+  totals2026:{vals:[5070,16896,71098,10772,3901,20712,25357,18878,-7568], acum:165116, orc:79984, desvio:85130},
   y2025: { // Jan–Ago 2025 (mesmo período) — fonte: DRE consolidada
     CACEM:   {acumAno:9328, acumPeriodo:-5426, orc:3115, desvio:-1473},
     CASCAIS: {acumAno:3586, acumPeriodo:-7305, orc:133, desvio:4469},
@@ -1752,7 +1752,7 @@ function renderNetGrid(){
 }
 
 function renderPNL(){
-  const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago'];
+  const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set'];
   const t26=PNL.totals2026, t25=PNL.totals2025;
   document.getElementById('pnl-acum26').textContent = fmtEUR0(t26.acum);
   document.getElementById('pnl-acum25-ano').textContent = fmtEUR0(t25.acumPeriodo);
@@ -1796,7 +1796,7 @@ function renderPNL(){
       <div class="pnl-row"><span>Acumulado</span><span class="v">${fmtEUR0(d25.acumPeriodo)}</span></div>
       <div class="pnl-row"><span>ORC/Acum.</span><span class="v">${fmtEUR0(d25.orc)}</span></div>
       <div class="pnl-row"><span>Desvio</span><span class="v">${fmtEUR0(d25.desvio)}</span></div>
-      <div class="pnl-yr" style="margin-top:14px;">2026 (Jan–Ago)</div>
+      <div class="pnl-yr" style="margin-top:14px;">2026 (Jan–Set)</div>
       <div class="pnl-row"><span>Acumulado</span><span class="v">${fmtEUR0(d26.acum)}</span></div>
       <div class="pnl-row"><span>ORC/Acum.</span><span class="v">${fmtEUR0(d26.orc)}</span></div>
       <div class="pnl-row"><span>Desvio</span><span class="v">${fmtEUR0(d26.desvio)}</span></div>
@@ -1809,6 +1809,7 @@ function renderPNL(){
 
 function renderMargem(){
   const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago'];
+  const monthsPNL=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set'];
 
   // Tabela: Repartição de Margem de Viaturas
   const mTable=document.getElementById('margem-table');
@@ -1831,9 +1832,9 @@ function renderMargem(){
 
   // Tabela: Resultado sem Repartição de Margem (Demonstração de Resultados - Margem, mês a mês)
   const dTable=document.getElementById('margem-diff-table');
-  let dThead='<thead><tr><th>Balcão</th>'+months.map(m=>`<th>${m}</th>`).join('')+'<th>Acum.</th></tr></thead>';
+  let dThead='<thead><tr><th>Balcão</th>'+monthsPNL.map(m=>`<th>${m}</th>`).join('')+'<th>Acum.</th></tr></thead>';
   let dTbody='<tbody>';
-  let dTotals=new Array(months.length).fill(0);
+  let dTotals=new Array(monthsPNL.length).fill(0);
   PNL.branches.forEach(b=>{
     const pVals=PNL.m2026[b].vals, mVals=MARGEM.m2026[b].vals;
     const diffVals=pVals.map((v,i)=>v-(mVals[i]||0));

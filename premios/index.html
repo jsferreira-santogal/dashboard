@@ -1077,7 +1077,7 @@
   </div>
 
   <div class="subhead">Reconciliação — Apurado F2M-Insurance vs Recondicionamentos (Acumulado Jan–Set 2026)</div>
-  <p class="subtitle" style="font-size:12.5px; margin-bottom:14px;">Valor apurado junto da seguradora menos o valor efetivamente gasto em recondicionamentos — para ver se, mesmo descontando o custo da reparação, o saldo por balcão continua positivo.</p>
+  <p class="subtitle" style="font-size:12.5px; margin-bottom:14px;">Valor apurado junto da seguradora menos o valor efetivamente gasto em recondicionamentos — para ver se, mesmo descontando o custo da reparação, o saldo por balcão continua positivo. Inclui o nº de processos de 2026, já que um balcão com menos processos tende, de forma natural, a ter menos valor apurado.</p>
   <div class="pnl-table-wrap" style="margin-bottom:18px;">
     <table class="pnl-table" id="rep-table-saldo"></table>
   </div>
@@ -1815,6 +1815,8 @@ function emailBranchCardPNL(b){
   const variacao = base>0 ? ((d26.acum - d25.acumPeriodo)/base*100) : (d26.acum>0?100:0);
   const up = d25.acumPeriodo<0 ? (d26.acum>d25.acumPeriodo) : (variacao>=0);
   const vColor = up ? '#1FA866' : '#E63950';
+  const mVals=(MARGEM.m2026[b]&&MARGEM.m2026[b].vals)||[];
+  const semMargemAcum = d26.vals.reduce((s,v,i)=>s+(v-(mVals[i]||0)),0);
   return `<div style="border-left:5px solid ${DATA.colors[b]};background:#f7f6fb;border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif;">`+
     `<div style="font-weight:800;color:#170B3B;font-size:15px;margin-bottom:10px;">${DATA.names[b]}</div>`+
     `<table style="width:100%;border-collapse:collapse;font-size:13px;color:#55526b;">`+
@@ -1822,6 +1824,7 @@ function emailBranchCardPNL(b){
       `<tr><td style="padding:3px 0;">2026 (Jan–Set)</td><td style="padding:3px 0;text-align:right;font-weight:800;color:#170B3B;font-size:14px;">${fmtEUR0(d26.acum)}</td></tr>`+
       `<tr><td style="padding:3px 0;">ORC 2026</td><td style="padding:3px 0;text-align:right;">${fmtEUR0(d26.orc)}</td></tr>`+
       `<tr><td style="padding:3px 0;">Desvio vs ORC</td><td style="padding:3px 0;text-align:right;font-weight:700;color:${d26.desvio>=0?'#1FA866':'#E63950'};">${d26.desvio>=0?'+':''}${fmtEUR0(d26.desvio)}</td></tr>`+
+      `<tr><td style="padding:3px 0;border-top:1px solid #e3e1ec;">Resultado s/ Margem Viaturas (Acum.)</td><td style="padding:3px 0;border-top:1px solid #e3e1ec;text-align:right;font-weight:700;color:#170B3B;">${fmtEUR0(semMargemAcum)}</td></tr>`+
     `</table>`+
     `<div style="margin-top:10px;text-align:center;background:${up?'#E8F8EF':'#FBE9EC'};color:${vColor};font-weight:800;font-size:12.5px;padding:7px;border-radius:7px;">Variação Acum. 2026 vs 2025: ${variacao>=0?'▲':'▼'} ${Math.abs(variacao).toFixed(1)}%</div>`+
   `</div>`;
@@ -1853,7 +1856,7 @@ function buildPNLEmailHTML(){
   rows+=emailSubhead('Por balcão — Acumulado 2025 vs 2026');
   PNL.branches.forEach(b=>{ rows+=emailBranchCardPNL(b); });
   return emailWrap('Demonstração de Resultados — Jan a Set 2026', 'Resultado líquido por balcão · Free2Move Rent Santogal', rows,
-    'Comparação com 2025 ainda em Jan–Ago (período homólogo); fecho de Setembro 2025 ainda não enviado.');
+    'Comparação com 2025 ainda em Jan–Ago (período homólogo); fecho de Setembro 2025 ainda não enviado. "Resultado s/ Margem Viaturas" retira o valor da Repartição de Margem de cada mês (Setembro ainda não desconta margem, dado por enviar).');
 }
 function buildPNLEmailText(){
   const t26=PNL.totals2026, t25=PNL.totals2025;
@@ -1873,7 +1876,9 @@ function buildPNLEmailText(){
     const d26=PNL.m2026[b], d25=PNL.y2025[b];
     const base=Math.abs(d25.acumPeriodo);
     const variacao = base>0 ? ((d26.acum - d25.acumPeriodo)/base*100) : (d26.acum>0?100:0);
-    L.push('- '+DATA.names[b]+': 2025 '+fmtEUR0(d25.acumPeriodo)+' → 2026 '+fmtEUR0(d26.acum)+' | ORC '+fmtEUR0(d26.orc)+' | desvio '+(d26.desvio>=0?'+':'')+fmtEUR0(d26.desvio)+' | variação '+(variacao>=0?'+':'')+variacao.toFixed(1)+'%');
+    const mVals=(MARGEM.m2026[b]&&MARGEM.m2026[b].vals)||[];
+    const semMargemAcum = d26.vals.reduce((s,v,i)=>s+(v-(mVals[i]||0)),0);
+    L.push('- '+DATA.names[b]+': 2025 '+fmtEUR0(d25.acumPeriodo)+' → 2026 '+fmtEUR0(d26.acum)+' | ORC '+fmtEUR0(d26.orc)+' | desvio '+(d26.desvio>=0?'+':'')+fmtEUR0(d26.desvio)+' | variação '+(variacao>=0?'+':'')+variacao.toFixed(1)+'% | resultado s/ margem '+fmtEUR0(semMargemAcum));
   });
   L.push('');
   L.push('Nota: comparação com 2025 ainda em Jan–Ago (Setembro 2025 ainda não enviado).');
@@ -1887,7 +1892,7 @@ function emailBranchCardRep(b){
     `<div style="font-weight:800;color:#170B3B;font-size:15px;margin-bottom:10px;">${DATA.names[b]}</div>`+
     `<table style="width:100%;border-collapse:collapse;font-size:13px;color:#55526b;">`+
       `<tr><td style="padding:3px 0;">Processos 2025 → 2026</td><td style="padding:3px 0;text-align:right;font-weight:700;color:#170B3B;">${a25.n} → ${a26.n}</td></tr>`+
-      `<tr><td style="padding:3px 0;">Apurado F2M-Insurance (2026)</td><td style="padding:3px 0;text-align:right;font-weight:800;color:#170B3B;font-size:14px;">${fmtEUR0(a26.apurado)}</td></tr>`+
+      `<tr><td style="padding:3px 0;">Apurado F2M-Insurance (2026)</td><td style="padding:3px 0;text-align:right;font-weight:800;color:#170B3B;font-size:14px;">${fmtEUR0(a26.apurado)} <span style="font-size:10.5px;color:#9a97ab;font-weight:600;">(${a26.n} proc.)</span></td></tr>`+
       `<tr><td style="padding:3px 0;">Recondicionamentos (Acum.)</td><td style="padding:3px 0;text-align:right;">${fmtEUR0(recond)}</td></tr>`+
     `</table>`+
     `<div style="margin-top:10px;text-align:center;background:${saldo>=0?'#E8F8EF':'#FBE9EC'};color:${saldo>=0?'#1FA866':'#E63950'};font-weight:800;font-size:12.5px;padding:7px;border-radius:7px;">Saldo: ${saldo>=0?'+':''}${fmtEUR0(saldo)}</div>`+
@@ -1905,7 +1910,7 @@ function buildRepEmailHTML(){
   rows+=emailRow('Apurado F2M-Insurance 2026', fmtEUR0(ap26));
   rows+=emailRow('Recondicionamentos (Acum. 2026)', fmtEUR0(recond));
   rows+=emailRow('Saldo de Rede (Acum.)', (saldoTotal>=0?'+':'')+fmtEUR0(saldoTotal), saldoTotal>=0?'#1FA866':'#E63950');
-  rows+=emailSubhead('Por balcão — Acumulado 2026');
+  rows+=emailSubhead('Reconciliação — Apurado F2M-Insurance vs Recondicionamentos, por balcão (Acum. Jan–Set 2026)');
   branches.forEach(b=>{ rows+=emailBranchCardRep(b); });
   return emailWrap('Reparações F2M-Insurance — Reconciliação Jan a Set 2026', 'Apurado junto da seguradora vs custo de recondicionamento · Free2Move Rent Santogal', rows,
     '2026 ainda em curso — os totais sobem até dezembro.');
@@ -1926,11 +1931,11 @@ function buildRepEmailText(){
   L.push('Recondicionamentos (Acum. 2026): '+fmtEUR0(recond));
   L.push('Saldo de Rede (Acum.): '+(saldoTotal>=0?'+':'')+fmtEUR0(saldoTotal));
   L.push('');
-  L.push('Por balcão — Acumulado 2026:');
+  L.push('Reconciliação — Apurado F2M-Insurance vs Recondicionamentos, por balcão (Acum. Jan–Set 2026):');
   branches.forEach(b=>{
     const a25=REP.totals2025[b], a26=REP.totals2026[b];
     const recond=RECOND.m2026[b].acum, saldo=a26.apurado-recond;
-    L.push('- '+DATA.names[b]+': processos '+a25.n+' → '+a26.n+' | apurado '+fmtEUR0(a26.apurado)+' | recondicionamentos '+fmtEUR0(recond)+' | saldo '+(saldo>=0?'+':'')+fmtEUR0(saldo));
+    L.push('- '+DATA.names[b]+': processos '+a25.n+' → '+a26.n+' | apurado '+fmtEUR0(a26.apurado)+' ('+a26.n+' proc.) | recondicionamentos '+fmtEUR0(recond)+' | saldo '+(saldo>=0?'+':'')+fmtEUR0(saldo));
   });
   L.push('');
   L.push('Nota: 2026 ainda em curso — os totais sobem até dezembro.');
@@ -2146,17 +2151,17 @@ function renderReparacoes(){
   document.getElementById('rep-table-recond').innerHTML=buildRecondTable();
 
   function buildSaldoTable(){
-    let thead='<thead><tr><th>Balcão</th><th>Apurado F2M-Insurance (Acum.)</th><th>Recondicionamentos (Acum.)</th><th>Saldo</th></tr></thead>';
+    let thead='<thead><tr><th>Balcão</th><th>Processos 2026</th><th>Apurado F2M-Insurance (Acum.)</th><th>Recondicionamentos (Acum.)</th><th>Saldo</th></tr></thead>';
     let tbody='<tbody>';
-    let apTotal=0, rcTotal=0;
+    let apTotal=0, rcTotal=0, nTotal=0;
     branches.forEach(b=>{
-      const apurado=REP.totals2026[b].apurado, recond=RECOND.m2026[b].acum;
+      const n=REP.totals2026[b].n, apurado=REP.totals2026[b].apurado, recond=RECOND.m2026[b].acum;
       const saldo=apurado-recond;
-      apTotal+=apurado; rcTotal+=recond;
-      tbody+=`<tr><td>${DATA.names[b]}</td><td>${fmtEUR0(apurado)}</td><td>${fmtEUR0(recond)}</td><td style="font-weight:700; color:${saldo>=0?'#1FCB7A':'#FF4D5E'};">${saldo>=0?'+':''}${fmtEUR0(saldo)}</td></tr>`;
+      apTotal+=apurado; rcTotal+=recond; nTotal+=n;
+      tbody+=`<tr><td>${DATA.names[b]}</td><td class="dim">${n}</td><td>${fmtEUR0(apurado)}</td><td>${fmtEUR0(recond)}</td><td style="font-weight:700; color:${saldo>=0?'#1FCB7A':'#FF4D5E'};">${saldo>=0?'+':''}${fmtEUR0(saldo)}</td></tr>`;
     });
     const saldoTotal=apTotal-rcTotal;
-    tbody+=`<tr class="total-row"><td>TOTAL</td><td>${fmtEUR0(apTotal)}</td><td>${fmtEUR0(rcTotal)}</td><td style="color:${saldoTotal>=0?'#1FCB7A':'#FF4D5E'};">${saldoTotal>=0?'+':''}${fmtEUR0(saldoTotal)}</td></tr>`;
+    tbody+=`<tr class="total-row"><td>TOTAL</td><td>${nTotal}</td><td>${fmtEUR0(apTotal)}</td><td>${fmtEUR0(rcTotal)}</td><td style="color:${saldoTotal>=0?'#1FCB7A':'#FF4D5E'};">${saldoTotal>=0?'+':''}${fmtEUR0(saldoTotal)}</td></tr>`;
     tbody+='</tbody>';
     return thead+tbody;
   }

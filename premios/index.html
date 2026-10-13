@@ -1801,10 +1801,12 @@ function renderNetGrid(){
 
 // ── PARTILHAR POR EMAIL (resumo condensado em HTML/texto) ───────────────────
 function emailRow(label, value, color){
-  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #eee;">`+
-    `<span style="color:#55526b;font-size:14px;font-family:Arial,Helvetica,sans-serif;">${label}</span>`+
-    `<span style="color:${color||'#170B3B'};font-weight:700;font-size:15px;font-family:Arial,Helvetica,sans-serif;">${value}</span>`+
-    `</div>`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;">`+
+    `<tr>`+
+      `<td style="padding:11px 0;border-bottom:1px solid #eee;color:#55526b;font-size:14px;font-family:Arial,Helvetica,sans-serif;text-align:left;vertical-align:middle;">${label}</td>`+
+      `<td style="padding:11px 0;border-bottom:1px solid #eee;color:${color||'#170B3B'};font-weight:700;font-size:15px;font-family:Arial,Helvetica,sans-serif;text-align:right;vertical-align:middle;white-space:nowrap;">${value}</td>`+
+    `</tr>`+
+  `</table>`;
 }
 function emailSubhead(label){
   return `<div style="margin-top:22px;margin-bottom:10px;color:#170B3B;font-size:13.5px;font-weight:800;font-family:Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:.03em;">${label}</div>`;
@@ -1847,15 +1849,24 @@ function emailWrap(title, subtitle, bodyHtml, footNote){
     `</div>`+
   `</div>`;
 }
+function emailSemMargemTotalAcum(){
+  return PNL.branches.reduce((tot,b)=>{
+    const d26=PNL.m2026[b];
+    const mVals=(MARGEM.m2026[b]&&MARGEM.m2026[b].vals)||[];
+    return tot + d26.vals.reduce((s,v,i)=>s+(v-(mVals[i]||0)),0);
+  },0);
+}
 function buildPNLEmailHTML(){
   const t26=PNL.totals2026, t25=PNL.totals2025;
   const diff=t26.acum - t25.acumPeriodo;
+  const semMargemTotal=emailSemMargemTotalAcum();
   let rows='';
   rows+=emailRow('Resultado Acumulado 2026 (Jan–Set)', fmtEUR0(t26.acum));
   rows+=emailRow('Resultado Acumulado 2025 (Jan–Ago, mesmo período)', fmtEUR0(t25.acumPeriodo));
   rows+=emailRow('Diferença 2026 vs 2025', (diff>=0?'+':'')+fmtEUR0(diff), diff>=0?'#1FA866':'#E63950');
   rows+=emailRow('ORC Acumulado 2026', fmtEUR0(t26.orc));
   rows+=emailRow('Desvio vs ORC 2026', (t26.desvio>=0?'+':'')+fmtEUR0(t26.desvio), t26.desvio>=0?'#1FA866':'#E63950');
+  rows+=emailRow('Resultado s/ Margem Viaturas (Acum. Rede)', fmtEUR0(semMargemTotal));
   rows+=emailSubhead('Por balcão — Acumulado 2025 vs 2026');
   PNL.branches.forEach(b=>{ rows+=emailBranchCardPNL(b); });
   return emailWrap('Demonstração de Resultados — Jan a Set 2026', 'Resultado líquido por balcão · Free2Move Rent Santogal', rows,
@@ -1873,6 +1884,7 @@ function buildPNLEmailText(){
   L.push('Diferença 2026 vs 2025: '+(diff>=0?'+':'')+fmtEUR0(diff));
   L.push('ORC Acumulado 2026: '+fmtEUR0(t26.orc));
   L.push('Desvio vs ORC 2026: '+(t26.desvio>=0?'+':'')+fmtEUR0(t26.desvio));
+  L.push('Resultado s/ Margem Viaturas (Acum. Rede): '+fmtEUR0(emailSemMargemTotalAcum()));
   L.push('');
   L.push('Por balcão — Acumulado 2025 vs 2026:');
   PNL.branches.forEach(b=>{

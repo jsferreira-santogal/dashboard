@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -535,6 +536,12 @@
   .cer3-person{display:flex; align-items:center; gap:10px;}
   .cer3-person img{width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.3); flex-shrink:0; background:rgba(255,255,255,.08);}
   .cer3-person span{font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#fff; text-align:left;}
+  #cer3 .cer3-dots{position:absolute; top:7.5vh; left:0; right:0; display:flex; justify-content:center; gap:10px; z-index:6;}
+  #cer3 .cer3-dots i{width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.18); transition:all .4s; font-style:normal;}
+  #cer3 .cer3-dots i.done{background:#FFC107; box-shadow:0 0 8px #FFC107;}
+  #cer3 .cer3-dots i.cur{background:#00E5FF; transform:scale(1.5); box-shadow:0 0 10px #00E5FF;}
+  .cer3-rank-sub{display:flex; flex-direction:column; align-items:center; animation:cer3FadeUp .6s ease both;}
+  .cer3-person.solo{transform:scale(1.15);}
 </style>
 </head>
 <body>
@@ -547,6 +554,9 @@
   <h1 class="intro-title">Dashboard<br><em>Prémios 2026</em></h1>
   <p class="intro-sub">Resultados trimestrais, vencedores e reconhecimento por balcão — Free2Move Rent Santogal, 4 Balcões.</p>
   <button class="intro-btn" onclick="document.getElementById('intro').classList.add('hide')">▶ Entrar no Dashboard</button>
+  <div style="margin-top:16px;">
+    <button class="cer-open-btn" style="margin:0;" onclick="abrirCerimoniaQ3()">🎬 Ver Cerimónia de Entrega de Prémios</button>
+  </div>
   <div class="intro-foot">Cacém · Cascais · Loures · Lisboa</div>
 </div>
 
@@ -1200,35 +1210,32 @@
   <div class="cer3-spot l"></div><div class="cer3-spot r"></div>
   <div class="cer3-top"><img id="cer3-logo1" alt=""><div class="cer3-ttl">Dashboard Prémios 2026 · Free2Move Rent Santogal</div><img id="cer3-logo2" alt=""></div>
   <button id="cer3-close" onclick="fecharCerimoniaQ3()">✕ Fechar (Esc)</button>
+  <div class="cer3-dots" id="cer3-dots"></div>
   <div class="cer3-stage">
-    <div class="cer3-step act" id="cer3-step-suspense">
+    <div class="cer3-step act" id="cer3-step-intro">
       <div class="cer3-eyebrow">Cerimónia de Entrega de Prémios</div>
-      <div class="cer3-suspense-text">E o balcão líder do<br>3º Trimestre 2026 é...</div>
+      <div class="cer3-suspense-text">Vamos atribuir os prémios<br>do 3º Trimestre 2026,<br>balcão a balcão...</div>
       <div class="cer3-loading"><span></span><span></span><span></span></div>
-      <button class="cer3-next" onclick="cer3StartCountdown()">Revelar Vencedor →</button>
+      <button class="cer3-next" onclick="cer3Next()">Começar →</button>
     </div>
-    <div class="cer3-step" id="cer3-step-countdown">
-      <div class="cer3-countdown-num" id="cer3-countdown-num">3</div>
-    </div>
-    <div class="cer3-step" id="cer3-step-reveal">
-      <div class="cer3-eyebrow">🏆 Balcão Líder do Trimestre</div>
-      <div class="crown-pill" style="font-size:15px; padding:11px 24px;">🏆 LÍDER DO 3º TRIMESTRE 2026</div>
-      <div class="photo-duo" style="margin-top:22px;">
-        <img id="cer3-photo" class="branch-photo" alt="" style="display:none;">
-        <div class="plaque-wrap">
-          <div class="plaque">
-            <div>
-              <div class="pl-title">MELHOR BALCÃO</div>
-              <div class="pl-sub">3º TRIMESTRE 2026</div>
-            </div>
-            <div class="pl-winner">1º Lugar<b id="cer3-winner-name">—</b></div>
-          </div>
-          <div class="plaque-stand"></div>
-        </div>
+    <div class="cer3-step" id="cer3-step-rank">
+      <div class="cer3-rank-sub" id="cer3-rank-suspense">
+        <div class="cer3-eyebrow" id="cer3-rank-eyebrow">4º Lugar</div>
+        <div class="cer3-suspense-text" id="cer3-rank-suspense-text">Em 4º lugar...</div>
+        <div class="cer3-loading"><span></span><span></span><span></span></div>
+        <button class="cer3-next" onclick="cer3StartRankCountdown()">Revelar →</button>
       </div>
-      <div class="cer3-amount" id="cer3-winner-amount">—</div>
-      <div class="cer3-sub">Maior faturação do trimestre entre os 4 balcões (dados fechados). Reconhecimento simbólico — o prémio de 500€ só é atribuído no final do ano.</div>
-      <button class="cer3-next" style="margin-top:28px; font-size:12.5px; padding:10px 24px;" onclick="cer3ShowTeams()">Ver Reconhecimento das Equipas →</button>
+      <div class="cer3-rank-sub" id="cer3-rank-countdown" style="display:none;">
+        <div class="cer3-countdown-num" id="cer3-countdown-num">3</div>
+      </div>
+      <div class="cer3-rank-sub" id="cer3-rank-reveal" style="display:none;">
+        <div class="cer3-eyebrow" id="cer3-reveal-eyebrow">🏆 4º Lugar</div>
+        <div class="crown-pill" id="cer3-reveal-pill" style="font-size:15px; padding:11px 24px;">🏆 4º LUGAR · 3º TRIMESTRE 2026</div>
+        <div class="photo-duo" id="cer3-reveal-photos" style="margin-top:22px;"></div>
+        <div class="cer3-amount" id="cer3-rank-amount">—</div>
+        <div class="cer3-sub" id="cer3-rank-note">Faturação do trimestre (dados fechados).</div>
+        <button class="cer3-next" style="margin-top:28px; font-size:12.5px; padding:10px 24px;" onclick="cer3Next()" id="cer3-rank-next-btn">Próximo →</button>
+      </div>
     </div>
     <div class="cer3-step" id="cer3-step-teams">
       <div class="cer3-eyebrow">👏 Reconhecimento das Equipas · Todos os Balcões</div>
@@ -1459,23 +1466,53 @@ function replayTadah(id){
   el.style.animation='';
 }
 
-/* ══ CERIMÓNIA DE ENTREGA DE PRÉMIOS — 3º TRIMESTRE 2026 ══ */
-function cer3GetWinner(){
+/* ══ CERIMÓNIA DE ENTREGA DE PRÉMIOS — 3º TRIMESTRE 2026 (todos os balcões, do 4º ao 1º lugar) ══ */
+const CER3_BRANCH_PEOPLE = {
+  CACEM:   [{name:'Gonçalo Tavares', photo:()=>CER3_PHOTO_GONCALO}, {name:'Miguel Taborda', photo:()=>CER3_PHOTO_MIGUEL}],
+  LOURES:  [{name:'Pedro Alves', photo:()=>CER3_PHOTO_PEDRO}, {name:'Diogo Martins', photo:()=>CER3_PHOTO_DIOGO}],
+  CASCAIS: [{name:'Fernanda Costa', photo:()=>CER3_PHOTO_FERNANDA}],
+  LISBOA:  [{name:'Carla Dias', photo:()=>CER3_PHOTO_CARLA}]
+};
+let cer3Queue=[], cer3Idx=0;
+function cer3GetRanking(){
   const totals=DATA.branches.map(b=>({b, val:sumBranch(2026,DATA.q3Months,b,'fat')}));
   totals.sort((a,b)=>b.val-a.val);
-  return totals[0];
+  return totals; // index 0 = 1º lugar
 }
-function cer3AllSteps(){ return ['cer3-step-suspense','cer3-step-countdown','cer3-step-reveal','cer3-step-teams']; }
+function cer3BuildQueue(){
+  const ranking=cer3GetRanking();
+  const q=[];
+  for(let i=ranking.length-1;i>=0;i--){ q.push({rank:i+1, b:ranking[i].b, val:ranking[i].val}); }
+  return q; // começa no último lugar, acaba no 1º
+}
+function cer3AllSteps(){ return ['cer3-step-intro','cer3-step-rank','cer3-step-teams']; }
 function cer3ShowStep(id){
   cer3AllSteps().forEach(s=>document.getElementById(s).classList.remove('act'));
   document.getElementById(id).classList.add('act');
+}
+function cer3RankSubState(which){
+  ['cer3-rank-suspense','cer3-rank-countdown','cer3-rank-reveal'].forEach(id=>{
+    document.getElementById(id).style.display = (id===which) ? 'flex' : 'none';
+  });
+}
+function cer3RenderDots(){
+  const dotsEl=document.getElementById('cer3-dots'); dotsEl.innerHTML='';
+  const total=cer3Queue.length;
+  for(let i=0;i<total;i++){
+    const d=document.createElement('i');
+    if(i<cer3Idx) d.className='done'; else if(i===cer3Idx) d.className='cur';
+    dotsEl.appendChild(d);
+  }
 }
 function cer3KeyHandler(e){
   if(e.key==='Escape' || e.key==='h' || e.key==='H'){ fecharCerimoniaQ3(); }
   else if(e.key==='ArrowRight' || e.key===' '){
     e.preventDefault();
-    if(document.getElementById('cer3-step-suspense').classList.contains('act')) cer3StartCountdown();
-    else if(document.getElementById('cer3-step-reveal').classList.contains('act')) cer3ShowTeams();
+    if(document.getElementById('cer3-step-intro').classList.contains('act')) cer3Next();
+    else if(document.getElementById('cer3-step-rank').classList.contains('act')){
+      if(document.getElementById('cer3-rank-suspense').style.display!=='none') cer3StartRankCountdown();
+      else if(document.getElementById('cer3-rank-reveal').style.display!=='none') cer3Next();
+    }
   }
 }
 function abrirCerimoniaQ3(){
@@ -1483,7 +1520,10 @@ function abrirCerimoniaQ3(){
   document.getElementById('cer3-logo2').src=EMAIL_LOGO_SANTOGAL;
   const photoMap={goncalo:CER3_PHOTO_GONCALO, miguel:CER3_PHOTO_MIGUEL, pedro:CER3_PHOTO_PEDRO, diogo:CER3_PHOTO_DIOGO, fernanda:CER3_PHOTO_FERNANDA, carla:CER3_PHOTO_CARLA};
   Object.keys(photoMap).forEach(k=>{ const el=document.getElementById('cer3-p-'+k); if(el) el.src=photoMap[k]; });
-  cer3ShowStep('cer3-step-suspense');
+  cer3Queue=cer3BuildQueue();
+  cer3Idx=0;
+  cer3RenderDots();
+  cer3ShowStep('cer3-step-intro');
   document.getElementById('cer3').classList.add('on');
   document.addEventListener('keydown', cer3KeyHandler);
 }
@@ -1491,8 +1531,19 @@ function fecharCerimoniaQ3(){
   document.getElementById('cer3').classList.remove('on');
   document.removeEventListener('keydown', cer3KeyHandler);
 }
-function cer3StartCountdown(){
-  cer3ShowStep('cer3-step-countdown');
+function cer3Next(){
+  if(cer3Idx>=cer3Queue.length){ cer3ShowTeams(); return; }
+  const item=cer3Queue[cer3Idx];
+  document.getElementById('cer3-rank-eyebrow').textContent=item.rank+'º Lugar';
+  document.getElementById('cer3-rank-suspense-text').innerHTML = item.rank===1
+    ? 'E o grande vencedor do<br>3º Trimestre 2026 é...'
+    : `Em ${item.rank}º lugar...`;
+  cer3ShowStep('cer3-step-rank');
+  cer3RankSubState('cer3-rank-suspense');
+  cer3RenderDots();
+}
+function cer3StartRankCountdown(){
+  cer3RankSubState('cer3-rank-countdown');
   const numEl=document.getElementById('cer3-countdown-num');
   let n=3;
   numEl.textContent=n;
@@ -1502,29 +1553,49 @@ function cer3StartCountdown(){
     if(n>0){
       numEl.textContent=n;
       numEl.style.animation='none'; void numEl.offsetWidth; numEl.style.animation='';
-      setTimeout(tick, 850);
+      setTimeout(tick, 800);
     } else {
-      cer3Reveal();
+      cer3RevealRank();
     }
   };
-  setTimeout(tick, 850);
+  setTimeout(tick, 800);
 }
-function cer3Reveal(){
-  const winner=cer3GetWinner();
-  const BRANCH_PHOTOS={CACEM:CER3_PHOTO_CACEM};
-  const photoEl=document.getElementById('cer3-photo');
-  if(BRANCH_PHOTOS[winner.b]){ photoEl.src=BRANCH_PHOTOS[winner.b]; photoEl.style.display='block'; }
-  else { photoEl.style.display='none'; }
-  document.getElementById('cer3-winner-name').textContent=DATA.names[winner.b];
-  cer3ShowStep('cer3-step-reveal');
+function cer3RevealRank(){
+  const item=cer3Queue[cer3Idx];
+  const isWinner=item.rank===1;
+  document.getElementById('cer3-reveal-eyebrow').textContent=(isWinner?'🏆 ':'')+item.rank+'º Lugar · '+DATA.names[item.b];
+  document.getElementById('cer3-reveal-pill').innerHTML=(isWinner?'🏆 LÍDER DO TRIMESTRE':item.rank+'º LUGAR')+' · 3º TRIMESTRE 2026';
+  document.getElementById('cer3-rank-note').textContent = isWinner
+    ? 'Maior faturação do trimestre entre os 4 balcões (dados fechados). Reconhecimento simbólico — o prémio de 500€ só é atribuído no final do ano.'
+    : 'Faturação do trimestre entre os 4 balcões (dados fechados).';
+  document.getElementById('cer3-rank-next-btn').textContent = isWinner ? 'Ver Reconhecimento das Equipas →' : 'Próximo Balcão →';
+
+  // fotos da equipa do balcão (pessoas reais) + plaqueta
+  const people=CER3_BRANCH_PEOPLE[item.b]||[];
+  const photosHtml = people.map(p=>`<div style="text-align:center;"><img src="${p.photo()}" class="branch-photo" style="width:150px; height:150px; border-radius:50%; object-fit:cover;" alt=""><div style="margin-top:8px; font-family:'Inter',sans-serif; font-weight:700; color:#fff; font-size:13px;">${p.name}</div></div>`).join('');
+  document.getElementById('cer3-reveal-photos').innerHTML = `
+    ${photosHtml}
+    <div class="plaque-wrap">
+      <div class="plaque">
+        <div>
+          <div class="pl-title">${isWinner?'MELHOR BALCÃO':'BALCÃO'}</div>
+          <div class="pl-sub">3º TRIMESTRE 2026</div>
+        </div>
+        <div class="pl-winner">${item.rank}º Lugar<b>${DATA.names[item.b]}</b></div>
+      </div>
+      <div class="plaque-stand"></div>
+    </div>`;
+
+  cer3RankSubState('cer3-rank-reveal');
   document.getElementById('cer3-flash').classList.remove('go'); void document.getElementById('cer3-flash').offsetWidth;
   document.getElementById('cer3-flash').classList.add('go');
   launchConfetti();
   setTimeout(launchConfetti, 400);
-  setTimeout(launchConfetti, 850);
+  if(isWinner) setTimeout(launchConfetti, 850);
+
   // contagem crescente do valor até ao total
-  const amtEl=document.getElementById('cer3-winner-amount');
-  const dur=1400, start=performance.now(), target=winner.val;
+  const amtEl=document.getElementById('cer3-rank-amount');
+  const dur=1400, start=performance.now(), target=item.val;
   function step(t){
     const p=Math.min(1,(t-start)/dur);
     const eased=1-Math.pow(1-p,3);
@@ -1532,6 +1603,9 @@ function cer3Reveal(){
     if(p<1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
+
+  cer3Idx++;
+  cer3RenderDots();
 }
 function cer3ShowTeams(){
   cer3ShowStep('cer3-step-teams');

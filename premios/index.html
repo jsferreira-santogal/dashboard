@@ -197,6 +197,11 @@
     display:inline-flex; align-items:center; gap:8px; margin-bottom:14px;
     background:rgba(255,193,7,0.12); border:1px solid rgba(255,193,7,0.35); color:#FFC107;
     padding:7px 16px; border-radius:30px; font-size:12.5px; font-weight:700; letter-spacing:.03em;
+    animation:crownPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes crownPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,193,7,0.45); transform:scale(1);}
+    50%{box-shadow:0 0 22px 5px rgba(255,193,7,0.5); transform:scale(1.035);}
   }
   .ranking{margin-top:30px; display:flex; flex-direction:column; gap:12px; width:100%;}
   .rank-row{display:flex; align-items:center; gap:14px;}
@@ -211,7 +216,11 @@
   }
   .prize-card h3{font-size:18px; margin-bottom:6px; display:flex; align-items:center; gap:8px;}
   .prize-card .note{color:var(--text-muted); font-size:13.5px; margin-bottom:20px; line-height:1.55;}
-  .prize-amount{font-family:'Space Mono',monospace; font-size:30px; font-weight:700; color:#FFC107; margin-bottom:18px;}
+  .prize-amount{font-family:'Space Mono',monospace; font-size:30px; font-weight:700; color:#FFC107; margin-bottom:18px; display:inline-block; animation:prizePulse 2.4s ease-in-out infinite;}
+  @keyframes prizePulse{
+    0%,100%{transform:scale(1); text-shadow:0 0 14px rgba(255,193,7,.45);}
+    50%{transform:scale(1.06); text-shadow:0 0 30px rgba(255,193,7,.9), 0 0 55px rgba(255,193,7,.4);}
+  }
   .annual-rank{display:flex; flex-direction:column; gap:10px;}
   .ar-row{display:flex; align-items:center; gap:10px; font-size:13.5px;}
   .ar-pos{font-family:'Space Mono',monospace; width:20px; color:var(--text-muted);}
@@ -314,11 +323,16 @@
     background:linear-gradient(150deg,#4148E0 0%, #5B4FE8 22%, #2B2C72 60%, #14143F 100%);
     position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:center;
     justify-content:space-between; border:1px solid rgba(255,255,255,0.22);
-    box-shadow:0 18px 50px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
     min-height:300px;
+    animation:plaqueGlow 2.8s ease-in-out infinite;
+  }
+  @keyframes plaqueGlow{
+    0%,100%{box-shadow:0 18px 50px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05), 0 0 0px rgba(47,230,184,0);}
+    50%{box-shadow:0 18px 60px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.08), 0 0 45px rgba(47,230,184,0.55);}
   }
   .plaque::before{content:''; position:absolute; top:0; left:8%; width:30%; height:100%; background:linear-gradient(115deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 55%); pointer-events:none;}
-  .plaque::after{content:''; position:absolute; width:150px; height:150px; background:#2FE6B8; border-radius:50%; filter:blur(40px); opacity:.4; top:38%; right:-50px;}
+  .plaque::after{content:''; position:absolute; width:150px; height:150px; background:#2FE6B8; border-radius:50%; filter:blur(40px); opacity:.4; top:38%; right:-50px; animation:plaqueOrb 2.8s ease-in-out infinite;}
+  @keyframes plaqueOrb{0%,100%{opacity:.35; transform:scale(1);} 50%{opacity:.6; transform:scale(1.18);}}
   .plaque .pl-logo{height:18px; position:relative; z-index:1;}
   .plaque .pl-title{font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; margin-top:20px; position:relative; z-index:1; line-height:1.3; text-align:center;}
   .plaque .pl-sub{font-family:'Inter',sans-serif; font-weight:500; font-size:13px; opacity:.85; margin-top:5px; position:relative; z-index:1; text-align:center;}
@@ -391,7 +405,13 @@
   .wt-card .wt-trophy{font-size:30px; margin-bottom:10px;}
   .wt-card .wt-name{font-family:'Poppins',sans-serif; font-weight:800; font-size:21px; margin-bottom:5px;}
   .wt-card .wt-amount{font-family:'Space Mono',monospace; font-size:12.5px; color:var(--text-muted);}
-  .wt-card.current{border-color:rgba(0,229,255,.55); box-shadow:0 0 28px rgba(0,229,255,.22);}
+  .wt-card.current{border-color:rgba(0,229,255,.55); animation:wtCurrentPulse 2.4s ease-in-out infinite;}
+  @keyframes wtCurrentPulse{
+    0%,100%{box-shadow:0 0 18px rgba(0,229,255,.2); transform:scale(1);}
+    50%{box-shadow:0 0 38px rgba(0,229,255,.55), 0 0 65px rgba(0,229,255,.22); transform:scale(1.025);}
+  }
+  .wt-card.current .wt-trophy{display:inline-block; animation:float 2.6s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);}}
   .wt-card.current .wt-q{color:var(--glow-cyan);}
   .wt-card.future{border:2px dashed rgba(255,193,7,.45); background:rgba(255,193,7,0.05);}
   .wt-card.future .wt-trophy{font-size:36px; animation:tadahSpin 6s linear infinite;}
@@ -1196,10 +1216,10 @@ const REP = {
     LISBOA:{n:24, apurado:14605.85, recebido:14605.85}
   },
   totals2026:{
-    CACEM:{n:25, apurado:19084.44, recebido:9524.95},
-    CASCAIS:{n:4, apurado:2226.49, recebido:1157.30},
-    LOURES:{n:38, apurado:28398.88, recebido:14568.92},
-    LISBOA:{n:17, apurado:10113.43, recebido:4659.45}
+    CACEM:{n:32, apurado:21666.12, recebido:9524.95},
+    CASCAIS:{n:12, apurado:6233.50, recebido:1157.30},
+    LOURES:{n:41, apurado:26635.37, recebido:14568.92},
+    LISBOA:{n:24, apurado:14962.34, recebido:4659.45}
   },
   ratio2025:{
     CACEM:{n:22, rec:11628.00, contratos:495},

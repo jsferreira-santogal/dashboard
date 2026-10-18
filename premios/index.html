@@ -1184,8 +1184,8 @@
 <section class="view" id="view-reparacoes">
   <div class="sec-head">
     <div class="eyebrow">Sinistros · Reparações seguradas</div>
-    <h2 class="title-md">Reparações F2M-Insurance — Totais 2025 vs 2026</h2>
-    <p class="subtitle">Nº de processos enviados à F2M-Insurance por cada balcão, e valor apurado junto da seguradora. 2025 é ano fechado; 2026 está em curso (o total sobe até dezembro).</p>
+    <h2 class="title-md">Reparações — Danos 2025 vs 2026 (Com e Sem Seguro)</h2>
+    <p class="subtitle">Nº de processos de danos por balcão (acidentes/avarias reparadas). Em 2026, só os processos efetivamente participados à F2M-Insurance (Com Seguro) contam para o valor apurado junto da seguradora — os restantes foram pagos diretamente pelo cliente (Sem Seguro). 2025 é ano fechado; 2026 está em curso (o total sobe até dezembro).</p>
   </div>
 
   <div class="share-bar">
@@ -1196,7 +1196,7 @@
   <p class="share-note">Resumo condensado das Reparações F2M-Insurance, pronto a colar num email para a equipa (não é o separador completo).</p>
 
   <div class="growth-hero">
-    <div class="gh-label">Processos enviados à F2M-Insurance · Rede completa</div>
+    <div class="gh-label">Total de Processos de Danos (Com + Sem Seguro) · Rede Completa</div>
     <div class="gh-row">
       <div class="gh-from" id="rep-gh-from">—</div>
       <div class="gh-arrow">→</div>
@@ -1204,6 +1204,7 @@
     </div>
     <div class="gh-pct" id="rep-gh-pct">—</div>
     <div class="gh-sub">Total de processos abertos, 2025 vs 2026 (em curso)</div>
+    <div class="gh-sub" id="rep-gh-split" style="margin-top:10px; font-weight:600;">—</div>
   </div>
 
   <div class="grid4" style="margin-bottom:40px;">
@@ -2533,11 +2534,13 @@ function renderReparacoes(){
   const sumT=(year,key)=>branches.reduce((s,b)=>s+REP[year][b][key],0);
 
   const n25=sumT('totals2025','n'), n26=sumT('totals2026','n');
+  const nSeguro26=sumT('totals2026','nSeguro'), nSemSeguro26=sumT('totals2026','nSemSeguro');
   const ap25=sumT('totals2025','apurado'), ap26=sumT('totals2026','apurado');
 
   document.getElementById('rep-gh-from').textContent=n25;
   document.getElementById('rep-gh-to').textContent=n26;
   document.getElementById('rep-gh-pct').textContent=growthLabel(n26,n25);
+  document.getElementById('rep-gh-split').innerHTML=`Dos quais, em 2026: <span style="color:#00E5FF;">${nSeguro26} participados à F2M-Insurance (Com Seguro)</span> &nbsp;·&nbsp; <span style="color:var(--text-muted);">${nSemSeguro26} pagos diretamente pelo cliente (Sem Seguro)</span>`;
 
   document.getElementById('rep-apurado26').textContent=fmtEUR(ap26);
   document.getElementById('rep-apurado25').textContent=fmtEUR(ap25);
@@ -2551,19 +2554,20 @@ function renderReparacoes(){
     card.innerHTML=`
       <div class="h-name"><span class="b-dot"></span>${DATA.names[b]}</div>
       <div class="h-big">${c.n}<span style="font-size:12px; color:var(--text-muted); font-weight:500; margin-left:6px;">processos</span></div>
+      <div class="h-vs" style="font-size:11px; opacity:.85;">${c.nSeguro} com seguro · ${c.nSemSeguro} sem seguro</div>
       <div class="h-vs">vs ${a.n} em 2025 &nbsp;<span class="delta ${growthClass(c.n,a.n)}">${growthLabel(c.n,a.n)}</span></div>
       <div class="h-pen">Apurado <b>${fmtEUR0(c.apurado)}</b> &nbsp;<span class="delta ${growthClass(c.apurado,a.apurado)}" style="font-size:10.5px;">${growthLabel(c.apurado,a.apurado)}</span></div>`;
     grid.appendChild(card);
   });
 
   function buildTotaisTable(){
-    let thead='<thead><tr><th>Balcão</th><th>Processos 2025</th><th>Processos 2026</th><th>Apurado 2025</th><th>Apurado 2026</th></tr></thead>';
+    let thead='<thead><tr><th>Balcão</th><th>Processos 2025</th><th>Processos 2026 (Total)</th><th>— Com Seguro</th><th>— Sem Seguro</th><th>Apurado 2025</th><th>Apurado 2026</th></tr></thead>';
     let tbody='<tbody>';
     branches.forEach(b=>{
       const a=REP.totals2025[b], c=REP.totals2026[b];
-      tbody+=`<tr><td>${DATA.names[b]}</td><td>${a.n}</td><td>${c.n}</td><td>${fmtEUR0(a.apurado)}</td><td>${fmtEUR0(c.apurado)}</td></tr>`;
+      tbody+=`<tr><td>${DATA.names[b]}</td><td>${a.n}</td><td>${c.n}</td><td class="dim">${c.nSeguro}</td><td class="dim">${c.nSemSeguro}</td><td>${fmtEUR0(a.apurado)}</td><td>${fmtEUR0(c.apurado)}</td></tr>`;
     });
-    tbody+=`<tr class="total-row"><td>TOTAL</td><td>${n25}</td><td>${n26}</td><td>${fmtEUR0(ap25)}</td><td>${fmtEUR0(ap26)}</td></tr>`;
+    tbody+=`<tr class="total-row"><td>TOTAL</td><td>${n25}</td><td>${n26}</td><td>${nSeguro26}</td><td>${nSemSeguro26}</td><td>${fmtEUR0(ap25)}</td><td>${fmtEUR0(ap26)}</td></tr>`;
     tbody+='</tbody>';
     return thead+tbody;
   }

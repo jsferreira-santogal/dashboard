@@ -563,6 +563,17 @@
   @keyframes cer3Shine{0%{left:-60%;} 100%{left:160%;}}
   .cer3-voucher small{display:block; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.75;}
   .cer3-voucher b{font-family:'Poppins',sans-serif; font-size:clamp(28px,4.8vw,48px); line-height:1;}
+  .cer3-race-bars{display:flex; flex-direction:column; gap:14px; width:min(90vw,760px); margin-top:26px;}
+  .cer3-race-row{display:grid; grid-template-columns:34px 130px 1fr auto; align-items:center; gap:14px; animation:cer3FadeUp .6s ease both;}
+  .cer3-race-row:nth-child(2){animation-delay:.1s;} .cer3-race-row:nth-child(3){animation-delay:.2s;} .cer3-race-row:nth-child(4){animation-delay:.3s;}
+  .cer3-race-rank{font-family:'Poppins',sans-serif; font-weight:800; font-size:19px; color:rgba(255,255,255,.5); text-align:center;}
+  .cer3-race-row.lead .cer3-race-rank{color:#FFC107;}
+  .cer3-race-name{font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px; color:#fff; text-align:left; white-space:nowrap;}
+  .cer3-race-track{height:34px; border-radius:8px; background:rgba(255,255,255,.08); overflow:hidden; position:relative;}
+  .cer3-race-fill{height:100%; border-radius:8px; width:0; transition:width 1.2s cubic-bezier(.2,.9,.3,1);}
+  .cer3-race-row.lead .cer3-race-fill{background:linear-gradient(90deg,#FFC107,#ff8f00); box-shadow:0 0 16px rgba(255,193,7,.5);}
+  .cer3-race-row:not(.lead) .cer3-race-fill{background:linear-gradient(90deg,#00E5FF,#5B5CF0);}
+  .cer3-race-val{font-family:'Poppins',sans-serif; font-weight:700; font-size:14px; color:#fff; min-width:108px; text-align:right;}
   #cer3 .cer3-mystery{width:min(26vw,170px); height:min(26vw,170px); margin:22px auto 0; border-radius:50%; display:flex; align-items:center; justify-content:center;
     font-family:'Poppins',sans-serif; font-size:min(13vw,80px); font-weight:800; color:#FFC107;
     background:radial-gradient(circle,rgba(255,193,7,.2),rgba(255,193,7,.02) 70%); border:3px solid rgba(255,193,7,.65); animation:cer3Ring 1.4s ease-in-out infinite;}
@@ -1296,6 +1307,14 @@
         </div>
       </div>
       <div class="cer3-sub" style="margin-top:20px;">Obrigado Free2Move Rent Santogal — Cacém · Cascais · Loures · Lisboa.</div>
+      <button class="cer3-next" style="margin-top:28px; font-size:12.5px; padding:10px 24px;" onclick="cer3ShowRace()">📊 Ver a Corrida Anual →</button>
+    </div>
+    <div class="cer3-step" id="cer3-step-race">
+      <div class="cer3-eyebrow">🔥 Corrida Anual · Rumo ao Prémio de 2026</div>
+      <div class="cer3-suspense-text" style="font-size:clamp(18px,2.4vw,24px); margin-bottom:6px;">Acumulado Q1 + Q2 + Q3 — quem vai à frente até agora</div>
+      <div class="cer3-race-bars" id="cer3-race-bars"></div>
+      <div class="cer3-sub" id="cer3-race-note" style="margin-top:18px; max-width:620px; font-size:13.5px; line-height:1.6;"></div>
+      <div class="cer3-sub" style="margin-top:10px; opacity:.8;">Resultado final do prémio anual só é decidido depois do 4º Trimestre.</div>
     </div>
   </div>
   <div class="cer3-hint">→ / espaço avançar · Esc ou H fechar</div>
@@ -1516,7 +1535,7 @@ function cer3BuildQueue(){
   for(let i=ranking.length-1;i>=0;i--){ q.push({rank:i+1, b:ranking[i].b, val:ranking[i].val}); }
   return q; // começa no último lugar, acaba no 1º
 }
-function cer3AllSteps(){ return ['cer3-step-intro','cer3-step-rank','cer3-step-teams']; }
+function cer3AllSteps(){ return ['cer3-step-intro','cer3-step-rank','cer3-step-teams','cer3-step-race']; }
 function cer3ShowStep(id){
   cer3AllSteps().forEach(s=>document.getElementById(s).classList.remove('act'));
   document.getElementById(id).classList.add('act');
@@ -1650,6 +1669,36 @@ function cer3RevealRank(){
 function cer3ShowTeams(){
   cer3ShowStep('cer3-step-teams');
   launchConfetti();
+}
+function cer3ShowRace(){
+  cer3ShowStep('cer3-step-race');
+  const colors={CACEM:'#00E5FF', LOURES:'#7B61FF', CASCAIS:'#FF5E3D', LISBOA:'#1FCB7A'};
+  const months=[...DATA.q1Months, ...DATA.q2Months, ...DATA.q3Months];
+  const ranking=DATA.branches.map(b=>({b, val:sumBranch(2026, months, b, 'fat')})).sort((a,b)=>b.val-a.val);
+  const max=ranking[0].val;
+  const barsEl=document.getElementById('cer3-race-bars');
+  barsEl.innerHTML = ranking.map((r,i)=>`
+    <div class="cer3-race-row${i===0?' lead':''}">
+      <div class="cer3-race-rank">${i===0?'🏆':(i+1)+'º'}</div>
+      <div class="cer3-race-name">${DATA.names[r.b]}</div>
+      <div class="cer3-race-track"><div class="cer3-race-fill" id="cer3-race-fill-${i}" style="--c:${colors[r.b]};"></div></div>
+      <div class="cer3-race-val">${fmtEUR(r.val)}</div>
+    </div>`).join('');
+  requestAnimationFrame(()=>{
+    ranking.forEach((r,i)=>{
+      const el=document.getElementById('cer3-race-fill-'+i);
+      if(el) el.style.width=(r.val/max*100)+'%';
+    });
+  });
+  // mensagem dinâmica: menor diferença entre balcões vizinhos = rivalidade mais em aberto
+  let gaps=[];
+  for(let i=1;i<ranking.length;i++){ gaps.push({pos:i, gap:ranking[i-1].val-ranking[i].val, a:ranking[i-1].b, b:ranking[i].b}); }
+  gaps.sort((x,y)=>x.gap-y.gap);
+  const closest=gaps[0];
+  const leadGap=ranking[0].val-ranking[1].val;
+  const note = `${DATA.names[ranking[0].b]} lidera o acumulado do ano, mas com ${fmtEUR(leadGap)} de vantagem sobre ${DATA.names[ranking[1].b]} — um trimestre inteiro ainda por jogar. `
+    + `A disputa mais em aberto é entre ${DATA.names[closest.a]} e ${DATA.names[closest.b]}, separados por apenas ${fmtEUR(closest.gap)}. No 4º Trimestre tudo pode acontecer — qualquer balcão pode trocar de posição.`;
+  document.getElementById('cer3-race-note').textContent = note;
 }
 
 function renderResumoQ1(){

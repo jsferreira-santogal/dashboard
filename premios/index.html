@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -480,6 +479,8 @@
   #cer3{position:fixed; inset:0; z-index:9999; display:none; overflow:hidden; cursor:default;
     background:radial-gradient(ellipse at 50% 28%, #1C2E8C 0%, #170B3B 55%, #0A0726 100%);}
   #cer3.on{display:block;}
+  #cer3.reveal .cer3-rays{opacity:1;}
+  #cer3.reveal .cer3-glow{animation-duration:2.2s;}
   #cer3 .cer3-rays{position:absolute; left:50%; top:50%; width:220vmax; height:220vmax; margin:-110vmax 0 0 -110vmax;
     background:conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,.05) 8deg, transparent 16deg, transparent 40deg, rgba(0,229,255,.07) 48deg, transparent 56deg);
     animation:cer3Spin 50s linear infinite; opacity:.65;}
@@ -518,8 +519,8 @@
   #cer3 .cer3-sub{font-size:13px; color:rgba(255,255,255,.55); margin-top:10px; max-width:460px;}
   #cer3 .cer3-hint{position:absolute; bottom:3vh; left:0; right:0; text-align:center; font-size:11px; color:rgba(255,255,255,.35); font-family:'Space Mono',monospace; z-index:6;}
   @media (max-width:640px){ #cer3 .cer3-top img{height:22px;} #cer3 .cer3-ttl{font-size:10.5px;} }
-  #cer3 .cer3-countdown-num{font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(90px,16vw,170px);
-    color:#fff; text-shadow:0 0 50px rgba(0,229,255,.8); animation:cer3CountPop .9s cubic-bezier(.34,1.56,.64,1) both;}
+  #cer3 .cer3-countdown-num{font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(150px,30vw,360px);
+    color:#fff; text-shadow:0 0 8vh rgba(0,229,255,.85), 0 0 16vh rgba(123,97,255,.5); animation:cer3CountPop .9s cubic-bezier(.34,1.56,.64,1) both;}
   @keyframes cer3CountPop{0%{opacity:0; transform:scale(.3);} 60%{opacity:1; transform:scale(1.15);} 100%{opacity:1; transform:scale(1);}}
   #cer3-flash{position:fixed; inset:0; background:#fff; opacity:0; pointer-events:none; z-index:10000;}
   #cer3-flash.go{animation:cer3Flash .5s ease-out;}
@@ -527,15 +528,45 @@
   #cer3 .photo-duo{animation:cer3FadeUp .7s ease both;}
   #cer3 .branch-photo{animation:cer3PhotoPop .8s cubic-bezier(.34,1.56,.64,1) both;}
   @keyframes cer3PhotoPop{0%{opacity:0; transform:scale(.85) translateY(10px);} 100%{opacity:1; transform:scale(1) translateY(0);}}
-  .cer3-teams-grid{display:flex; flex-wrap:wrap; gap:18px; justify-content:center; max-width:900px; margin-top:22px;}
+  .cer3-teams-grid{display:flex; flex-wrap:wrap; gap:18px; justify-content:center; max-width:1000px; margin-top:22px;}
   .cer3-team-card{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-top:3px solid var(--c);
-    border-radius:16px; padding:16px 18px; width:230px; animation:cer3FadeUp .7s ease both;}
+    border-radius:18px; padding:18px 20px; width:270px; animation:cer3FadeUp .7s ease both; box-shadow:0 0 30px rgba(0,0,0,.25);}
   .cer3-team-card:nth-child(2){animation-delay:.1s;} .cer3-team-card:nth-child(3){animation-delay:.2s;} .cer3-team-card:nth-child(4){animation-delay:.3s;}
-  .cer3-team-branch{font-family:'Space Mono',monospace; font-weight:700; font-size:12px; letter-spacing:.1em; color:var(--c); margin-bottom:12px; text-align:center;}
-  .cer3-team-people{display:flex; flex-direction:column; gap:10px;}
-  .cer3-person{display:flex; align-items:center; gap:10px;}
-  .cer3-person img{width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.3); flex-shrink:0; background:rgba(255,255,255,.08);}
-  .cer3-person span{font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#fff; text-align:left;}
+  .cer3-team-branch{font-family:'Space Mono',monospace; font-weight:700; font-size:13px; letter-spacing:.1em; color:var(--c); margin-bottom:14px; text-align:center;}
+  .cer3-team-people{display:flex; flex-direction:column; gap:14px;}
+  .cer3-person{display:flex; align-items:center; gap:12px;}
+  .cer3-person img{width:86px; height:86px; border-radius:50%; object-fit:cover; border:3px solid var(--c); flex-shrink:0; background:rgba(255,255,255,.08); box-shadow:0 0 18px var(--c);}
+  .cer3-person span{font-family:'Inter',sans-serif; font-size:14px; font-weight:700; color:#fff; text-align:left;}
+  /* ── reveal: big photo treatment (estilo apresentação dos seguros) ── */
+  .cer3-rev{display:flex; align-items:center; justify-content:center; gap:5vw; max-width:1150px; width:100%; margin-top:14px; flex-wrap:wrap;}
+  .cer3-photos-col{display:flex; gap:22px; justify-content:center; align-items:flex-start;}
+  .cer3-photo-card{display:flex; flex-direction:column; align-items:center; animation:cer3PhotoPop .9s cubic-bezier(.34,1.56,.64,1) both;}
+  .cer3-photo-card .pic{position:relative; width:min(32vw,250px); height:min(44vw,340px); border-radius:22px;}
+  .cer3-photo-card img{width:100%; height:100%; object-fit:cover; border-radius:22px; display:block; position:relative; z-index:2;}
+  .cer3-photo-card .pic::before{content:''; position:absolute; inset:-6px; border-radius:26px; z-index:1;
+    background:conic-gradient(#FFC107,#FF5E3D,#00E5FF,#7B61FF,#FFC107); animation:cer3SpinBorder 3.4s linear infinite;}
+  .cer3-photo-card .pic::after{content:''; position:absolute; inset:-16px; border-radius:30px; z-index:0; background:var(--pc,#FFC107);
+    filter:blur(30px); opacity:.5; animation:cer3Breath 3s ease-in-out infinite;}
+  @keyframes cer3SpinBorder{to{transform:rotate(360deg);}}
+  .cer3-photo-card .pname{margin-top:14px; text-align:center; font-family:'Inter',sans-serif; font-weight:700; font-size:13px; color:#fff;}
+  .cer3-info-col{text-align:center; min-width:280px;}
+  .cer3-name-big{font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(34px,6.5vw,68px); line-height:1.02; margin:10px 0 6px;
+    background:linear-gradient(90deg,#fff,#fff6c8,#FFC107,#fff,#fff); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:cer3Shimmer 4s linear infinite; filter:drop-shadow(0 .6vh 2vh rgba(0,0,0,.5));}
+  @keyframes cer3Shimmer{0%{background-position:0% 50%;} 100%{background-position:300% 50%;}}
+  .cer3-voucher{display:inline-block; margin-top:18px; position:relative; padding:16px 40px; border-radius:20px; overflow:hidden;
+    background:linear-gradient(135deg,#FFC107,#ffb300 45%,#ff8f00); color:#2b1600; box-shadow:0 14px 44px rgba(255,170,0,.45);
+    animation:cer3VoucherPop .7s .3s both;}
+  @keyframes cer3VoucherPop{0%{opacity:0; transform:scale(.6);} 100%{opacity:1; transform:scale(1);}}
+  .cer3-voucher::after{content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.8),transparent); transform:skewX(-20deg); animation:cer3Shine 3s ease-in-out infinite;}
+  @keyframes cer3Shine{0%{left:-60%;} 100%{left:160%;}}
+  .cer3-voucher small{display:block; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.75;}
+  .cer3-voucher b{font-family:'Poppins',sans-serif; font-size:clamp(28px,4.8vw,48px); line-height:1;}
+  #cer3 .cer3-mystery{width:min(26vw,170px); height:min(26vw,170px); margin:22px auto 0; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins',sans-serif; font-size:min(13vw,80px); font-weight:800; color:#FFC107;
+    background:radial-gradient(circle,rgba(255,193,7,.2),rgba(255,193,7,.02) 70%); border:3px solid rgba(255,193,7,.65); animation:cer3Ring 1.4s ease-in-out infinite;}
+  @keyframes cer3Ring{0%,100%{box-shadow:0 0 0 0 rgba(255,193,7,.45);} 50%{box-shadow:0 0 0 22px rgba(255,193,7,0);}}
   #cer3 .cer3-dots{position:absolute; top:7.5vh; left:0; right:0; display:flex; justify-content:center; gap:10px; z-index:6;}
   #cer3 .cer3-dots i{width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.18); transition:all .4s; font-style:normal;}
   #cer3 .cer3-dots i.done{background:#FFC107; box-shadow:0 0 8px #FFC107;}
@@ -1222,6 +1253,7 @@
       <div class="cer3-rank-sub" id="cer3-rank-suspense">
         <div class="cer3-eyebrow" id="cer3-rank-eyebrow">4º Lugar</div>
         <div class="cer3-suspense-text" id="cer3-rank-suspense-text">Em 4º lugar...</div>
+        <div class="cer3-mystery">?</div>
         <div class="cer3-loading"><span></span><span></span><span></span></div>
         <button class="cer3-next" onclick="cer3StartRankCountdown()">Revelar →</button>
       </div>
@@ -1231,8 +1263,7 @@
       <div class="cer3-rank-sub" id="cer3-rank-reveal" style="display:none;">
         <div class="cer3-eyebrow" id="cer3-reveal-eyebrow">🏆 4º Lugar</div>
         <div class="crown-pill" id="cer3-reveal-pill" style="font-size:15px; padding:11px 24px;">🏆 4º LUGAR · 3º TRIMESTRE 2026</div>
-        <div class="photo-duo" id="cer3-reveal-photos" style="margin-top:22px;"></div>
-        <div class="cer3-amount" id="cer3-rank-amount">—</div>
+        <div id="cer3-reveal-photos" style="margin-top:10px; width:100%;"></div>
         <div class="cer3-sub" id="cer3-rank-note">Faturação do trimestre (dados fechados).</div>
         <button class="cer3-next" style="margin-top:28px; font-size:12.5px; padding:10px 24px;" onclick="cer3Next()" id="cer3-rank-next-btn">Próximo →</button>
       </div>
@@ -1494,6 +1525,7 @@ function cer3RankSubState(which){
   ['cer3-rank-suspense','cer3-rank-countdown','cer3-rank-reveal'].forEach(id=>{
     document.getElementById(id).style.display = (id===which) ? 'flex' : 'none';
   });
+  if(which!=='cer3-rank-reveal') document.getElementById('cer3').classList.remove('reveal');
 }
 function cer3RenderDots(){
   const dotsEl=document.getElementById('cer3-dots'); dotsEl.innerHTML='';
@@ -1528,7 +1560,7 @@ function abrirCerimoniaQ3(){
   document.addEventListener('keydown', cer3KeyHandler);
 }
 function fecharCerimoniaQ3(){
-  document.getElementById('cer3').classList.remove('on');
+  document.getElementById('cer3').classList.remove('on','reveal');
   document.removeEventListener('keydown', cer3KeyHandler);
 }
 function cer3Next(){
@@ -1570,28 +1602,36 @@ function cer3RevealRank(){
     : 'Faturação do trimestre entre os 4 balcões (dados fechados).';
   document.getElementById('cer3-rank-next-btn').textContent = isWinner ? 'Ver Reconhecimento das Equipas →' : 'Próximo Balcão →';
 
-  // fotos da equipa do balcão (pessoas reais) + plaqueta
+  const colors={CACEM:'#00E5FF', LOURES:'#7B61FF', CASCAIS:'#FF5E3D', LISBOA:'#1FCB7A'};
+  const pc=colors[item.b]||'#FFC107';
+
+  // fotos grandes da equipa do balcão (pessoas reais, estilo apresentação) + nome gigante + voucher
   const people=CER3_BRANCH_PEOPLE[item.b]||[];
-  const photosHtml = people.map(p=>`<div style="text-align:center;"><img src="${p.photo()}" class="branch-photo" style="width:150px; height:150px; border-radius:50%; object-fit:cover;" alt=""><div style="margin-top:8px; font-family:'Inter',sans-serif; font-weight:700; color:#fff; font-size:13px;">${p.name}</div></div>`).join('');
+  const photosHtml = people.map(p=>`
+    <div class="cer3-photo-card" style="--pc:${pc};">
+      <div class="pic"><img src="${p.photo()}" alt=""></div>
+      <div class="pname">${p.name}</div>
+    </div>`).join('');
   document.getElementById('cer3-reveal-photos').innerHTML = `
-    ${photosHtml}
-    <div class="plaque-wrap">
-      <div class="plaque">
-        <div>
-          <div class="pl-title">${isWinner?'MELHOR BALCÃO':'BALCÃO'}</div>
-          <div class="pl-sub">3º TRIMESTRE 2026</div>
+    <div class="cer3-rev">
+      <div class="cer3-photos-col">${photosHtml}</div>
+      <div class="cer3-info-col">
+        <div class="cer3-name-big">${DATA.names[item.b]}</div>
+        <div class="cer3-voucher">
+          <small>${isWinner?'MELHOR BALCÃO · FATURAÇÃO':'FATURAÇÃO DO TRIMESTRE'}</small>
+          <b id="cer3-rank-amount">—</b>
         </div>
-        <div class="pl-winner">${item.rank}º Lugar<b>${DATA.names[item.b]}</b></div>
       </div>
-      <div class="plaque-stand"></div>
     </div>`;
 
   cer3RankSubState('cer3-rank-reveal');
+  document.getElementById('cer3').classList.add('reveal');
   document.getElementById('cer3-flash').classList.remove('go'); void document.getElementById('cer3-flash').offsetWidth;
   document.getElementById('cer3-flash').classList.add('go');
   launchConfetti();
   setTimeout(launchConfetti, 400);
-  if(isWinner) setTimeout(launchConfetti, 850);
+  setTimeout(launchConfetti, 900);
+  if(isWinner){ setTimeout(launchConfetti, 1400); setTimeout(launchConfetti, 1900); }
 
   // contagem crescente do valor até ao total
   const amtEl=document.getElementById('cer3-rank-amount');

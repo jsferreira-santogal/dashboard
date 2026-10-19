@@ -563,6 +563,27 @@
   @keyframes cer3Shine{0%{left:-60%;} 100%{left:160%;}}
   .cer3-voucher small{display:block; font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.75;}
   .cer3-voucher b{font-family:'Poppins',sans-serif; font-size:clamp(28px,4.8vw,48px); line-height:1;}
+
+  /* ── Apresentação da reunião ── */
+  .apr-list{display:flex; flex-direction:column; gap:14px; width:min(94vw,860px); margin:30px auto 0; text-align:left;}
+  .apr-item{display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:18px; padding:18px 22px; border-radius:18px;
+    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); animation:cer3FadeUp .7s ease both; transition:all .35s; cursor:pointer;}
+  .apr-item:nth-child(1){animation-delay:.05s;} .apr-item:nth-child(2){animation-delay:.15s;} .apr-item:nth-child(3){animation-delay:.25s;}
+  .apr-item:nth-child(4){animation-delay:.35s;} .apr-item:nth-child(5){animation-delay:.45s;} .apr-item:nth-child(6){animation-delay:.55s;}
+  .apr-item:hover{transform:translateX(4px); border-color:rgba(0,229,255,.5);}
+  .apr-num{font-family:'Poppins',sans-serif; font-weight:800; font-size:38px; line-height:1; text-align:center; color:rgba(255,255,255,.35);
+    background:linear-gradient(135deg,#00E5FF,#7B61FF); -webkit-background-clip:text; background-clip:text;}
+  .apr-title{font-family:'Inter',sans-serif; font-weight:700; font-size:16px; color:#fff; line-height:1.35;}
+  .apr-title small{display:block; font-weight:500; font-size:12.5px; color:var(--text-muted); margin-top:4px;}
+  .apr-go{font-family:'Inter',sans-serif; font-weight:700; font-size:12px; color:#0A0726; background:linear-gradient(120deg,#00E5FF,#7B61FF);
+    border:none; padding:9px 18px; border-radius:100px; cursor:pointer; white-space:nowrap; box-shadow:0 0 18px rgba(0,229,255,.4);}
+  .apr-item.cur{border-color:#FFC107; background:rgba(255,193,7,.09); box-shadow:0 0 34px rgba(255,193,7,.25); animation:cer3FadeUp .7s ease both, aprPulse 2.4s ease-in-out infinite;}
+  .apr-item.cur .apr-num{background:linear-gradient(135deg,#FFC107,#ff8f00); -webkit-background-clip:text; background-clip:text;}
+  .apr-item.done{opacity:.55;} .apr-item.done .apr-num::after{content:' ✓'; font-size:20px; color:#1FCB7A; -webkit-text-fill-color:#1FCB7A;}
+  .apr-num, .apr-item.cur .apr-num{color:transparent;}
+  @keyframes aprPulse{0%,100%{box-shadow:0 0 22px rgba(255,193,7,.2);} 50%{box-shadow:0 0 44px rgba(255,193,7,.4);}}
+  .apr-hint{font-size:11.5px; color:var(--text-muted); margin-top:16px; text-align:center;}
+  @media (max-width:640px){ .apr-item{grid-template-columns:44px 1fr; } .apr-go{grid-column:2; justify-self:start;} .apr-num{font-size:28px;} }
   .cer3-race-bars{display:flex; flex-direction:column; gap:14px; width:min(90vw,760px); margin-top:26px;}
   .cer3-race-row{display:grid; grid-template-columns:34px 130px 1fr auto; align-items:center; gap:14px; animation:cer3FadeUp .6s ease both;}
   .cer3-race-row:nth-child(2){animation-delay:.1s;} .cer3-race-row:nth-child(3){animation-delay:.2s;} .cer3-race-row:nth-child(4){animation-delay:.3s;}
@@ -622,6 +643,7 @@
   <button class="tab-btn" data-view="resumo">Resumo Q2</button>
   <button class="tab-btn" data-view="vencedor">🏆 Vencedor &amp; Prémio Q2</button>
   <button class="tab-btn" data-view="q2">🔎 Q2 em Detalhe</button>
+  <button class="tab-btn" data-view="apresentacao">🎬 Apresentação da Reunião</button>
   <button class="tab-btn active" data-view="resumoq3">Resumo Q3</button>
   <button class="tab-btn" data-view="vencedorq3">🏆 Vencedor &amp; Prémio Q3</button>
   <button class="tab-btn" data-view="q3detalhe">🔎 Q3 em Detalhe</button>
@@ -907,6 +929,47 @@
     <button class="month-btn" data-month="Q2TOTAL">Acumulado Q2</button>
   </div>
   <div class="grid4" id="month-grid"></div>
+</section>
+
+<!-- APRESENTAÇÃO DA REUNIÃO -->
+<section class="view" id="view-apresentacao">
+  <div class="hero">
+    <div class="eyebrow">Free2Move Santogal · Reunião de Resultados</div>
+    <h1 class="title-xl">Apresentação<br>Resultados Comerciais Q3 2026</h1>
+    <p class="subtitle">Entrega de Prémios Challenge Seguros Verão + Melhor Balcão Santogal Q3</p>
+    <div class="ddv-badge" style="margin-top:14px;">DDV <span class="sub">· DINÂMICA DE VITÓRIA</span></div>
+
+    <div class="apr-list" id="apr-list">
+      <div class="apr-item" data-i="0" onclick="aprMark(0)">
+        <div class="apr-num">1</div>
+        <div class="apr-title">Apresentação Dr. José Neto Rebelo<small>Novo Diretor Geral da operação Free2Move Santogal Rent</small></div>
+      </div>
+      <div class="apr-item" data-i="1" onclick="aprMark(1)">
+        <div class="apr-num">2</div>
+        <div class="apr-title">Entrega de prémios — Challenge de Verão 2026<small>Decorreu a nível nacional de Junho a Setembro 2026, com 4 categorias</small></div>
+        <button class="apr-go" onclick="event.stopPropagation(); aprMark(1); window.open('https://jsferreira-santogal.github.io/dashboard/challenge/','_blank')">Abrir Challenge →</button>
+      </div>
+      <div class="apr-item" data-i="2" onclick="aprMark(2)">
+        <div class="apr-num">3</div>
+        <div class="apr-title">Apresentação resultados comerciais Q3 + Total acumulado<small>Resumo Q3 e Corrida Anual</small></div>
+        <button class="apr-go" onclick="event.stopPropagation(); aprMark(2); document.querySelector('.tab-btn[data-view=resumoq3]').click(); window.scrollTo(0,0);">Abrir Resumo Q3 →</button>
+      </div>
+      <div class="apr-item" data-i="3" onclick="aprMark(3)">
+        <div class="apr-num">4</div>
+        <div class="apr-title">Entrega de prémios “Melhor Balcão Santogal Q3 2026”<small>Cerimónia balcão a balcão, do 4º ao 1º lugar</small></div>
+        <button class="apr-go" onclick="event.stopPropagation(); aprMark(3); abrirCerimoniaQ3();">🎬 Iniciar Cerimónia</button>
+      </div>
+      <div class="apr-item" data-i="4" onclick="aprMark(4)">
+        <div class="apr-num">5</div>
+        <div class="apr-title">Apresentação do projeto nova plataforma de Agenda e Gestão<small>SANTOGAL MOVE</small></div>
+      </div>
+      <div class="apr-item" data-i="5" onclick="aprMark(5)">
+        <div class="apr-num">6</div>
+        <div class="apr-title">Encerramento dos trabalhos<small>Com a palavra Dr. Neto Rebelo e Dr. Rodrigo Menéres</small></div>
+      </div>
+    </div>
+    <div class="apr-hint">Clica num ponto para o marcar como “em curso” (os anteriores ficam concluídos). Clica de novo no ponto em curso para o limpar.</div>
+  </div>
 </section>
 
 <!-- RESUMO Q3 (fechado: Julho, Agosto e Setembro) -->
@@ -1475,6 +1538,14 @@ function getSegFat(year, monthKey, branch){
   return aggMap[monthKey] ? sumSegFat(year,aggMap[monthKey],branch) : ((DATA.segFat[year][monthKey]&&DATA.segFat[year][monthKey][branch])||0);
 }
 
+let aprCur=-1;
+function aprMark(i){
+  aprCur = (aprCur===i) ? -1 : i;
+  document.querySelectorAll('#apr-list .apr-item').forEach((el,k)=>{
+    el.classList.toggle('cur', k===aprCur);
+    el.classList.toggle('done', aprCur>=0 && k<aprCur);
+  });
+}
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));

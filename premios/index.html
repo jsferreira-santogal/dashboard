@@ -1374,6 +1374,12 @@
     <table class="pnl-table" id="rep-table-saldo"></table>
   </div>
 
+  <div class="subhead">Reconciliação — RECEBIDO F2M-Insurance vs Recondicionamentos (Acumulado Jan–Set 2026)</div>
+  <p class="subtitle" style="font-size:12.5px; margin-bottom:14px;">A mesma conta, mas só com o dinheiro que a seguradora <b>já pagou efetivamente</b> (e não o apurado, que inclui valores ainda por receber). É o saldo “real” de caixa até hoje; a diferença para o quadro anterior é o que ainda está em falta receber.</p>
+  <div class="pnl-table-wrap" style="margin-bottom:18px;">
+    <table class="pnl-table" id="rep-table-recebido"></table>
+  </div>
+
   <div class="dis-card" style="border-left-color:#FF4D5E;">
     <h3>🔧 Nota sobre sinistralidade e reconciliação F2M-Insurance</h3>
     <ul id="rep-nota-list"></ul>
@@ -1564,10 +1570,10 @@ const REP = {
     LISBOA:{n:24, apurado:14605.85, recebido:14605.85}
   },
   totals2026:{
-    CACEM:{n:32, nSeguro:25, nSemSeguro:7, apurado:21666.12, recebido:9524.95},
-    CASCAIS:{n:12, nSeguro:5, nSemSeguro:7, apurado:6233.50, recebido:1157.30},
-    LOURES:{n:42, nSeguro:39, nSemSeguro:3, apurado:27243.25, recebido:14568.92},
-    LISBOA:{n:25, nSeguro:19, nSemSeguro:6, apurado:15685.96, recebido:4659.45}
+    CACEM:{n:32, nSeguro:25, nSemSeguro:7, apurado:21666.12, recebido:17293.57},
+    CASCAIS:{n:12, nSeguro:5, nSemSeguro:7, apurado:6233.50, recebido:5344.79},
+    LOURES:{n:42, nSeguro:39, nSemSeguro:3, apurado:27243.25, recebido:21301.27},
+    LISBOA:{n:27, nSeguro:20, nSemSeguro:7, apurado:16551.07, recebido:13148.36}
   },
   ratio2025:{
     CACEM:{n:22, rec:11628.00, contratos:495},
@@ -2545,6 +2551,7 @@ function emailBranchCardRep(b){
   const a25=REP.totals2025[b], a26=REP.totals2026[b];
   const recond=RECOND.m2026[b].acum;
   const saldo=a26.apurado-recond;
+  const saldoRec=a26.recebido-recond, falta=a26.recebido-a26.apurado;
   return `<div style="border-left:5px solid ${DATA.colors[b]};background:#f7f6fb;border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif;">`+
     `<div style="font-weight:800;color:#170B3B;font-size:15px;margin-bottom:10px;">${DATA.names[b]}</div>`+
     `<table style="width:100%;border-collapse:collapse;font-size:13px;color:#55526b;">`+
@@ -2552,9 +2559,11 @@ function emailBranchCardRep(b){
       `<tr><td style="padding:3px 0;">— Com Seguro (participados)</td><td style="padding:3px 0;text-align:right;color:#170B3B;">${a26.nSeguro}</td></tr>`+
       `<tr><td style="padding:3px 0;">— Sem Seguro (pago pelo cliente)</td><td style="padding:3px 0;text-align:right;color:#170B3B;">${a26.nSemSeguro}</td></tr>`+
       `<tr><td style="padding:3px 0;">Apurado F2M-Insurance (2026)</td><td style="padding:3px 0;text-align:right;font-weight:800;color:#170B3B;font-size:14px;">${fmtEUR0(a26.apurado)} <span style="font-size:10.5px;color:#9a97ab;font-weight:600;">(${a26.n} proc.)</span></td></tr>`+
+      `<tr><td style="padding:3px 0;">Recebido da F2M-Insurance (Acum.)</td><td style="padding:3px 0;text-align:right;font-weight:700;color:#170B3B;">${fmtEUR0(a26.recebido)} <span style="font-size:10.5px;color:#E63950;font-weight:600;">(em falta ${fmtEUR0(-falta)})</span></td></tr>`+
       `<tr><td style="padding:3px 0;">Recondicionamentos (Acum.)</td><td style="padding:3px 0;text-align:right;">${fmtEUR0(recond)}</td></tr>`+
     `</table>`+
-    `<div style="margin-top:10px;text-align:center;background:${saldo>=0?'#E8F8EF':'#FBE9EC'};color:${saldo>=0?'#1FA866':'#E63950'};font-weight:800;font-size:12.5px;padding:7px;border-radius:7px;">Saldo: ${saldo>=0?'+':''}${fmtEUR0(saldo)}</div>`+
+    `<div style="margin-top:10px;text-align:center;background:${saldo>=0?'#E8F8EF':'#FBE9EC'};color:${saldo>=0?'#1FA866':'#E63950'};font-weight:800;font-size:12.5px;padding:7px;border-radius:7px;">Saldo s/ Apurado: ${saldo>=0?'+':''}${fmtEUR0(saldo)}</div>`+
+    `<div style="margin-top:6px;text-align:center;background:${saldoRec>=0?'#E8F8EF':'#FBE9EC'};color:${saldoRec>=0?'#1FA866':'#E63950'};font-weight:800;font-size:12.5px;padding:7px;border-radius:7px;">Saldo s/ Recebido: ${saldoRec>=0?'+':''}${fmtEUR0(saldoRec)}</div>`+
   `</div>`;
 }
 function buildRepEmailHTML(){
@@ -2564,6 +2573,7 @@ function buildRepEmailHTML(){
   const ap25=branches.reduce((s,b)=>s+REP.totals2025[b].apurado,0), ap26=branches.reduce((s,b)=>s+REP.totals2026[b].apurado,0);
   const recond=RECOND.totals2026.acum;
   const saldoTotal=ap26-recond;
+  const rec26=branches.reduce((s,b)=>s+REP.totals2026[b].recebido,0), saldoRecTotal=rec26-recond;
   let rows='';
   rows+=emailRow('Total Processos 2025 → 2026', n25+' → '+n26);
   rows+=emailRow('— Com Seguro (participados à F2M-Insurance)', String(nSeguro26));
@@ -2571,11 +2581,13 @@ function buildRepEmailHTML(){
   rows+=emailRow('Apurado F2M-Insurance 2025', fmtEUR0(ap25));
   rows+=emailRow('Apurado F2M-Insurance 2026', fmtEUR0(ap26));
   rows+=emailRow('Recondicionamentos (Acum. 2026)', fmtEUR0(recond));
-  rows+=emailRow('Saldo de Rede (Acum.)', (saldoTotal>=0?'+':'')+fmtEUR0(saldoTotal), saldoTotal>=0?'#1FA866':'#E63950');
-  rows+=emailSubhead('Reconciliação — Apurado F2M-Insurance vs Recondicionamentos, por balcão (Acum. Jan–Set 2026)');
+  rows+=emailRow('Saldo de Rede s/ Apurado (Acum.)', (saldoTotal>=0?'+':'')+fmtEUR0(saldoTotal), saldoTotal>=0?'#1FA866':'#E63950');
+  rows+=emailRow('Recebido da F2M-Insurance (Acum.)', fmtEUR0(rec26)+' (em falta '+fmtEUR0(ap26-rec26)+')');
+  rows+=emailRow('Saldo de Rede s/ Recebido (Acum.)', (saldoRecTotal>=0?'+':'')+fmtEUR0(saldoRecTotal), saldoRecTotal>=0?'#1FA866':'#E63950');
+  rows+=emailSubhead('Reconciliação — Apurado e Recebido F2M-Insurance vs Recondicionamentos, por balcão (Acum. Jan–Set 2026)');
   branches.forEach(b=>{ rows+=emailBranchCardRep(b); });
-  return emailWrap('Reparações F2M-Insurance — Reconciliação Jan a Set 2026', 'Apurado junto da seguradora vs custo de recondicionamento · Free2Move Rent Santogal', rows,
-    'O valor apurado conta sempre para o total, venha de seguro ou de pagamento direto do cliente. 2026 ainda em curso — os totais sobem até dezembro.');
+  return emailWrap('Reparações F2M-Insurance — Reconciliação Jan a Set 2026', 'Apurado e recebido da seguradora vs custo de recondicionamento · Free2Move Rent Santogal', rows,
+    'O valor apurado conta sempre para o total, venha de seguro ou de pagamento direto do cliente; o recebido é o que a seguradora já pagou efetivamente. 2026 ainda em curso — os totais sobem até dezembro.');
 }
 function buildRepEmailText(){
   const branches=DATA.branches;
@@ -2584,6 +2596,7 @@ function buildRepEmailText(){
   const ap25=branches.reduce((s,b)=>s+REP.totals2025[b].apurado,0), ap26=branches.reduce((s,b)=>s+REP.totals2026[b].apurado,0);
   const recond=RECOND.totals2026.acum;
   const saldoTotal=ap26-recond;
+  const rec26=branches.reduce((s,b)=>s+REP.totals2026[b].recebido,0), saldoRecTotal=rec26-recond;
   let L=[];
   L.push('REPARAÇÕES F2M-INSURANCE — RECONCILIAÇÃO · Jan a Set 2026');
   L.push('Free2Move Rent Santogal');
@@ -2594,13 +2607,15 @@ function buildRepEmailText(){
   L.push('Apurado F2M-Insurance 2025: '+fmtEUR0(ap25));
   L.push('Apurado F2M-Insurance 2026: '+fmtEUR0(ap26));
   L.push('Recondicionamentos (Acum. 2026): '+fmtEUR0(recond));
-  L.push('Saldo de Rede (Acum.): '+(saldoTotal>=0?'+':'')+fmtEUR0(saldoTotal));
+  L.push('Saldo de Rede s/ Apurado (Acum.): '+(saldoTotal>=0?'+':'')+fmtEUR0(saldoTotal));
+  L.push('Recebido da F2M-Insurance (Acum.): '+fmtEUR0(rec26)+' (em falta '+fmtEUR0(ap26-rec26)+')');
+  L.push('Saldo de Rede s/ Recebido (Acum.): '+(saldoRecTotal>=0?'+':'')+fmtEUR0(saldoRecTotal));
   L.push('');
-  L.push('Reconciliação — Apurado F2M-Insurance vs Recondicionamentos, por balcão (Acum. Jan–Set 2026):');
+  L.push('Reconciliação — Apurado e Recebido F2M-Insurance vs Recondicionamentos, por balcão (Acum. Jan–Set 2026):');
   branches.forEach(b=>{
     const a25=REP.totals2025[b], a26=REP.totals2026[b];
     const recond=RECOND.m2026[b].acum, saldo=a26.apurado-recond;
-    L.push('- '+DATA.names[b]+': processos '+a25.n+' → '+a26.n+' (com seguro '+a26.nSeguro+' / sem seguro '+a26.nSemSeguro+') | apurado '+fmtEUR0(a26.apurado)+' | recondicionamentos '+fmtEUR0(recond)+' | saldo '+(saldo>=0?'+':'')+fmtEUR0(saldo));
+    L.push('- '+DATA.names[b]+': processos '+a25.n+' → '+a26.n+' (com seguro '+a26.nSeguro+' / sem seguro '+a26.nSemSeguro+') | apurado '+fmtEUR0(a26.apurado)+' | recondicionamentos '+fmtEUR0(recond)+' | saldo s/ apurado '+(saldo>=0?'+':'')+fmtEUR0(saldo)+' | recebido '+fmtEUR0(a26.recebido)+' | saldo s/ recebido '+((a26.recebido-recond)>=0?'+':'')+fmtEUR0(a26.recebido-recond));
   });
   L.push('');
   L.push('Nota: 2026 ainda em curso — os totais sobem até dezembro.');
@@ -2836,6 +2851,21 @@ function renderReparacoes(){
   }
   document.getElementById('rep-table-saldo').innerHTML=buildSaldoTable();
 
+  function buildRecebidoTable(){
+    let thead='<thead><tr><th>Balcão</th><th>Apurado (Acum.)</th><th>Recebido (Acum.)</th><th>Em falta receber</th><th>Recondicionamentos (Acum.)</th><th>Saldo s/ Recebido</th></tr></thead>';
+    let tbody='<tbody>', apT=0, recT=0, rcT=0;
+    branches.forEach(b=>{
+      const ap=REP.totals2026[b].apurado, rec=REP.totals2026[b].recebido, rc=RECOND.m2026[b].acum;
+      const falta=rec-ap, saldo=rec-rc;
+      apT+=ap; recT+=rec; rcT+=rc;
+      tbody+=`<tr><td>${DATA.names[b]}</td><td class="dim">${fmtEUR0(ap)}</td><td>${fmtEUR0(rec)}</td><td style="color:#FF4D5E;">${fmtEUR0(falta)} <span class="dim">(${(falta/ap*100).toFixed(0)}%)</span></td><td>${fmtEUR0(rc)}</td><td style="font-weight:700; color:${saldo>=0?'#1FCB7A':'#FF4D5E'};">${saldo>=0?'+':''}${fmtEUR0(saldo)}</td></tr>`;
+    });
+    const faltaT=recT-apT, saldoT=recT-rcT;
+    tbody+=`<tr class="total-row"><td>TOTAL</td><td>${fmtEUR0(apT)}</td><td>${fmtEUR0(recT)}</td><td style="color:#FF4D5E;">${fmtEUR0(faltaT)} (${(faltaT/apT*100).toFixed(2).replace('.',',')}%)</td><td>${fmtEUR0(rcT)}</td><td style="color:${saldoT>=0?'#1FCB7A':'#FF4D5E'};">${saldoT>=0?'+':''}${fmtEUR0(saldoT)}</td></tr>`;
+    return thead+tbody+'</tbody>';
+  }
+  document.getElementById('rep-table-recebido').innerHTML=buildRecebidoTable();
+
   // nota dinâmica: identifica balcões com saldo negativo (gastam mais em recondicionamento do que recuperam da seguradora)
   const saldos=branches.map(b=>({b, apurado:REP.totals2026[b].apurado, recond:RECOND.m2026[b].acum, saldo:REP.totals2026[b].apurado-RECOND.m2026[b].acum}));
   const negativos=saldos.filter(s=>s.saldo<0).sort((a,c)=>a.saldo-c.saldo);
@@ -2844,6 +2874,10 @@ function renderReparacoes(){
   let notaHtml=`
     <li>Rede completa: processos ${growthLabel(n26,n25)} (${n25}→${n26}) e valor apurado ${growthLabel(ap26,ap25)} (${fmtEUR0(ap25)}→${fmtEUR0(ap26)}). Nota: 2026 ainda está em curso, por isso os totais sobem até dezembro.</li>
     <li>Descontando os recondicionamentos já pagos (${fmtEUR0(RECOND.totals2026.acum)} acumulados), o saldo de rede continua positivo: <b>${saldoTotal>=0?'+':''}${fmtEUR0(saldoTotal)}</b>.</li>`;
+  const recSaldos=branches.map(b=>({b, rec:REP.totals2026[b].recebido, saldo:REP.totals2026[b].recebido-RECOND.m2026[b].acum}));
+  const recT=recSaldos.reduce((x,y)=>x+y.rec,0), recSaldoT=recSaldos.reduce((x,y)=>x+y.saldo,0), faltaT=recT-ap26;
+  notaHtml+=`<li>Só com o que a seguradora <b>já pagou</b> (${fmtEUR0(recT)} de ${fmtEUR0(ap26)} apurados; faltam receber ${fmtEUR0(Math.abs(faltaT))}, ${(Math.abs(faltaT)/ap26*100).toFixed(1).replace('.',',')}%), o saldo de rede é ${recSaldoT>=0?'positivo':'negativo'}: <b>${recSaldoT>=0?'+':''}${fmtEUR0(recSaldoT)}</b>.`+
+    (recSaldos.filter(x=>x.saldo<0).length?` Com base no recebido, têm saldo negativo: ${recSaldos.filter(x=>x.saldo<0).sort((p,q)=>p.saldo-q.saldo).map(x=>`<b>${DATA.names[x.b]}</b> (${fmtEUR0(x.saldo)})`).join(' e ')}.`:'')+`</li>`;
   if(negativos.length>0){
     negativos.forEach(n=>{
       notaHtml+=`<li><b>${DATA.names[n.b]}</b> tem saldo negativo: gastou ${fmtEUR0(n.recond)} em recondicionamentos contra ${fmtEUR0(n.apurado)} apurados da seguradora — défice de ${fmtEUR0(Math.abs(n.saldo))}.</li>`;

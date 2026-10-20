@@ -2653,7 +2653,8 @@ async function copyShareText(kind, btn){
   catch(e){ shareToast(btn, '⚠️ Não copiou'); }
 }
 function openGmailShare(kind){
-  const subject = kind==='pnl' ? 'Demonstração de Resultados — Jan a Set 2026' : 'Reparações F2M-Insurance — Reconciliação Jan a Set 2026';
+  const hoje=new Date(), dd=String(hoje.getDate()).padStart(2,'0')+'/'+String(hoje.getMonth()+1).padStart(2,'0')+'/'+hoje.getFullYear();
+  const subject = (kind==='pnl' ? 'Demonstração de Resultados — Jan a Set 2026' : 'Reparações F2M-Insurance — Reconciliação Jan a Set 2026')+' ( '+dd+' )';
   window.open('https://mail.google.com/mail/?view=cm&fs=1&su='+encodeURIComponent(subject), '_blank');
 }
 

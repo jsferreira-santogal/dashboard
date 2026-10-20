@@ -1646,9 +1646,9 @@ function getSegFat(year, monthKey, branch){
 }
 
 let aprCur=-1;
-// ── Apresentação Santogal Move: slides em ecrã inteiro (imagens em ./slides/sNN.jpg) ──
+// ── Apresentação Santogal Move: slides em ecrã inteiro (imagens em ./sNN.jpg, na mesma pasta do index.html) ──
 const SLV_N=35; let slvI=0, slvOpen=false, slvHudT=null;
-function slvSrc(i){ return 'slides/s'+String(i+1).padStart(2,'0')+'.jpg'; }
+function slvSrc(i){ return 's'+String(i+1).padStart(2,'0')+'.jpg'; }
 function slvShow(i){
   slvI=Math.max(0,Math.min(SLV_N-1,i));
   const im=document.getElementById('slv-img');

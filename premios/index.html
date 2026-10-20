@@ -569,7 +569,7 @@
   .apr-item{display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:18px; padding:18px 22px; border-radius:18px;
     background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); animation:cer3FadeUp .7s ease both; transition:all .35s; cursor:pointer;}
   .apr-item:nth-child(1){animation-delay:.05s;} .apr-item:nth-child(2){animation-delay:.15s;} .apr-item:nth-child(3){animation-delay:.25s;}
-  .apr-item:nth-child(4){animation-delay:.35s;} .apr-item:nth-child(5){animation-delay:.45s;} .apr-item:nth-child(6){animation-delay:.55s;}
+  .apr-item:nth-child(4){animation-delay:.35s;} .apr-item:nth-child(5){animation-delay:.45s;} .apr-item:nth-child(6){animation-delay:.55s;} .apr-item:nth-child(7){animation-delay:.65s;}
   .apr-item:hover{transform:translateX(4px); border-color:rgba(0,229,255,.5);}
   .apr-num{font-family:'Poppins',sans-serif; font-weight:800; font-size:38px; line-height:1; text-align:center; color:rgba(255,255,255,.35);
     background:linear-gradient(135deg,#00E5FF,#7B61FF); -webkit-background-clip:text; background-clip:text;}
@@ -584,6 +584,31 @@
   @keyframes aprPulse{0%,100%{box-shadow:0 0 22px rgba(255,193,7,.2);} 50%{box-shadow:0 0 44px rgba(255,193,7,.4);}}
   .apr-hint{font-size:11.5px; color:var(--text-muted); margin-top:16px; text-align:center;}
   @media (max-width:640px){ .apr-item{grid-template-columns:44px 1fr; } .apr-go{grid-column:2; justify-self:start;} .apr-num{font-size:28px;} }
+
+  /* ── Projeção a Dezembro ── */
+  .pj-pills{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:6px 0 4px;}
+  .pj-pill{font-family:'Inter',sans-serif; font-weight:700; font-size:13px; color:#fff; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.2);
+    padding:10px 20px; border-radius:100px; cursor:pointer; transition:all .25s;}
+  .pj-pill:hover{border-color:#00E5FF;}
+  .pj-pill.sel{background:linear-gradient(120deg,#00E5FF,#7B61FF); color:#0A0726; border-color:transparent; box-shadow:0 0 22px rgba(0,229,255,.45);}
+  .pj-desc{text-align:center; font-size:12.5px; color:var(--text-muted); margin:8px 0 22px;}
+  .pj-safe{max-width:820px; margin:0 auto 30px; padding:22px 26px; border-radius:20px; text-align:center;
+    background:rgba(31,203,122,.09); border:1px solid rgba(31,203,122,.45); box-shadow:0 0 34px rgba(31,203,122,.15);}
+  .pj-safe .big{font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(20px,3vw,30px); color:#fff; line-height:1.3;}
+  .pj-safe .big b{color:#1FCB7A;}
+  .pj-safe .sm{font-size:13px; color:var(--text-muted); margin-top:8px; line-height:1.5;}
+  .pj-chart{display:flex; align-items:flex-end; gap:10px; height:210px; padding:0 6px; margin:8px auto 0; max-width:900px;}
+  .pj-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; min-width:0;}
+  .pj-bars{display:flex; align-items:flex-end; gap:3px; height:180px; width:100%; justify-content:center;}
+  .pj-b{width:42%; max-width:22px; border-radius:5px 5px 0 0; transition:height .9s cubic-bezier(.2,.9,.3,1);}
+  .pj-b.y25{background:rgba(255,255,255,.22);}
+  .pj-b.y26{background:linear-gradient(180deg,#00E5FF,#5B5CF0);}
+  .pj-b.proj{background:repeating-linear-gradient(45deg,#FFC107 0 5px,#ff8f00 5px 10px); box-shadow:0 0 14px rgba(255,193,7,.45);}
+  .pj-lbl{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--text-muted); margin-top:7px;}
+  .pj-legend{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; font-size:11.5px; color:var(--text-muted); margin:14px 0 30px;}
+  .pj-legend i{display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:6px; vertical-align:-1px;}
+  .pj-note{font-size:12px; color:var(--text-muted); max-width:820px; margin:18px auto 0; line-height:1.6; text-align:left;}
+  .pnl-table tr.pj-selrow td{background:rgba(0,229,255,.12);} .pnl-table tr.pj-row{cursor:pointer;}
   .cer3-race-bars{display:flex; flex-direction:column; gap:14px; width:min(90vw,760px); margin-top:26px;}
   .cer3-race-row{display:grid; grid-template-columns:34px 130px 1fr auto; align-items:center; gap:14px; animation:cer3FadeUp .6s ease both;}
   .cer3-race-row:nth-child(2){animation-delay:.1s;} .cer3-race-row:nth-child(3){animation-delay:.2s;} .cer3-race-row:nth-child(4){animation-delay:.3s;}
@@ -652,6 +677,7 @@
   <button class="tab-btn" data-view="q4detalhe">🔎 Q4 em Detalhe</button>
   <button class="tab-btn" data-view="semestre">📈 1º Semestre</button>
   <button class="tab-btn" data-view="acumtotal">🏁 Total Acumulado</button>
+  <button class="tab-btn" data-view="projecao">💼 Projeção a Dezembro</button>
   <button class="tab-btn" data-view="pnl">📊 Demonstração de Resultados</button>
   <button class="tab-btn" data-view="reparacoes">🔧 Reparações F2M-Insurance</button>
 </nav>
@@ -965,6 +991,11 @@
       </div>
       <div class="apr-item" data-i="5" onclick="aprMark(5)">
         <div class="apr-num">6</div>
+        <div class="apr-title">Visão consolidada e projeção a Dezembro<small>Resultados comerciais e financeiros Jan–Set, Q4 e fecho do ano com margem de segurança</small></div>
+        <button class="apr-go" onclick="event.stopPropagation(); aprMark(5); document.querySelector('.tab-btn[data-view=projecao]').click(); window.scrollTo(0,0);">Abrir Projeção →</button>
+      </div>
+      <div class="apr-item" data-i="6" onclick="aprMark(6)">
+        <div class="apr-num">7</div>
         <div class="apr-title">Encerramento dos trabalhos<small>Com a palavra Dr. Neto Rebelo e Dr. Rodrigo Menéres</small></div>
       </div>
     </div>
@@ -1243,6 +1274,49 @@
   </div>
 </section>
 
+<!-- PROJEÇÃO A DEZEMBRO -->
+<section class="view" id="view-projecao">
+  <div class="hero" style="padding-bottom:20px;">
+    <div class="eyebrow">Visão para Administração e Acionistas</div>
+    <h1 class="title-xl">Visão Consolidada<br>e Projeção a Dezembro 2026</h1>
+    <p class="subtitle">Janeiro a Setembro fechado. Q4 e fecho do ano em quatro cenários, com a margem de segurança.</p>
+  </div>
+
+  <div class="grid4" style="margin-bottom:26px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));">
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-k1">—</div><div class="lbl">Faturação Jan–Set 2026 (fechado)</div><div class="cmp">2025 mesmo período: <b id="pj-k1b">—</b> &nbsp;<span class="delta" id="pj-k1d">—</span></div></div>
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-k2">—</div><div class="lbl">Resultado acumulado Jan–Set 2026</div><div class="cmp">Todo o ano 2025: <b id="pj-k2b">—</b></div></div>
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-k4">—</div><div class="lbl">Resultado acumulado SEM margem de viaturas</div><div class="cmp">Margem de viaturas Jan–Ago: <b id="pj-k4b">—</b></div></div>
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-k3">—</div><div class="lbl">Da faturação de todo 2025, já feita antes do Q4</div><div class="cmp">2025 completo: <b id="pj-k3b">—</b></div></div>
+  </div>
+
+  <div class="pj-safe">
+    <div class="big" id="pj-safe-big">—</div>
+    <div class="sm" id="pj-safe-sm">—</div>
+  </div>
+
+  <div class="subhead" style="margin-top:0; text-align:center;">Cenário para o Q4 e fecho do ano</div>
+  <div class="pj-pills" id="pj-pills"></div>
+  <div class="pj-desc" id="pj-desc">—</div>
+
+  <div class="grid4" style="margin-bottom:26px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));">
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-r1">—</div><div class="lbl">Faturação projetada — ano 2026</div><div class="cmp">vs 2025: <b id="pj-r1b">—</b> &nbsp;<span class="delta" id="pj-r1d">—</span></div></div>
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-r2">—</div><div class="lbl">Resultado projetado — ano 2026 (com margem de viaturas)</div><div class="cmp">vs 2025: <b id="pj-r2b">—</b> &nbsp;<span class="delta" id="pj-r2d">—</span></div></div>
+    <div class="hero-stat" style="min-width:0;"><div class="num glow-num" id="pj-r3">—</div><div class="lbl">Resultado projetado — ano 2026 SEM margem de viaturas</div><div class="cmp">Resultado de todo o 2025: <b id="pj-r3b">—</b> &nbsp;<span class="delta" id="pj-r3d">—</span></div></div>
+  </div>
+
+  <div class="subhead" style="text-align:center;">Faturação mensal — 2025 vs 2026 (Out–Dez projetado)</div>
+  <div class="pj-chart" id="pj-chart"></div>
+  <div class="pj-legend"><span><i style="background:rgba(255,255,255,.3)"></i>2025</span><span><i style="background:#5B5CF0"></i>2026 fechado</span><span><i style="background:#FFC107"></i>2026 projetado (cenário)</span></div>
+
+  <div class="subhead">Resumo dos cenários (clica numa linha para a selecionar)</div>
+  <div class="pnl-table-wrap" style="margin-bottom:18px;"><table class="pnl-table" id="pj-table-scen"></table></div>
+
+  <div class="subhead">Projeção por balcão — cenário selecionado</div>
+  <div class="pnl-table-wrap" style="margin-bottom:10px;"><table class="pnl-table" id="pj-table-br"></table></div>
+
+  <div class="pj-note" id="pj-notes">—</div>
+</section>
+
 <!-- REPARAÇÕES F2M-INSURANCE -->
 <section class="view" id="view-reparacoes">
   <div class="sec-head">
@@ -1434,15 +1508,15 @@ const DATA = {
       DEZEMBRO:{CACEM:{fat:28960.84,custo:14774.25,extPct:.4071,apvPct:.5929,result:14186.59,ocup:.76,contratos:77,seguros:40,hipay:0,dias:794},CASCAIS:{fat:27422.83,custo:15982.49,extPct:.4760,apvPct:.5240,result:11440.34,ocup:.61,contratos:71,seguros:45,hipay:147.91,dias:684},LOURES:{fat:27164.30,custo:16856.33,extPct:.5922,apvPct:.4078,result:10307.97,ocup:.57,contratos:105,seguros:77,hipay:494.32,dias:657},LISBOA:{fat:28157.40,custo:14375.37,extPct:.3469,apvPct:.6531,result:13782.03,ocup:.68,contratos:76,seguros:47,hipay:204.04,dias:655}}
     },
     2026:{
-      JANEIRO:{CACEM:{fat:32333.84,custo:14330.00,extPct:.3357,apvPct:.6643,result:18003.84,ocup:.7849,contratos:84,seguros:43,hipay:677.92,dias:803},CASCAIS:{fat:25432.94,custo:15885.40,extPct:.5005,apvPct:.4995,result:9547.00,ocup:.6639,contratos:93,seguros:56,hipay:0,dias:747},LOURES:{fat:20478.18,custo:16786.00,extPct:.6404,apvPct:.3596,result:3692.18,ocup:.5323,contratos:123,seguros:60,hipay:0,dias:594},LISBOA:{fat:24413.67,custo:14047.00,extPct:.2626,apvPct:.7374,result:10366.67,ocup:.6653,contratos:79,seguros:52,hipay:1099.28,dias:660}},
+      JANEIRO:{CACEM:{fat:32333.84,custo:14330.00,extPct:.3357,apvPct:.6643,result:18003.84,ocup:.7849,contratos:84,seguros:43,hipay:677.92,dias:803},CASCAIS:{fat:25432.40,custo:15885.40,extPct:.5005,apvPct:.4995,result:9547.00,ocup:.6639,contratos:93,seguros:56,hipay:0,dias:747},LOURES:{fat:20478.18,custo:16786.00,extPct:.6404,apvPct:.3596,result:3692.18,ocup:.5323,contratos:123,seguros:60,hipay:0,dias:594},LISBOA:{fat:24413.67,custo:14047.00,extPct:.2626,apvPct:.7374,result:10366.67,ocup:.6653,contratos:79,seguros:52,hipay:1099.28,dias:660}},
       FEVEREIRO:{CACEM:{fat:24486.90,custo:15654.08,extPct:.5179,apvPct:.4821,result:8832.82,ocup:.6555,contratos:73,seguros:36,hipay:0,dias:611},CASCAIS:{fat:22208.27,custo:17041.47,extPct:.4604,apvPct:.5396,result:5166.80,ocup:.6675,contratos:68,seguros:44,hipay:0,dias:651},LOURES:{fat:28672.16,custo:17959.76,extPct:.5620,apvPct:.4380,result:10712.40,ocup:.7130,contratos:111,seguros:80,hipay:404.44,dias:774},LISBOA:{fat:30034.66,custo:15667.96,extPct:.2144,apvPct:.7856,result:14366.70,ocup:.7336,contratos:78,seguros:45,hipay:859.74,dias:716}},
-      MARCO:{CACEM:{fat:35011.02,custo:15525.01,extPct:.5089,apvPct:.4911,result:19486.01,ocup:.8282,contratos:92,seguros:47,hipay:188.49,dias:908},CASCAIS:{fat:27021.84,custo:15646.24,extPct:.4742,apvPct:.5258,result:11375.60,ocup:.6194,contratos:94,seguros:52,hipay:397.85,dias:691},LOURES:{fat:26777.28,custo:15729.03,extPct:.5571,apvPct:.4429,result:11048.25,ocup:.5440,contratos:96,seguros:51,hipay:24.74,dias:587},LISBOA:{fat:30006.38,custo:15076.34,extPct:.4239,apvPct:.5615,result:14930.04,ocup:.6979,contratos:92,seguros:58,hipay:918.13,dias:705}},
+      MARCO:{CACEM:{fat:35011.02,custo:15525.01,extPct:.5089,apvPct:.4911,result:19486.01,ocup:.8282,contratos:92,seguros:47,hipay:188.49,dias:908},CASCAIS:{fat:27021.84,custo:15646.24,extPct:.4742,apvPct:.5258,result:11375.60,ocup:.6194,contratos:94,seguros:52,hipay:397.85,dias:691},LOURES:{fat:26777.28,custo:15729.03,extPct:.5571,apvPct:.4429,result:11048.25,ocup:.5440,contratos:96,seguros:51,hipay:24.74,dias:587},LISBOA:{fat:30006.38,custo:15076.34,extPct:.4239,apvPct:.5761,result:14930.04,ocup:.6979,contratos:92,seguros:58,hipay:918.13,dias:705}},
       ABRIL:{CACEM:{fat:35220.20,custo:14508.52,extPct:.4278,apvPct:.5722,result:20711.68,ocup:.8443,contratos:72,seguros:40,hipay:30.11,dias:841},CASCAIS:{fat:23447.33,custo:15912.37,extPct:.6015,apvPct:.3985,result:7534.96,ocup:.6440,contratos:87,seguros:41,hipay:1152.71,dias:667},LOURES:{fat:24769.08,custo:15127.85,extPct:.5280,apvPct:.4720,result:9641.23,ocup:.6475,contratos:104,seguros:53,hipay:2214.62,dias:665},LISBOA:{fat:24339.09,custo:14117.75,extPct:.4068,apvPct:.5932,result:10221.34,ocup:.6910,contratos:70,seguros:48,hipay:621.11,dias:640}},
       MAIO:{CACEM:{fat:31414.07,custo:14852.41,extPct:.3511,apvPct:.6489,result:16561.66,ocup:.8107,contratos:76,seguros:47,hipay:786.16,dias:896},CASCAIS:{fat:26864.53,custo:15098.78,extPct:.6885,apvPct:.3115,result:11765.75,ocup:.6039,contratos:82,seguros:42,hipay:0,dias:654},LOURES:{fat:27322.32,custo:14123.83,extPct:.5470,apvPct:.4530,result:13198.49,ocup:.7505,contratos:104,seguros:42,hipay:1797.05,dias:781},LISBOA:{fat:26678.14,custo:14243.95,extPct:.3474,apvPct:.6526,result:12434.19,ocup:.7412,contratos:80,seguros:46,hipay:446.69,dias:709}},
       JUNHO:{CACEM:{fat:38018.82,custo:15060.92,extPct:.347,apvPct:.653,result:22957.90,ocup:.76,contratos:85,seguros:56,hipay:0,dias:820},CASCAIS:{fat:21663.46,custo:14435.08,extPct:.542,apvPct:.458,result:7228.38,ocup:.60,contratos:66,seguros:30,hipay:221.39,dias:598},LOURES:{fat:30712.63,custo:13891.95,extPct:.606,apvPct:.394,result:16820.68,ocup:.85,contratos:94,seguros:36,hipay:1343.37,dias:855},LISBOA:{fat:28909.86,custo:13983.01,extPct:.440,apvPct:.560,result:14926.85,ocup:.72,contratos:82,seguros:42,hipay:446.69,dias:720}},
       JULHO:{CACEM:{fat:41906.96,custo:15896.97,extPct:.33,apvPct:.67,result:26009.99,ocup:.77,contratos:86,seguros:55,hipay:0,dias:891},CASCAIS:{fat:27152.79,custo:15074.00,extPct:.56,apvPct:.44,result:12078.79,ocup:.64,contratos:76,seguros:34,hipay:1772.57,dias:674},LOURES:{fat:40214.86,custo:14150.00,extPct:.67,apvPct:.33,result:26064.86,ocup:.75,contratos:97,seguros:46,hipay:6.04,dias:767},LISBOA:{fat:31931.38,custo:14305.00,extPct:.42,apvPct:.58,result:17626.38,ocup:.83,contratos:80,seguros:48,hipay:0,dias:835}},
       AGOSTO:{CACEM:{fat:33590.18,custo:18117.72,extPct:.35,apvPct:.65,result:15472.46,ocup:.65,contratos:62,seguros:35,hipay:24.35,dias:801},CASCAIS:{fat:26529.52,custo:15531.94,extPct:.68,apvPct:.32,result:10997.58,ocup:.67,contratos:66,seguros:30,hipay:654.96,dias:600},LOURES:{fat:21799.24,custo:15652.99,extPct:.74,apvPct:.26,result:6146.25,ocup:.53,contratos:76,seguros:29,hipay:0,dias:487},LISBOA:{fat:33748.66,custo:16141.25,extPct:.60,apvPct:.40,result:17607.41,ocup:.67,contratos:57,seguros:30,hipay:1030.49,dias:668}},
-      SETEMBRO:{CACEM:{fat:39934.06,custo:17548.03,extPct:.39,apvPct:.61,result:22386.03,ocup:.77,contratos:81,seguros:47,hipay:44.84,dias:850},CASCAIS:{fat:23320.85,custo:16604.90,extPct:.52,apvPct:.48,result:6715.95,ocup:.72,contratos:83,seguros:36,hipay:221.89,dias:677},LOURES:{fat:22081.41,custo:15750.63,extPct:.72,apvPct:.28,result:6303.03,ocup:.50,contratos:70,seguros:54,hipay:0,dias:435},LISBOA:{fat:24131.20,custo:15904.11,extPct:.29,apvPct:.71,result:8227.09,ocup:.64,contratos:78,seguros:50,hipay:48.51,dias:645}}
+      SETEMBRO:{CACEM:{fat:39934.06,custo:17548.03,extPct:.39,apvPct:.61,result:22386.03,ocup:.77,contratos:81,seguros:47,hipay:44.84,dias:850},CASCAIS:{fat:23320.85,custo:16604.90,extPct:.52,apvPct:.48,result:6715.95,ocup:.72,contratos:83,seguros:36,hipay:221.89,dias:677},LOURES:{fat:22081.41,custo:15750.63,extPct:.72,apvPct:.28,result:6303.03,ocup:.50,contratos:70,seguros:55,hipay:0,dias:435},LISBOA:{fat:24131.20,custo:15904.11,extPct:.29,apvPct:.71,result:8227.09,ocup:.64,contratos:78,seguros:50,hipay:48.51,dias:647}}
     }
   },
   ytdMonths:['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO'],
@@ -1545,6 +1619,80 @@ function aprMark(i){
     el.classList.toggle('cur', k===aprCur);
     el.classList.toggle('done', aprCur>=0 && k<aprCur);
   });
+}
+
+// ── Projeção a Dezembro ──
+const PJ_M12=['JANEIRO','FEVEREIRO','MARCO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
+const PJ_LBL=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+let projSel='base';
+function pjCalc(){
+  const act=PJ_M12.slice(0,9), q4=PJ_M12.slice(9), q3=PJ_M12.slice(6,9);
+  const fatYTD=sumTotal(2026,act,'fat'), fatYTD25=sumTotal(2025,act,'fat');
+  const fat25Y=sumTotal(2025,PJ_M12,'fat'), q4_25=sumTotal(2025,q4,'fat');
+  const resYTD=PNL.totals2026.acum, res25Y=PNL.totals2025.acumAno;
+  const margemYTD=MARGEM.branches.reduce((s,b)=>s+MARGEM.m2026[b].vals.reduce((a,v)=>a+v,0),0);
+  const resSemYTD=resYTD-margemYTD, shareSem=resSemYTD/resYTD;
+  const rYTD=resYTD/fatYTD;
+  const resQ3=PNL.totals2026.vals.slice(6,9).reduce((a,b)=>a+b,0);
+  const rQ3=resQ3/sumTotal(2026,q3,'fat');
+  const fatSepDec25=sumTotal(2025,['SETEMBRO'].concat(q4),'fat');
+  const r25=(PNL.totals2025.acumAno-PNL.totals2025.acumPeriodo)/fatSepDec25;
+  const gQ3=sumTotal(2026,q3,'fat')/sumTotal(2025,q3,'fat')-1;
+  const gSet=sumTotal(2026,['SETEMBRO'],'fat')/sumTotal(2025,['SETEMBRO'],'fat')-1;
+  const scen=[
+    {id:'stress',label:'Stress',g:-0.20,r:r25,rtxt:'rácio do fim de 2025',desc:'Q4 20% abaixo do Q4 de 2025 — teste de resistência.'},
+    {id:'prud',label:'Prudente',g:0,r:r25,rtxt:'rácio do fim de 2025',desc:'Q4 igual ao Q4 de 2025, sem crescimento.'},
+    {id:'base',label:'Base',g:0.08,r:rQ3,rtxt:'rácio do Q3 2026',desc:'Q4 com +8% face a 2025 (entre o crescimento de Setembro, '+(gSet*100).toFixed(1)+'%, e o do Q3, '+(gQ3*100).toFixed(1)+'%).'},
+    {id:'otim',label:'Otimista',g:Math.round(gQ3*100)/100,r:rYTD,rtxt:'rácio acumulado 2026',desc:'Q4 ao ritmo do Q3 ('+(Math.round(gQ3*100))+'% face a 2025).'}
+  ];
+  scen.forEach(c=>{
+    c.fatQ4=q4_25*(1+c.g); c.fatY=fatYTD+c.fatQ4;
+    c.resQ4=c.fatQ4*c.r; c.resY=resYTD+c.resQ4;
+    c.resQ4s=c.resQ4*shareSem; c.resYs=resSemYTD+c.resQ4s;
+  });
+  return {act,q4,fatYTD,fatYTD25,fat25Y,q4_25,resYTD,res25Y,margemYTD,resSemYTD,shareSem,rYTD,rQ3,r25,gQ3,gSet,scen};
+}
+function renderProjecao(){
+  const P=pjCalc(); const sel=P.scen.find(c=>c.id===projSel);
+  const $=id=>document.getElementById(id);
+  $('pj-k1').textContent=fmtEUR(P.fatYTD); $('pj-k1b').textContent=fmtEUR(P.fatYTD25);
+  $('pj-k1d').outerHTML=`<span class="delta ${growthClass(P.fatYTD,P.fatYTD25)}" id="pj-k1d">${growthLabel(P.fatYTD,P.fatYTD25)}</span>`;
+  $('pj-k2').textContent=fmtEUR0(P.resYTD); $('pj-k2b').textContent=fmtEUR0(P.res25Y);
+  $('pj-k4').textContent=fmtEUR0(P.resSemYTD); $('pj-k4b').textContent=fmtEUR0(P.margemYTD);
+  $('pj-k3').textContent=(P.fatYTD/P.fat25Y*100).toFixed(1)+'%'; $('pj-k3b').textContent=fmtEUR(P.fat25Y);
+  const need=P.fat25Y-P.fatYTD, pct=need/P.q4_25;
+  $('pj-safe-big').innerHTML=`Para igualar a faturação de <b>todo o 2025</b>, o Q4 só precisa de faturar <b>${fmtEUR0(need)}</b> — ${(pct*100).toFixed(0)}% do Q4 de 2025.`;
+  $('pj-safe-sm').textContent=`O Q4 pode ficar ${(100-pct*100).toFixed(0)}% abaixo do ano passado e 2026 continua ao nível de 2025. O resultado acumulado Jan–Set (${fmtEUR0(P.resYTD)}) já supera o resultado de todo o 2025 (${fmtEUR0(P.res25Y)}) e, mesmo sem a margem de viaturas, fica em ${fmtEUR0(P.resSemYTD)}.`;
+  $('pj-pills').innerHTML=P.scen.map(c=>`<button class="pj-pill${c.id===projSel?' sel':''}" onclick="projSel='${c.id}'; renderProjecao();">${c.label}</button>`).join('');
+  $('pj-desc').textContent=sel.desc+' Resultado do Q4 estimado com o '+sel.rtxt+' ('+(sel.r*100).toFixed(1)+'% da faturação).';
+  $('pj-r1').textContent=fmtEUR0(sel.fatY); $('pj-r1b').textContent=fmtEUR0(P.fat25Y);
+  $('pj-r1d').outerHTML=`<span class="delta ${growthClass(sel.fatY,P.fat25Y)}" id="pj-r1d">${growthLabel(sel.fatY,P.fat25Y)}</span>`;
+  $('pj-r2').textContent=fmtEUR0(sel.resY); $('pj-r2b').textContent=fmtEUR0(P.res25Y);
+  $('pj-r3').textContent=fmtEUR0(sel.resYs); $('pj-r3b').textContent=fmtEUR0(P.res25Y);
+  $('pj-r3d').outerHTML=`<span class="delta ${growthClass(sel.resYs,P.res25Y)}" id="pj-r3d">${growthLabel(sel.resYs,P.res25Y)}</span>`;
+  $('pj-r2d').outerHTML=`<span class="delta ${growthClass(sel.resY,P.res25Y)}" id="pj-r2d">${growthLabel(sel.resY,P.res25Y)}</span>`;
+  // gráfico
+  const v25=PJ_M12.map(m=>sumTotal(2025,[m],'fat'));
+  const v26=PJ_M12.map((m,i)=> i<9 ? sumTotal(2026,[m],'fat') : v25[i]*(1+sel.g));
+  const mx=Math.max(...v25,...v26);
+  $('pj-chart').innerHTML=PJ_M12.map((m,i)=>`<div class="pj-col"><div class="pj-bars"><div class="pj-b y25" style="height:${v25[i]/mx*100}%" title="2025: ${fmtEUR0(v25[i])}"></div><div class="pj-b ${i<9?'y26':'proj'}" style="height:${v26[i]/mx*100}%" title="2026: ${fmtEUR0(v26[i])}"></div></div><div class="pj-lbl">${PJ_LBL[i]}</div></div>`).join('');
+  // tabela cenários
+  let t='<thead><tr><th>Cenário</th><th>Q4 vs 2025</th><th>Faturação Q4</th><th>Faturação ano</th><th>vs 2025</th><th>Resultado ano</th><th>Resultado ano s/ margem viaturas</th></tr></thead><tbody>';
+  P.scen.forEach(c=>{
+    t+=`<tr class="pj-row${c.id===projSel?' pj-selrow':''}" onclick="projSel='${c.id}'; renderProjecao();"><td><b>${c.label}</b></td><td>${c.g>=0?'+':''}${(c.g*100).toFixed(0)}%</td><td>${fmtEUR0(c.fatQ4)}</td><td>${fmtEUR0(c.fatY)}</td><td>${growthLabel(c.fatY,P.fat25Y)}</td><td>${fmtEUR0(c.resY)}</td><td>${fmtEUR0(c.resYs)}</td></tr>`;
+  });
+  $('pj-table-scen').innerHTML=t+'</tbody>';
+  // tabela por balcão
+  let b='<thead><tr><th>Balcão</th><th>Jan–Set 2026</th><th>Q4 2025</th><th>Q4 projetado</th><th>Ano projetado</th><th>Ano 2025</th><th>vs 2025</th></tr></thead><tbody>';
+  let tot={a:0,q:0,p:0,y:0,y25:0};
+  DATA.branches.forEach(br=>{
+    const a=sumBranch(2026,P.act,br,'fat'), q=sumBranch(2025,P.q4,br,'fat'), p=q*(1+sel.g), y25=sumBranch(2025,PJ_M12,br,'fat');
+    tot.a+=a; tot.q+=q; tot.p+=p; tot.y+=a+p; tot.y25+=y25;
+    b+=`<tr><td>${DATA.names[br]}</td><td>${fmtEUR0(a)}</td><td>${fmtEUR0(q)}</td><td>${fmtEUR0(p)}</td><td>${fmtEUR0(a+p)}</td><td>${fmtEUR0(y25)}</td><td>${growthLabel(a+p,y25)}</td></tr>`;
+  });
+  b+=`<tr class="total-row"><td>TOTAL</td><td>${fmtEUR0(tot.a)}</td><td>${fmtEUR0(tot.q)}</td><td>${fmtEUR0(tot.p)}</td><td>${fmtEUR0(tot.y)}</td><td>${fmtEUR0(tot.y25)}</td><td>${growthLabel(tot.y,tot.y25)}</td></tr></tbody>`;
+  $('pj-table-br').innerHTML=b;
+  $('pj-notes').innerHTML=`<b>Pressupostos:</b> a faturação do Q4 parte dos valores reais de Out–Dez de 2025, de cada balcão, com o crescimento do cenário. O resultado do Q4 aplica à faturação o rácio resultado/faturação observado: ${(P.r25*100).toFixed(1)}% (Set–Dez 2025), ${(P.rQ3*100).toFixed(1)}% (Q3 2026) e ${(P.rYTD*100).toFixed(1)}% (acumulado 2026). O resultado <b>sem margem de viaturas</b> retira a repartição de margem da venda de viaturas de frota (Jan–Ago, como na Demonstração de Resultados) e assume que no Q4 essa margem pesa como em Jan–Set (${((1-P.shareSem)*100).toFixed(0)}% do resultado). Setembro ainda não tem repartição de margem (valor por enviar), por isso o resultado sem margem está ligeiramente sobrestimado. São estimativas, não compromissos.`;
 }
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
@@ -2716,6 +2864,7 @@ renderSegCmp();
 renderNetGrid();
 renderPNL();
 renderReparacoes();
+renderProjecao();
 </script>
 </body>
 </html>
